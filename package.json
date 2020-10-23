@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.28.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
+  },
+  "private": true,
+  "scripts": {
+    "watch": "encore dev --watch --progress"
+  }
+}

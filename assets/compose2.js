@@ -1,0 +1,1 @@
+import './css/main2.styl'
