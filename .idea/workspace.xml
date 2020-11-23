@@ -1,7 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="" />
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/compose3.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/compose4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/general/form_layout.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/main3.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/main4.styl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/dev/config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/FormController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/User1Type.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/forgotPass.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/form/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/register.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user/_delete_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user/_form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user/edit.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user/new.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/BP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/symfony2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/article_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/article_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/boty/boty_converse_sede.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/boty/boty_dr_bordove.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/boty/boty_steadys_zlte.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/boty/boty_trex_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_acidez_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_anl_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_antiflag_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_blink182_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_clash_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_conflict_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_nn_cervene.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oblecenie/tricka/tricko_nn_cierne.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article1.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article1.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article2.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article2.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article3.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article3.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article4.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article4.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article5.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article5.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article_temp.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_temp.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layouts/article_layout.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layouts/base_layout.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +104,9 @@
         <option value="HTML File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -124,27 +213,40 @@
       <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/apache-pack" />
     </include_path>
   </component>
   <component name="ProjectId" id="1ieFLhsgpuVF7DM6n4JDivY43Rn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/css/general" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\BP\assets\css\general" />
+      <recent name="C:\Users\filip\Desktop\BP\templates" />
+      <recent name="C:\Users\filip\Desktop\BP\templates\layouts" />
+      <recent name="C:\Users\filip\Desktop\BP\templates\tmp" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\filip\Desktop\BP\templates" />
-      <recent name="C:\Users\filip\Desktop\BP\assets\css" />
+      <recent name="C:\Users\filip\Desktop\BP\templates\nepotrebne" />
       <recent name="C:\Users\filip\Desktop\BP\assets" />
-      <recent name="C:\Users\filip\Desktop\BP" />
+      <recent name="C:\Users\filip\Desktop\BP\assets\css" />
+      <recent name="C:\Users\filip\Desktop\BP\assets\css\general" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -164,21 +266,72 @@
       <workItem from="1603293356195" duration="6000" />
       <workItem from="1603293659335" duration="23935000" />
       <workItem from="1603453940766" duration="590000" />
+      <workItem from="1603461932311" duration="1417000" />
+      <workItem from="1603474453853" duration="235000" />
+      <workItem from="1605287033250" duration="6289000" />
+      <workItem from="1605472364682" duration="8569000" />
+      <workItem from="1605534993257" duration="11738000" />
+      <workItem from="1605566212106" duration="9779000" />
+      <workItem from="1605627981690" duration="27565000" />
+      <workItem from="1605802187505" duration="34553000" />
+      <workItem from="1606000297094" duration="1146000" />
+      <workItem from="1606081269772" duration="3760000" />
+      <workItem from="1606085092488" duration="4111000" />
+      <workItem from="1606118780830" duration="968000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1602695720868">
+    <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606087409443">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1602695720868" />
+    <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606087409443" />
+    <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser" timestamp="1605292781134">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605292781134" />
+    <state x="414" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606082388154">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="414" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1606082388154" />
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603306495064">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1603306495064" />
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605725900970">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1605725900970" />
     <state x="438" y="191" key="EditFileWatcherDialog" timestamp="1603294945600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -191,17 +344,21 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="561" y="135" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1602260189693" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1602695780318">
+    <state x="277" y="57" key="SettingsEditor" timestamp="1605483155416">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1602695780318" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1602701009337">
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605483155416" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605842325610">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1602701009337" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1603294586091">
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605842325610" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1605836753730">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1603294586091" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605836753730" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606088024446">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606088024446" />
   </component>
 </project>

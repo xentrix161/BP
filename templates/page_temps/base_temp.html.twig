@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+{#  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
+{#   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.styl') }}">#}
+    <title>
+        {% block title %}
+            pAnk st0re! - Domov
+        {% endblock %}
+    </title>
+
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hakenkreuz_im_Verbotsschild.svg/900px-Hakenkreuz_im_Verbotsschild.svg.png">
+
+    {% block stylesheets %}
+
+    {% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block layout_content %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

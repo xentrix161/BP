@@ -9,11 +9,12 @@ Encore
     .enableSourceMaps(true)
     .addEntry('homepage', './assets/compose.js')
     .addEntry('article', './assets/compose2.js')
+    .addEntry('form', './assets/compose3.js')
+    .addEntry('crude', './assets/compose4.js')
     .splitEntryChunks()
     .disableSingleRuntimeChunk()
     .enableVersioning(false)
     .enableStylusLoader();
 const config = Encore.getWebpackConfig();
 config.watchOptions = {ignored: null};
-
 module.exports = config;

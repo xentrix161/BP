@@ -1,0 +1,20 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('form', 'webpack_assets') }}
+{% endblock %}
+{% block body %}
+
+    {% for message in app.flashes('info') %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(post_form, {'attr': {'id': 'custom_post_form',
+        'class': 'login' }}) }}
+
+    {{ form(post_form) }}
+
+    {{ form_end(post_form) }}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('form', 'webpack_assets') }}
+{% endblock %}
+{% block body %}
+
+    <div class="login">
+        {# <form id="login" method="get" action="login.php"> #}
+        <form id="login">
+            <label><b>E-mail <br>
+                </b>
+            </label>
+            <input type="email" name="email" id="email" placeholder="E-mail" autofocus>
+            <br><br>
+
+            <input type="button" name="send" id="btn-form" value="Resetovať heslo"><br><br>
+
+            <a href="http://127.0.0.1:8000/login">Prihlásiť sa</a>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<title>Create user</title>
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    {{ encore_entry_link_tags('crude', 'webpack_assets') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Vytvor nového užívateľa</h1>
+
+    {{ include('user/_form.html.twig') }}
+
+    <br>
+
+    <a href="{{ path('user_index') }}">Späť</a>
+{% endblock %}

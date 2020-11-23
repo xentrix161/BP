@@ -1,117 +1,63 @@
-/*
-main-section {
-  max-width 1200px
-  margin 0 auto
-}
-
-.subsection {
-  width 100%
-  padding 0 20px
-  background-color red
-}
-
-.layout-list {
-  text-align center
-  font-size 0
-  .layout-item {
-    display inline-block
-    vertical-align top
-    width 25%
-
-    @media (max-width 479) {
-      width 50%
-    }
-  }
-}
-
-img {
-  height: 300px;
-  width: 250px;
-}
-
 body {
-  background-color: antiquewhite;
-}
-.card {
-  max-width: 300px;
-  margin: auto;
-  text-align: center;
-  font-family: Arial;
+  background-color black
 }
 
-.price {
-  color: black;
-  font-size: 28px;
+#btn-form {
+  margin-left 90%
 }
 
-.card button {
-  border-style: double;
-  border-color: #8959A8;
-  padding: 10px;
-  color: white;
-  background-color: red;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 20px;
+a {
+  font-size 1vw
+  color yellow
+  margin-right 20px
 }
 
-.homepage-item {
-  width 100%
-  background-color #718C00
-  height 100px
-  font-size 14px
-  color white
-  border 1px solid white
-  border-radius 50%
-}
-
-body {
-
-  background-color silver
-  font-size 12px
-}
-
-*/
-body {
-  background-color: antiquewhite;
+a.button {
+  background-color #222222
+  padding 5px
+  box-shadow 0 0 4px #ddd
+  font-size 1.5vw
+  display inline-block
+  float right
+  -webkit-appearance button
+  -moz-appearance button
+  appearance button
+  text-decoration none
+  color yellow
 }
 
 .collection {
-  display: grid;
-  grid-auto-columns: max-content;
-  grid-auto-flow: dense;
-  grid-auto-rows: minmax(100px, auto);
-  grid-gap: 25px;
-  grid-template-columns: repeat(3, 1fr);
+  display grid
+  grid-auto-columns max-content
+  grid-auto-flow dense
+  grid-auto-rows minmax(100px, auto)
+  grid-gap 25px
+  grid-template-columns repeat(3, 1fr)
 
-  //--- JUST VISUAL STYLING BELOW
-  margin: 60px auto;
-  max-width: 800px;
+  margin 60px auto
+  max-width 800px
 }
 
 .product {
 
-  //--- JUST VISUAL STYLING BELOW
-
   &image {
-    background-color: antiquewhite;
-    display: block;
-    height: 200px;
-    width: 100%;
+    background-color black
+    display inline-block
+    height 8vw
+    width 100%
   }
 
   &__name {
 
     p {
-      font-family: sans-serif;
-      font-size: 16px;
-      font-weight: bold;
+      font-family sans-serif
+      font-size 1.1vw
+      font-weight bold
 
       a {
-        color: #000000;
-        text-decoration: none;
-        display block;
+        color white
+        text-decoration none
+        display block
       }
     }
   }
@@ -119,8 +65,9 @@ body {
   &__price {
 
     p {
-      font-family: sans-serif;
-      font-size: 14px;
+      font-family sans-serif
+      font-size 1.1vw
+      color yellow
     }
   }
 }

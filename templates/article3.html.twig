@@ -1,19 +1,17 @@
-{% extends 'layouts/article_layout.html.twig' %}
-{% block content %}
-
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('article', 'webpack_assets') }}
+{% endblock %}
+{% block body %}
     <div class="card">
         <img src="https://www.hof.sk/fotky/steel7809-1-foto.jpg">
         <h1>Topánky Dr.Martens (čierne)</h1>
-        <p class="price">149.99€</p>
         <p>Topánky Dr.Martens, čierne, vyrobené v UK</p>
-        <p>
-            <button>Pridať do košíka</button>
-        </p>
+        <p class="price">149.99€</p>
+        <button>Pridať do košíka</button>
+        <br><br>
         <form action="http://127.0.0.1:8000/homepage">
             <input type="submit" value="Späť na hlavnú stránku"/>
         </form>
-
     </div>
-
-
 {% endblock %}

@@ -1,0 +1,7 @@
+parameters:
+  mysql.shop.dbname: 'mydb'
+  mysql.shop.username: 'admin'
+  mysql.shop.password: 'bakalarka123'
+  mysql.shop.port: '3306'
+  mysql.shop.url: '127.0.0.1'
+
