@@ -1,0 +1,30 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('form', 'webpack_assets') }}
+{% endblock %}
+{% block body %}
+
+
+    <div class="login">
+        <form id="login">
+            <label><b>E-mail <br>
+                </b>
+            </label>
+            <input type="email" name="email" id="email" placeholder="E-mail" autofocus>
+            <br><br>
+            <label><b>Heslo <br>
+                </b>
+            </label>
+            <input type="password" name="pass" id="pass" placeholder="Heslo">
+            <br><br>
+            <input type="button" name="log" id="btn-form" value="Prihlásiť">
+            <br><br>
+            <input type="checkbox" id="check">
+            <span>Zapamätať si ma</span>
+            <br><br>
+            <a href="http://127.0.0.1:8000/forgot">Zabudol som heslo</a><br><br>
+            <a href="http://127.0.0.1:8000/register">Nemáte účet? Zaregistrujte sa!</a>
+        </form>
+    </div>
+
+{% endblock %}
