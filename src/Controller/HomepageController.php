@@ -36,7 +36,7 @@ class HomepageController extends AbstractController
 
 //LOGIN
     /**
-     * @Route("/login")
+     * @Route("/login1")
      * @return Response
      */
     public function login(): Response

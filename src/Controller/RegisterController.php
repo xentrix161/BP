@@ -8,17 +8,19 @@ use App\Entity\User;
 use App\Form\RegisterType;
 use Symfony\Component\HttpFoundation\Request;
 
-class FormController extends AbstractController
+class RegisterController extends AbstractController
 {
+
+    //HOTOVO
     /**
-     * @Route("/form", name="form")
+     * @Route("/registerForm", name="register-form")
      */
     public function registerU(Request $request)
     {
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(RegisterType::class, $user, [
-            'action' => $this->generateUrl('form')
+            'action' => $this->generateUrl('register-form')
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -33,7 +35,7 @@ class FormController extends AbstractController
         }
 
         return $this->render('form/index.html.twig', [
-            'post_form' => $form->createView()
+            'register_form' => $form->createView()
         ]);
     }
 
