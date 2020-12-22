@@ -28,15 +28,40 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="register CSS">
-      <change afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/LoginType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="login css">
+      <change afterPath="$PROJECT_DIR$/assets/images/cart.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/cart2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FormController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/compose2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/compose3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/compose4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/article_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/article_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/form_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/form_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main2.styl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main3.styl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/main4.styl" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/LoginType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/LoginType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegisterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegisterType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/User1Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/User1Type.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article1.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article1.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article2.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article2.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article3.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article3.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article4.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article4.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article5.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article5.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/forgotPass.html.twig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/form/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,11 +212,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\BP\assets\images" />
       <recent name="C:\Users\filip\Desktop\BP\templates" />
       <recent name="C:\Users\filip\Desktop\BP\templates\nepotrebne" />
       <recent name="C:\Users\filip\Desktop\BP\assets" />
       <recent name="C:\Users\filip\Desktop\BP\assets\css" />
-      <recent name="C:\Users\filip\Desktop\BP\assets\css\general" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\filip\Desktop\BP\assets\css\general" />
@@ -231,7 +256,7 @@
       <workItem from="1606118780830" duration="3663000" />
       <workItem from="1606228696055" duration="1183000" />
       <workItem from="1608463056254" duration="3000" />
-      <workItem from="1608648905968" duration="10760000" />
+      <workItem from="1608648905968" duration="24990000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -254,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608655335636</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="login css">
+      <created>1608661530282</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608661530282</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +330,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="checkpoint2" />
     <MESSAGE value="register CSS" />
-    <option name="LAST_COMMIT_MESSAGE" value="register CSS" />
+    <MESSAGE value="login css" />
+    <option name="LAST_COMMIT_MESSAGE" value="login css" />
   </component>
   <component name="WindowStateProjectService">
     <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606087409443">
@@ -339,27 +372,27 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605483155416" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1608655341487">
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1608661549091">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606122108587" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608655341487" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608661549091" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605842325610">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605842325610" />
-    <state x="667" y="119" width="585" height="801" key="find.popup" timestamp="1608653003259">
+    <state x="667" y="119" width="585" height="801" key="find.popup" timestamp="1608661745370">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608653003259" />
+    <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608661745370" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1605836753730">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605836753730" />
-    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1608652853772">
+    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1608661703181">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606121903751" />
-    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608652853772" />
+    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608661703181" />
   </component>
 </project>

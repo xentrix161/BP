@@ -1,49 +1,34 @@
-img {
-  margin-top 1.5vw
-  height: 20vw;
-  width: 20vw;
-}
+.detail
+  max-width 960px
+  margin 5em auto 0 auto
+  .image
+    &-wrapper
+     width 50%
+     position relative
+    &-container
+     //position absolute
 
-.h1 {
-  color white
-}
-
-body {
-  background-color: black;
-}
-
-.card {
-  max-width: 29vw;
-  margin: auto;
-  text-align: center;
-  font-family: Arial;
-  color white
-}
-
-.price {
-  color: yellow;
-  font-size: 3vw;
-  font-weight bold
-}
-
-.card button {
-  cursor pointer
-  width: 30vw;
-  height: 3.5vw;
-  border: none;
-  font-weight bold
-  border-radius: 17vw;
-  padding-left: 1vw;
-  color: black;
-  font-size 2.5vw
-}
-
-input {
-  background-color: black;
-  color: yellow;
-  width: auto;
-  height: 1.5vw;
-  cursor pointer
-  font-size: 1vw;
-  float: right;
-}
+  .info-wrapper
+    width 50%
+    color white
+    padding-left 1em
+    .headline
+      font-size 2.8em
+      color yellow
+    .description
+      font-size 1.4em
+      margin 1em 0 2em 0
+    .price-wrapper
+      font-size 4.5em
+      .price
+        font-weight bold
+        display inline-block
+        color yellow
+      .cart
+        display inline-block
+        button
+          background black url("../images/cart2.png") center center no-repeat
+          background-size contain
+          cursor pointer
+          padding 3em
+          vertical-align: super

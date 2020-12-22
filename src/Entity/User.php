@@ -31,9 +31,9 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="surename", type="string", length=255, nullable=false)
+     * @ORM\Column(name="surname", type="string", length=255, nullable=false)
      */
-    private $surename;
+    private $surname;
 
     /**
      * @var string
@@ -84,17 +84,17 @@ class User
     /**
      * @return string
      */
-    public function getSurename(): string
+    public function getSurname(): string
     {
-        return $this->surename;
+        return $this->surname;
     }
 
     /**
-     * @param string $surename
+     * @param string $surname
      */
-    public function setSurename(string $surename): void
+    public function setSurname(string $surname): void
     {
-        $this->surename = $surename;
+        $this->surname = $surname;
     }
 
     /**

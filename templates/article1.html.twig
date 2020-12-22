@@ -1,18 +1,27 @@
 {% extends 'page_temps/base_temp.html.twig' %}
-{% block stylesheets %}
-    {{ encore_entry_link_tags('article', 'webpack_assets') }}
-{% endblock %}
 {% block body %}
 
-    <div class="card">
-        <img src="https://www.no-gods-no-masters.com/img/thumb/local-tshirt-acidez-D01000839342P0691.jpg">
-        <h1>Tričko Acidez (čierne)</h1>
-        <p>Tričko Acidez čiernej farby, 100% bavlna</p>
-        <p class="price">9.99€</p>
-        <button>Pridať do košíka</button>
-        <br><br>
-        <form action="http://127.0.0.1:8000/homepage">
-            <input type="submit" value="Späť na hlavnú stránku"/>
-        </form>
+    <div class="detail clear-fix">
+        <div class="image-wrapper float-left">
+            <div class="image-container">
+                <img src="https://www.no-gods-no-masters.com/img/thumb/local-tshirt-acidez-D01000839342P0691.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="info-wrapper float-right">
+            <h1 class="headline">Tričko Acidez (čierne)</h1>
+            <p class="description">Tričko Acidez čiernej farby, 100% bavlna</p>
+            <div class="price-wrapper">
+                <div class="price">
+                    9.99€
+                </div>
+
+                <div class="cart">
+                    <button class="btn" title="Pridať do košíka"></button>
+                </div>
+            </div>
+        </div>
     </div>
+    <a href="http://127.0.0.1:8000/homepage">Späť na hlavnú stránku</a>
+
 {% endblock %}

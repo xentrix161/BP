@@ -26,7 +26,7 @@ class RegisterType extends AbstractType
                     'class'=> 'formInput'
                 ]
             ])
-            ->add('surename', TextType::class, [
+            ->add('surname', TextType::class, [
                 'attr' => [
                     'placeholder' => 'Zadaj priezvisko',
                     'class'=> 'formInput'
@@ -47,7 +47,7 @@ class RegisterType extends AbstractType
             ])
             ->add('Registruj', SubmitType::class, [
                 'attr' => [
-                    'class'=> 'form-btn',
+                    'class'=> 'btn btn-form',
                     'id' => 'btn-register'
                 ]
             ]);

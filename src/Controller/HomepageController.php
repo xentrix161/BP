@@ -20,13 +20,14 @@ class HomepageController extends AbstractController
      */
     public function index(): Response
     {
-
         return $this->render('homepage.html.twig');
     }
 
 //PRODUKTY
+
     /**
      * @Route(path="/produkt/{number}", name="article_moj")
+     * @param $number
      * @return Response
      */
     public function article($number): Response
@@ -74,7 +75,7 @@ class HomepageController extends AbstractController
 //        $defaultData = [''];
 //        $form = $this->createFormBuilder($defaultData)
 //            ->add('name', TextType::class)
-//            ->add('surename', TextType::class)
+//            ->add('surname', TextType::class)
 //            ->add('email', EmailType::class)
 //            ->add('password', TextType::class)
 //            ->getForm();
@@ -104,7 +105,7 @@ class HomepageController extends AbstractController
 //        if (!empty($form)) {
 //            $newUser = new User();
 //            $newUser->setName();
-//            $newUser->setSurename();
+//            $newUser->setSurname();
 //            $newUser->setEmail();
 //            $newUser->setPassword();
 //            $manager->persist($newUser);

@@ -1,7 +1,4 @@
 {% extends 'page_temps/base_temp.html.twig' %}
-{% block stylesheets %}
-    {{ encore_entry_link_tags('form', 'webpack_assets') }}
-{% endblock %}
 {% block body %}
 
     {% for message in app.flashes('info') %}
@@ -10,7 +7,7 @@
         </div>
     {% endfor %}
 
-    {{ form_start(register_form, {'attr': {'id': 'custom_post_form',
+    {{ form_start(register_form, {'attr': {'id': 'custom_register_form',
         'class': 'form-wrapper' }}) }}
 
     {{ form(register_form) }}
