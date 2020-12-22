@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\RegisterType;
 use Symfony\Component\HttpFoundation\Request;
 
 class FormController extends AbstractController
@@ -17,7 +17,7 @@ class FormController extends AbstractController
     {
         $user = new User();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm(RegisterType::class, $user, [
             'action' => $this->generateUrl('form')
         ]);
         $form->handleRequest($request);
@@ -44,7 +44,7 @@ class FormController extends AbstractController
     {
         $user = new User();
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm(RegisterType::class, $user, [
             'action' => $this->generateUrl('formDel')
         ]);
         $form->handleRequest($request);
@@ -72,7 +72,7 @@ class FormController extends AbstractController
             'email' => 'update@gmail.com'
         ]);
 
-        $form = $this->createForm(UserType::class, $userToUpadate, [
+        $form = $this->createForm(RegisterType::class, $userToUpadate, [
             'action' => $this->generateUrl('formUpd')
         ]);
         $form->handleRequest($request);

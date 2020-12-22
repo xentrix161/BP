@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Mime\Email;
 
-class UserType extends AbstractType
+class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -29,21 +29,26 @@ class UserType extends AbstractType
             ->add('surename', TextType::class, [
                 'attr' => [
                     'placeholder' => 'Zadaj priezvisko',
+                    'class'=> 'formInput'
                 ]
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'placeholder' => 'Zadaj svoj email'
+                    'placeholder' => 'Zadaj svoj email',
+                    'class'=> 'formInput'
                 ]
             ])
             ->add('password', PasswordType::class, [
                 'attr' => [
                     'placeholder' => 'Zadaj heslo',
+                    'class'=> 'formInput'
                 ]
 
             ])
             ->add('Registruj', SubmitType::class, [
                 'attr' => [
+                    'class'=> 'form-btn',
+                    'id' => 'btn-register'
                 ]
             ]);
     }
