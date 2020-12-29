@@ -28,40 +28,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="login css">
-      <change afterPath="$PROJECT_DIR$/assets/images/cart.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/cart2.png" afterDir="false" />
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="csska + formulare + prihlasovanie">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/compose2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/compose3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/compose4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/article_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/article_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/form_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/form_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main2.styl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main3.styl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main4.styl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/LoginType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/LoginType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegisterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegisterType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/User1Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/User1Type.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article1.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article1.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article2.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article2.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article3.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article3.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article4.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article4.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article5.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article5.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/forgotPass.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/form/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +224,9 @@
       <workItem from="1606118780830" duration="3663000" />
       <workItem from="1606228696055" duration="1183000" />
       <workItem from="1608463056254" duration="3000" />
-      <workItem from="1608648905968" duration="24990000" />
+      <workItem from="1608648905968" duration="25869000" />
+      <workItem from="1609109204285" duration="595000" />
+      <workItem from="1609260930918" duration="834000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -286,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608661530282</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="csska + formulare + prihlasovanie">
+      <created>1608676531841</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608676531841</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +308,8 @@
     <MESSAGE value="checkpoint2" />
     <MESSAGE value="register CSS" />
     <MESSAGE value="login css" />
-    <option name="LAST_COMMIT_MESSAGE" value="login css" />
+    <MESSAGE value="csska + formulare + prihlasovanie" />
+    <option name="LAST_COMMIT_MESSAGE" value="csska + formulare + prihlasovanie" />
   </component>
   <component name="WindowStateProjectService">
     <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606087409443">
@@ -372,11 +350,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605483155416" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1608661549091">
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1608676537475">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606122108587" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608661549091" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608676537475" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605842325610">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
