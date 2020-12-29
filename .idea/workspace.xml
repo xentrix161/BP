@@ -29,7 +29,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="csska + formulare + prihlasovanie">
+      <change afterPath="$PROJECT_DIR$/src/Controller/ArticleController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Article.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/article/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/topPanel.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article1.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article2.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article3.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article4.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article5.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,18 +196,18 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\filip\Desktop\BP\assets\images" />
-      <recent name="C:\Users\filip\Desktop\BP\templates" />
-      <recent name="C:\Users\filip\Desktop\BP\templates\nepotrebne" />
-      <recent name="C:\Users\filip\Desktop\BP\assets" />
-      <recent name="C:\Users\filip\Desktop\BP\assets\css" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\filip\Desktop\BP\assets\css\general" />
       <recent name="C:\Users\filip\Desktop\BP\templates" />
       <recent name="C:\Users\filip\Desktop\BP\templates\layouts" />
       <recent name="C:\Users\filip\Desktop\BP\templates\tmp" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\filip\Desktop\BP\src\Entity" />
+      <recent name="C:\Users\filip\Desktop\BP\assets\images" />
+      <recent name="C:\Users\filip\Desktop\BP\templates" />
+      <recent name="C:\Users\filip\Desktop\BP\templates\nepotrebne" />
+      <recent name="C:\Users\filip\Desktop\BP\assets" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -226,7 +243,7 @@
       <workItem from="1608463056254" duration="3000" />
       <workItem from="1608648905968" duration="25869000" />
       <workItem from="1609109204285" duration="595000" />
-      <workItem from="1609260930918" duration="834000" />
+      <workItem from="1609260930918" duration="7919000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -263,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608676531841</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="csska + formulare + prihlasovanie">
+      <created>1609261777382</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1609261777382</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,10 +340,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606087409443" />
-    <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser" timestamp="1605292781134">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="703" y="153" key="#com.intellij.ide.util.MemberChooser" timestamp="1609263168068">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605292781134" />
+    <state x="703" y="153" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1609263168068" />
     <state x="518" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1608656221593">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -329,11 +354,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1603306495064" />
-    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608658157445">
+    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1609263307404">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1605725900970" />
-    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608658157445" />
+    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609263307404" />
     <state x="438" y="191" key="EditFileWatcherDialog" timestamp="1603294945600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -363,10 +388,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608661745370" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605836753730">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="531" y="236" key="run.anything.popup" timestamp="1609263388644">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605836753730" />
+    <state x="531" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1609263388644" />
     <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1608661703181">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

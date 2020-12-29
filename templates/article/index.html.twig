@@ -1,0 +1,51 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <div class="detail clear-fix">
+        <div class="image-wrapper float-left">
+            <div class="image-container">
+                <img src="{{ data.img }}" alt="">
+            </div>
+        </div>
+
+        <div class="info-wrapper float-right">
+            <h1 class="headline">{{ data.title }}</h1>
+            <p class="description">{{ data.desc }}</p>
+            <div class="price-wrapper">
+                <div class="price">
+                    {{ data.price }}€
+                </div>
+
+                <div class="cart">
+                    <button class="btn" title="Pridať do košíka"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="http://127.0.0.1:8000/homepage">Späť na hlavnú stránku</a>
+{% endblock %}
+
+
+
+
+
+{#<!DOCTYPE html>#}
+
+{#<title>Hello ArticleController!</title>#}
+
+{#{% block body %}#}
+{#<style>#}
+{#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
+{#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
+{#</style>#}
+
+{#<div class="example-wrapper">#}
+{#    <h1>Hello {{ controller_name }}! ✅</h1>#}
+
+{#    This friendly message is coming from:#}
+{#    <ul>#}
+{#        <li>Your controller at <code><a href="{{ 'C:/Users/filip/Desktop/BP/src/Controller/ArticleController.php'|file_link(0) }}">src/Controller/ArticleController.php</a></code></li>#}
+{#        <li>Your template at <code><a href="{{ 'C:/Users/filip/Desktop/BP/templates/article/index.html.twig'|file_link(0) }}">templates/article/index.html.twig</a></code></li>#}
+{#    </ul>#}
+{#</div>#}
+{#{% endblock %}#}

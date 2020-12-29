@@ -3,42 +3,17 @@
 {#    {{ encore_entry_link_tags('homepage', 'webpack_assets') }}#}
 {#{% endblock %}#}
 {% block body %}
-
-
-    <div class="top-panel clear-fix">
-    <ul class="navigation float-left">
-        <li>
-            <a href="">O nás</a>
-        </li>
-        <li>
-            <a href="">Obchodné podmienky</a>
-        </li>
-        <li>
-            <a href="">FAQ</a>
-        </li>
-    </ul>
-
-    <ul class="form-buttons float-right">
-        <li>
-            <a href="http://127.0.0.1:8000/loginForm" class="button">Prihlásiť</a>
-        </li>
-        <li>
-            <a href="http://127.0.0.1:8000/registerForm" class="button">Registrovať</a>
-        </li>
-    </ul>
-    </div>
-
     <div class="collection">
-        {% for user in [1, 2, 3, 4, 5, 6] %}
+        {% for item in data %}
             <div class="product">
-                <a class="product-url" href="{{ url('article_moj', {'number': 1}) }}">
-                    <img class="product-image" src="https://www.no-gods-no-masters.com/img/thumb/local-tshirt-acidez-D01000839342P0691.jpg" alt="">
+                <a class="product-url" href="{{ url('article', {'id': item.id}) }}">
+                    <img class="product-image" src="{{ item.img }}" alt="">
                     <p class="product-name">
-                        Tričko Acidez - čierne
+                        {{ item.title }}
                     </p>
                 </a>
                 <span class="product-price">
-                9.99€
+                {{ item.price }}€
             </span>
             </div>
         {% endfor %}

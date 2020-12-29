@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -20,138 +21,17 @@ class HomepageController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('homepage.html.twig');
+        $allArticles = $this->getArticleList();
+        return $this->render('homepage.html.twig', [
+            'controller_name' => 'HomepageController',
+            'data' => $allArticles
+        ]);
     }
 
-//PRODUKTY
-
-    /**
-     * @Route(path="/produkt/{number}", name="article_moj")
-     * @param $number
-     * @return Response
-     */
-    public function article($number): Response
+    public function getArticleList()
     {
-        return $this->render('article' . $number . '.html.twig');
+        $articlesFromDB = $this->getDoctrine()
+            ->getRepository(Article::class);
+        return $articlesFromDB->findAll();
     }
-
-//LOGIN
-    /**
-     * @Route("/login1")
-     * @return Response
-     */
-    public function login(): Response
-    {
-        return $this->render('login.html.twig');
-    }
-
-//REGISTER
-    /**
-     * @Route("/register")
-     * @return Response
-     */
-    public function register(): Response
-    {
-        return $this->render('register.html.twig');
-    }
-
-//ZABUDNUTE HESLO
-    /**
-     * @Route("/forgot")
-     * @return Response
-     */
-    public function forgotPass(): Response
-    {
-        return $this->render('forgotPass.html.twig');
-    }
-
-
-
-//    /**
-//     * @Route("/contact", name="page_contact")
-//     */
-//    public function contact(Request $request)
-//    {
-//        $defaultData = [''];
-//        $form = $this->createFormBuilder($defaultData)
-//            ->add('name', TextType::class)
-//            ->add('surname', TextType::class)
-//            ->add('email', EmailType::class)
-//            ->add('password', TextType::class)
-//            ->getForm();
-//
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            // data is an array with "name", "email", and "message" keys
-//            $data = $form->getData();
-//            dump($data);
-//        }
-//
-//        return $this->render('login.html.twig', [
-//            'form' => $form
-//        ]);
-//    }
-
-//
-//    /**
-//     * @Route("/message", name="message", methods="GET")
-//     */
-//    public function registerCon(Request $request): Response
-//    {
-//        $manager = $this->getDoctrine()->getManager('default');
-//        $form = $request->get('form');
-//
-//        if (!empty($form)) {
-//            $newUser = new User();
-//            $newUser->setName();
-//            $newUser->setSurname();
-//            $newUser->setEmail();
-//            $newUser->setPassword();
-//            $manager->persist($newUser);
-//            $manager->flush($newUser); //vlozi do tabulky
-//            //$this->render(':message:index.html.twig');
-//            $this->render('login.html.twig');
-//        };
-//        return $this->render('nepotrebne/register.html.twig');
-//        exit;
-//        //return $form;
-//    }
-//
-
-//
-//    /**
-//     * @Route("/test/{id}")
-//     * @return Response
-//     */
-//    public function test($id): Response
-//    {
-//        $manager = $this->getDoctrine()->getManager('default');
-//        $userRepository = $manager->getRepository(User::class);
-//        /** @var User $user */
-//        $user = $userRepository->find($id);
-////        VYTVORENIE A VLOZENIE
-////        $newUser = new User();
-////        $newUser->setName('');
-////        $newUser->setSurenam('');
-////        $newUser->setEmail('');
-////        $newUser->setPassword('');
-////        $manager->persist($newUser);
-////        $manager->flush($newUser); //vlozi do tabulky
-//
-////        UPDATE
-////        $user->setEmail('novymail');
-////        $manager->flush()
-//
-////        DELETE
-////        if (!$user) {
-////            throw $this->createNotFoundException('No user found for id '.$id);
-////        }
-////        $manager->remove($user);
-////        $manager->flush($user);
-////        $manager->persist($user);
-////
-////        return $this->render('homepage.html.twig');
-//        exit;
-//    }
 }
