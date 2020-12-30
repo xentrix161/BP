@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
+//class User implements UserInterface
 class User
 {
     /**
@@ -38,7 +40,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false, unique=true)
      */
     private $email;
 
@@ -48,6 +50,30 @@ class User
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
     private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password2", type="string", length=255, nullable=false)
+     */
+    private $password2;
+
+
+    /**
+     * @return string
+     */
+    public function getPassword2(): string
+    {
+        return $this->password2;
+    }
+
+    /**
+     * @param string $password2
+     */
+    public function setPassword2(string $password2): void
+    {
+        $this->password2 = $password2;
+    }
 
     /**
      * @return int

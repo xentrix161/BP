@@ -1,0 +1,25 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <div class="detail clear-fix">
+        <div class="image-wrapper float-left">
+            <div class="image-container">
+                <img src="{{ data.img }}" alt="">
+            </div>
+        </div>
+
+        <div class="info-wrapper float-right">
+            <h1 class="headline">{{ data.title }}</h1>
+            <p class="description">{{ data.desc }}</p>
+            <div class="price-wrapper">
+                <div class="price">
+                    {{ data.price |number_format(2, '.', ',')}} €
+                </div>
+
+                <div class="cart">
+                    <button class="btn" title="Pridať do košíka"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

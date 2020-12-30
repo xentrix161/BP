@@ -1,0 +1,49 @@
+.top-panel
+  position sticky
+  top 0
+  background black
+  width 100%
+  max-width 960px
+  margin auto
+  border 1px yellow solid
+
+  //plati pre childov top-panel
+  .navigation, .form-buttons
+    buttonWidth = 20px
+    >li
+      display inline-block
+      >a
+        display inline-block
+        padding 0.5rem
+      .input-search
+        padding 4px buttonWidth+8 4px 4px
+      label
+        position relative
+        button
+          position absolute
+          right 5px
+          padding 4px
+          width buttonWidth
+          height buttonWidth
+          background url("../images/search_btn.png") center center no-repeat
+          background-size cover
+          cursor pointer
+          top 50%
+          transform translateY(-50%)
+
+
+
+
+
+
+//ampersand logika
+//.class-fix-red
+//.class-fix-green
+//.class-end
+//.class-fix
+//
+//.class
+//  &-fix
+//    &-red
+//    &-green
+//  &-end

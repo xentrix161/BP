@@ -19,6 +19,7 @@ class LoginType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => [
                     'placeholder' => 'Zadaj svoj email',
+                    'autofocus' => true,
                     'class'=> 'formInput'
                 ]
             ])

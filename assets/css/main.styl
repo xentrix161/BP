@@ -1,6 +1,8 @@
 @import "general/homepage_layout.styl"
 @import "general/form_layout.styl"
 @import "general/article_layout.styl"
+@import "general/topPanel_layout.styl"
+@import "general/crude_layout.styl"
 
 //kvoli rem
 :root {
@@ -60,3 +62,9 @@ ul, ol
     margin 1.5em 0 0 0
     color black
 
+input[type="text"], input[type="password"], textarea, select, button
+  border none
+  outline none
+  appearance none
+  &:focus
+    outline none

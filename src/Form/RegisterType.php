@@ -43,7 +43,12 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Zadaj heslo',
                     'class'=> 'formInput'
                 ]
-
+            ])
+            ->add('password2', PasswordType::class, [
+                'attr' => [
+                    'placeholder' => 'Zadaj heslo znovu',
+                    'class'=> 'formInput'
+                ]
             ])
             ->add('Registruj', SubmitType::class, [
                 'attr' => [
