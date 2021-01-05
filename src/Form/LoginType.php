@@ -30,7 +30,7 @@ class LoginType extends AbstractType
                 ]
 
             ])
-            ->add('Prihlas', SubmitType::class, [
+            ->add('Prihlasit', SubmitType::class, [
                 'attr' => [
                     'class'=> 'btn btn-form',
                     'id' => 'btn-register'

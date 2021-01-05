@@ -23,7 +23,8 @@ class RegisterType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Zadaj meno',
                     'autofocus' => true,
-                    'class'=> 'formInput'
+                    'class'=> 'formInput',
+                    'help' => 'The ZIP/Postal code for your credit card\'s billing address.'
                 ]
             ])
             ->add('surname', TextType::class, [
@@ -47,15 +48,17 @@ class RegisterType extends AbstractType
             ->add('password2', PasswordType::class, [
                 'attr' => [
                     'placeholder' => 'Zadaj heslo znovu',
-                    'class'=> 'formInput'
+                    'class'=> 'formInput',
                 ]
+
             ])
-            ->add('Registruj', SubmitType::class, [
+            ->add('Zaregistrovat', SubmitType::class, [
                 'attr' => [
                     'class'=> 'btn btn-form',
                     'id' => 'btn-register'
                 ]
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

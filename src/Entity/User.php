@@ -54,10 +54,8 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="password2", type="string", length=255, nullable=false)
      */
     private $password2;
-
 
     /**
      * @return string
@@ -75,10 +73,9 @@ class User
         $this->password2 = $password2;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -91,67 +88,51 @@ class User
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSurname(): string
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
 
-    /**
-     * @param string $surname
-     */
-    public function setSurname(string $surname): void
+    public function setSurname(string $surname): self
     {
         $this->surname = $surname;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 }

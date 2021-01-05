@@ -1,6 +1,25 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
+
+    <div class="category-bar">
+        <label>pAnkst0re!</label>
+        <h2>Kategórie</h2>
+        <a href="#tricka">Tričká</a>
+        <a href="#bundy">Bundy</a>
+        <a href="#obuv">Obuv</a>
+        <a href="#opasky">Opasky</a>
+        <button class="dropdown-btn">Bundy
+            <i class="fa fa-caret-down">FAFSFAS</i>
+        </button>
+        <div class="dropdown-container">
+            <a href="#">Všetky</a>
+            <a href="#">Bundy na zimu</a>
+            <a href="#">Bundy na leto</a>
+            <a href="#">Bundy s kapucou</a>
+        </div>
+    </div>
+
     <div class="collection">
         {% for item in data %}
             <div class="product">
@@ -16,4 +35,25 @@
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 {% endblock %}

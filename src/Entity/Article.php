@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Category;
+
 
 /**
  * Article
@@ -50,9 +52,23 @@ class Article
     private $img;
 
     /**
-     * @return int
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="category")
      */
-    public function getId(): int
+    private $category;
+
+    public function getCategory(): ?self
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?self $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -65,67 +81,51 @@ class Article
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDesc(): string
+    public function getDesc(): ?string
     {
         return $this->desc;
     }
 
-    /**
-     * @param string $desc
-     */
-    public function setDesc(string $desc): void
+    public function setDesc(string $desc): self
     {
         $this->desc = $desc;
+
+        return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    /**
-     * @param float $price
-     */
-    public function setPrice(float $price): void
+    public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getImg(): string
+    public function getImg(): ?string
     {
         return $this->img;
     }
 
-    /**
-     * @param string $img
-     */
-    public function setImg(string $img): void
+    public function setImg(string $img): self
     {
         $this->img = $img;
+
+        return $this;
     }
 }

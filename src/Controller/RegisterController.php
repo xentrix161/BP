@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Form\RegisterType;
@@ -19,8 +20,11 @@ class RegisterController extends AbstractController
     }
 
     //HOTOVO
+
     /**
      * @Route("/registerForm", name="register-form")
+     * @param Request $request
+     * @return Response
      */
     public function registerU(Request $request)
     {
@@ -33,17 +37,22 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //ulozenie do DB
 
-//            $user->setPassword(
-//                $passwordEncoder
-//            );
 
-            $em->persist($user);
-            $em->flush();
 
-            $this->addFlash(
-                'info',
-                'Užívateľ bol zaregistrovaný!'
-            );
+            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
+            if ($pom == null) {
+                $em->persist($user);
+                $em->flush();
+                $this->addFlash(
+                    'info',
+                    'Užívateľ bol zaregistrovaný!'
+                );
+            } else {
+                $this->addFlash(
+                    'info',
+                    'Email sa už používa!'
+                );
+            }
         }
 
         return $this->render('form/index.html.twig', [
@@ -53,6 +62,7 @@ class RegisterController extends AbstractController
 
     /**
      * @Route("/formCout", name="formCout")
+     * @param Request $request
      */
     public function showUserTable(Request $request)
     {
