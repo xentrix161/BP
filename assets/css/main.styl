@@ -77,3 +77,63 @@ input[type="text"], input[type="password"], textarea, select, button
   appearance none
   &:focus
     outline none
+
+
+.rate {
+  float: left;
+  height: 46px;
+  padding: 0 10px;
+}
+.rate:not(:checked) > input {
+  position:absolute;
+  top:-9999px;
+}
+.rate:not(:checked) > label {
+  float:right;
+  width:1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:30px;
+  color:#ccc;
+}
+.rate:not(:checked) > label:before {
+  content: '★ ';
+}
+.rate > input:checked ~ label {
+  color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08;
+}
+
+
+
+/* Add a black background color to the top navigation */
+.topnav
+  background-color black
+  overflow hidden
+  a
+    float left
+    color yellow
+    text-align center
+    padding 14px 16px
+    text-decoration none
+    font-size 17px
+    &.active
+      background-color #111111
+      color yellow
+    &:hover
+      background-color grey
+      color yellow
+
+
+
