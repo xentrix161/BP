@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -22,9 +23,11 @@ class HomepageController extends AbstractController
     public function index(): Response
     {
         $allArticles = $this->getArticleList();
+        $allCategories = $this->getCategoryList();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
-            'data' => $allArticles
+            'data' => $allArticles,
+            'categories' => $allCategories
         ]);
     }
 
@@ -33,5 +36,12 @@ class HomepageController extends AbstractController
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
         return $articlesFromDB->findAll();
+    }
+
+    public function getCategoryList()
+    {
+        $categoriesFromDB = $this->getDoctrine()
+            ->getRepository(Category::class);
+        return $categoriesFromDB->findAll();
     }
 }
