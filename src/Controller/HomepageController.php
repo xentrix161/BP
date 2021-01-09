@@ -17,7 +17,7 @@ class HomepageController extends AbstractController
 {
 //HOMEPAGE
     /**
-     * @Route("/homepage")
+     * @Route("/homepage", name="app_homepage")
      * @return Response
      */
     public function index(): Response

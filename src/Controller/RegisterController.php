@@ -10,6 +10,7 @@ use App\Form\RegisterType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 class RegisterController extends AbstractController
 {
     private $passwordEncoder;
@@ -36,23 +37,22 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             //ulozenie do DB
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
 
-
-
-            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
-            if ($pom == null) {
+//            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
+//            if ($pom == null) {
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash(
                     'info',
                     'Užívateľ bol zaregistrovaný!'
                 );
-            } else {
-                $this->addFlash(
-                    'info',
-                    'Email sa už používa!'
-                );
-            }
+//            } else {
+//                $this->addFlash(
+//                    'info',
+//                    'Email sa už používa!'
+//                );
+//            }
         }
 
         return $this->render('form/index.html.twig', [
