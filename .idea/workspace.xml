@@ -29,13 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="category bar + chyba v logine neopravena + zmena v articleDetail">
-      <change afterPath="$PROJECT_DIR$/assets/css/general/articlePanel_layout.styl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/css/general/rateStars_layout.styl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/categoryPanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/categoryPanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/topPanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/topPanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -237,7 +232,7 @@
       <workItem from="1609298920166" duration="4944000" />
       <workItem from="1609841201316" duration="8024000" />
       <workItem from="1609863346032" duration="9459000" />
-      <workItem from="1610214313562" duration="5234000" />
+      <workItem from="1610214313562" duration="6405000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -309,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609879044795</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="category bar + chyba v logine neopravena + zmena v articleDetail">
+      <created>1610219638886</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1610219638886</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
