@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 //class User implements UserInterface
 class User implements UserInterface
 {
+
     /**
      * @var int
      *
@@ -58,6 +59,11 @@ class User implements UserInterface
     private $password2;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private $role = [];
+
+    /**
      * @return string
      */
     public function getPassword2(): string
@@ -71,6 +77,22 @@ class User implements UserInterface
     public function setPassword2(string $password2): void
     {
         $this->password2 = $password2;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRole(): array
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param array $role
+     */
+    public function setRole(array $role): void
+    {
+        $this->role = $role;
     }
 
 
@@ -138,11 +160,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->role;
     }
 
     public function getSalt()
@@ -152,7 +170,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->name;
     }
 
     public function eraseCredentials()

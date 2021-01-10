@@ -35,7 +35,6 @@ class LoginController extends AbstractController
 //            );
             $email = $form["email"]->getData(); //mail z formulara
             $password = $form["password"]->getData(); //heslo z formulara
-
             $userFromDB = $this->getDoctrine() //uzivatel z DB podla mailu
                 ->getRepository(User::class)
                 ->findOneByEmail($email);

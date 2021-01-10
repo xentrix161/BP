@@ -28,15 +28,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="commit pred zmenou login formu">
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="login, bez admina">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20210109233710.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -240,7 +237,7 @@
       <workItem from="1609841201316" duration="8024000" />
       <workItem from="1609863346032" duration="9459000" />
       <workItem from="1610214313562" duration="6519000" />
-      <workItem from="1610228815883" duration="5562000" />
+      <workItem from="1610228815883" duration="8647000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -326,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610220788049</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="login, bez admina">
+      <created>1610234522000</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1610234522000</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,18 +381,19 @@
     <MESSAGE value="category bar + chyba v logine neopravena" />
     <MESSAGE value="category bar + chyba v logine neopravena + zmena v articleDetail" />
     <MESSAGE value="commit pred zmenou login formu" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit pred zmenou login formu" />
+    <MESSAGE value="login, bez admina" />
+    <option name="LAST_COMMIT_MESSAGE" value="login, bez admina" />
   </component>
   <component name="WindowStateProjectService">
     <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606087409443">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606087409443" />
-    <state x="703" y="153" key="#com.intellij.ide.util.MemberChooser" timestamp="1610230651273">
+    <state x="703" y="153" key="#com.intellij.ide.util.MemberChooser" timestamp="1610237179895">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="562" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605292781134" />
-    <state x="703" y="153" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1610230651273" />
+    <state x="703" y="153" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1610237179895" />
     <state x="518" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1609295421137">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

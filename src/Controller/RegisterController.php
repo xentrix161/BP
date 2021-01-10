@@ -41,6 +41,7 @@ class RegisterController extends AbstractController
 
 //            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
 //            if ($pom == null) {
+                $user->setRole(['ROLE_USER']);
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash(
