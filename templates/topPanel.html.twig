@@ -23,12 +23,30 @@
                     <input class="input-search" type="text" placeholder="Hľadaj v e-shope...">
                 </label>
             </li>
-            <li>
-                <a href="http://127.0.0.1:8000/loginForm" class="button">Prihlásiť</a>
-            </li>
-            <li>
-                <a href="http://127.0.0.1:8000/registerForm" class="button">Registrovať</a>
-            </li>
+
+{#            {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li>
+                    <label>{{ app.user.username|default('undefined') }}</label>
+                </li>
+                <li>
+                    <label href="">Košík</label>
+                </li>
+                <li>
+                    <label>Suma 0.0 €</label>
+                </li>
+                <li>
+                    <a href="{{ path('app_logout') }}">Odhlásiť</a>
+                </li>
+
+            {% else %}
+                <li>
+                    <a href="http://127.0.0.1:8000/login" class="button">Prihlásiť</a>
+                </li>
+                <li>
+                    <a href="http://127.0.0.1:8000/registerForm" class="button">Registrovať</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 
