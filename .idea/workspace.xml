@@ -28,25 +28,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="upravene CSS na login, vidno login usera, MAILER a reset hesla cez mail, funkcne">
-      <change afterPath="$PROJECT_DIR$/src/Controller/ShoppingCartController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/ajax.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/shopping_cart/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/BP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BP.iml" afterDir="false" />
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="vytvoreny shoppCart control">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/articlePanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/articlePanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/article_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/article_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/categoryPanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/categoryPanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/crude_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/crude_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/form_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/form_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/LoginFormAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/LoginFormAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +237,7 @@
       <workItem from="1610299066876" duration="13405000" />
       <workItem from="1610382286595" duration="9110000" />
       <workItem from="1610473313330" duration="11782000" />
-      <workItem from="1610630433987" duration="3227000" />
+      <workItem from="1610630433987" duration="3605000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -368,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610318477286</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="vytvoreny shoppCart control">
+      <created>1610634526981</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1610634526981</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,7 +412,8 @@
     <MESSAGE value="login, bez admina" />
     <MESSAGE value="login, admin, pristup len cez admina do CRUDE" />
     <MESSAGE value="upravene CSS na login, vidno login usera, MAILER a reset hesla cez mail, funkcne" />
-    <option name="LAST_COMMIT_MESSAGE" value="upravene CSS na login, vidno login usera, MAILER a reset hesla cez mail, funkcne" />
+    <MESSAGE value="vytvoreny shoppCart control" />
+    <option name="LAST_COMMIT_MESSAGE" value="vytvoreny shoppCart control" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Intentions" timestamp="1610474774785">
@@ -468,10 +459,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="561" y="135" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1602260189693" />
-    <state x="775" y="240" key="RollbackChangesDialog" timestamp="1609275213839">
+    <state x="775" y="240" key="RollbackChangesDialog" timestamp="1610634879335">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="775" y="240" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609275213839" />
+    <state x="775" y="240" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1610634879335" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1605483155416">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
