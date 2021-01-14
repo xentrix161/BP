@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +28,33 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'users' => $users,
         ]);
+    }
+
+
+    /**
+     * @Route("/ajax", name="ajax")
+     * @return Response
+     */
+    public function ajaxAction(Request $request): Response
+    {
+        $usersFromDB = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+            $jsonData = array();
+            $index = 0;
+            foreach($usersFromDB as $user) {
+                $temp = array(
+                    'Meno' => $user->getName(),
+                    'Email' => $user->getEmail()
+                );
+                $jsonData[$index++] = $temp;
+            }
+            return new JsonResponse($jsonData);
+        } else {
+            return $this->render('ajax.html.twig');
+        }
     }
 
     /**

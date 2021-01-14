@@ -1,0 +1,47 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block javascripts %}
+    <script language = "javascript"
+            src = "https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+    <script language = "javascript">
+        $(document).ready(function(){
+            $("#loadstudent").on("click", function(event){
+                $.ajax({
+                    url:        '/admin/user/ajax',
+                    type:       'POST',
+                    dataType:   'json',
+                    async:      true,
+
+                    success: function(data, status) {
+                        var e = $('<tr><th>Meno</th><th>Email</th></tr>');
+                        $('#student').html('');
+                        $('#student').append(e);
+
+                        for(var i = 0; i < data.length; i++) {
+                            var student = data[i];
+                            var e = $('<tr><td id = "Meno"></td><td id = "Email"></td></tr>');
+
+                            $('#Meno', e).html(student['Meno']);
+                            $('#Email', e).html(student['Email']);
+                            $('#student').append(e);
+                        }
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block body %}
+    <a id = "loadstudent" href = "#">Zobraz userov</a>
+    </br>
+    </br>
+
+    <table class = "table">
+        <tbody id = "student"></tbody>
+    </table>
+{% endblock %}
