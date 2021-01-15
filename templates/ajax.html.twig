@@ -1,11 +1,8 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block javascripts %}
-    <script language = "javascript"
-            src = "https://code.jquery.com/jquery-2.2.4.min.js"></script>
-
-    <script language = "javascript">
+    <script>
         $(document).ready(function(){
-            $("#loadstudent").on("click", function(event){
+            $("#loaduser").on("click", function(event){
                 $.ajax({
                     url:        '/admin/user/ajax',
                     type:       'POST',
@@ -13,19 +10,20 @@
                     async:      true,
 
                     success: function(data, status) {
-                        var e = $('<tr><th>Meno</th><th>Email</th></tr>');
-                        $('#student').html('');
-                        $('#student').append(e);
+                        var tableRowHeader = $('<tr><th>Meno</th><th>Email</th></tr>');
+                        var userElement = $('#user');
+                        userElement.html('');
+                        userElement.append(tableRowHeader);
 
-                        for(var i = 0; i < data.length; i++) {
-                            var student = data[i];
-                            var e = $('<tr><td id = "Meno"></td><td id = "Email"></td></tr>');
+                        data.forEach(function (user){
+                            var tableRow = $('<tr><td id="Meno"></td><td id="Email"></td></tr>');
 
-                            $('#Meno', e).html(student['Meno']);
-                            $('#Email', e).html(student['Email']);
-                            $('#student').append(e);
-                        }
+                            $('#Meno', tableRow).html(user['Meno']);
+                            $('#Email', tableRow).html(user['Email']);
+                            userElement.append(tableRow);
+                        });
                     },
+
                     error : function(xhr, textStatus, errorThrown) {
                         alert('Ajax request failed.');
                     }
@@ -37,11 +35,11 @@
 
 
 {% block body %}
-    <a id = "loadstudent" href = "#">Zobraz userov</a>
+    <a id = "loaduser" href = "#">Zobraz userov</a>
     </br>
     </br>
 
     <table class = "table">
-        <tbody id = "student"></tbody>
+        <tbody id = "user"></tbody>
     </table>
 {% endblock %}

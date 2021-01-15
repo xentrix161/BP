@@ -40,8 +40,6 @@
     </div>
 {% endblock %}
 
-
-
 {% block javascripts %}
     <script>
         function closeCategoryPanelBySize(x) {
@@ -58,8 +56,8 @@
 
 
         function openCategoryPanel() {
-            document.getElementById("categorPanel").style.width = "15.6em";
-            document.getElementById("main").style.marginLeft = "15.6em";
+            document.getElementById("categorPanel").style.width = "14em";
+            document.getElementById("main").style.marginLeft = "14em";
             document.getElementById("ponuka").style.display = "none";
             document.getElementById("dateDisplay").style.display = "block";
             document.getElementById("timeDisplay").style.display = "block";
@@ -95,17 +93,12 @@
             //Dátum
             var date = new Date();
             var year = date.getFullYear();
-                if (year < 1000) {
-                    year += 1900;
-                }
             var dayInWeek = date.getDay();
             var month = date.getMonth();
             var dayInMonth = date.getDate();
             var days = ["Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"];
-
             var months = ["Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September",
-                 "Október","November", "December"];
-
+                "Október","November", "December"];
             //Čas
             var time = new Date();
             var hours = time.getHours();
@@ -139,3 +132,4 @@
         actualTime();
     </script>
 {% endblock %}
+

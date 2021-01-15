@@ -43,13 +43,12 @@ class UserController extends AbstractController
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             $jsonData = array();
-            $index = 0;
             foreach($usersFromDB as $user) {
                 $temp = array(
                     'Meno' => $user->getName(),
                     'Email' => $user->getEmail()
                 );
-                $jsonData[$index++] = $temp;
+                array_push($jsonData, $temp);
             }
             return new JsonResponse($jsonData);
         } else {

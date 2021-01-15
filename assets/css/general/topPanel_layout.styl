@@ -6,10 +6,14 @@
   max-width 960px
   margin auto
   border 1px yellow solid
+  z-index 1
 
   //plati pre childov top-panel
   .navigation, .form-buttons
     buttonWidth = 20px
+    // > iba priamy potomok, ostatne nie
+    .navigation-hover
+      display none
     >li
       display inline-block
       >a
@@ -31,6 +35,29 @@
           cursor pointer
           top 50%
           transform translateY(-50%)
+
+@media screen and (max-width: 780px)
+  .top-panel
+   .navigation
+     position absolute
+     &:hover
+       //vsetky elementy v danej urovni
+       >li
+         display block
+     >li
+       color yellow
+       background-color black
+       display none
+       padding 0.5rem
+       a
+        background-color black
+     .navigation-hover
+       display block
+
+
+
+
+
 
 //ampersand logika
 //.class-fix-red

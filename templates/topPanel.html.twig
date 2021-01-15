@@ -1,5 +1,8 @@
     <div class="top-panel clear-fix">
         <ul class="navigation float-left">
+            <li class="navigation-hover">
+                Menu
+            </li>
             <li>
                 <a href="http://127.0.0.1:8000/homepage">Domov</a>
             </li>
@@ -24,16 +27,13 @@
                 </label>
             </li>
 
-{#            {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+            {% set sesionName = app.user.username|default('undefined') %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li>
-                    <label>{{ app.user.username|default('undefined') }}</label>
+                    <label>{{ app.user.name|default('undefined') }}</label>
                 </li>
                 <li>
-                    <label href="">Košík</label>
-                </li>
-                <li>
-                    <label>Suma 0.0 €</label>
+                    <a id="item-counter" href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
                 </li>
                 <li>
                     <a href="{{ path('app_logout') }}">Odhlásiť</a>

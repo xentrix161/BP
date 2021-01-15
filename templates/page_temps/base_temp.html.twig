@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
 {#  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
 {#   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.styl') }}">#}
+{#    <link rel="script" type="text/javascript" href="{{ asset('assets/js/base.js') }}">#}
+{#    <link rel="script" type="text/javascript" href="assets/js/base.js">#}
+        <link rel="script" type="text/javascript" href="{{ asset('assets/js/base.js') }}">
+
     <title>
         {% block title %}
             pAnk st0re! - Domov
         {% endblock %}
     </title>
+    <script language = "javascript"
+            src = "https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hakenkreuz_im_Verbotsschild.svg/900px-Hakenkreuz_im_Verbotsschild.svg.png">
 
@@ -21,6 +27,8 @@
 {% include "topPanel.html.twig" %}
 {% block body %}{% endblock %}
 {% block layout_content %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('homepage') }}
+{% endblock %}
 </body>
 </html>
