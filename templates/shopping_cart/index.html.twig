@@ -1,20 +1,32 @@
-<!DOCTYPE html>
-
-<title>Hello ShoppingCartController!</title>
+{% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="shopping-cart">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/filip/Desktop/BP/src/Controller/ShoppingCartController.php'|file_link(0) }}">src/Controller/ShoppingCartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/filip/Desktop/BP/templates/shopping_cart/index.html.twig'|file_link(0) }}">templates/shopping_cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <div>
+            <a class="far fa-times-circle"></a>
+        </div>
+        <div class="delete-item" > Delete-item</div>
+        <div class="image"> Image</div>
+        <div class="title"> Title</div>
+
+        <div class="buttons">
+            <span class="plus"> Plus</span>
+            <span class="count"> Count</span>
+            <span class="minus"> Minus</span>
+        </div>
+        <span class="price"> Cena</span>
+
+
+        <div class="clear"> clear cart</div>
+
+    </div>
+
 {% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+

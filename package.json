@@ -1,7 +1,9 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+
+  },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.31.0",
     "stylus": "^0.54.5",
