@@ -1,21 +1,21 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block javascripts %}
     <script>
-        $(document).ready(function(){
-            $("#loaduser").on("click", function(event){
+        $(document).ready(function () {
+            $("#loaduser").on("click", function (event) {
                 $.ajax({
-                    url:        '/admin/user/ajax',
-                    type:       'POST',
-                    dataType:   'json',
-                    async:      true,
+                    url: '/admin/user/ajax',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: true,
 
-                    success: function(data, status) {
+                    success: function (data, status) {
                         var tableRowHeader = $('<tr><th>Meno</th><th>Email</th></tr>');
                         var userElement = $('#user');
                         userElement.html('');
                         userElement.append(tableRowHeader);
 
-                        data.forEach(function (user){
+                        data.forEach(function (user) {
                             var tableRow = $('<tr><td id="Meno"></td><td id="Email"></td></tr>');
 
                             $('#Meno', tableRow).html(user['Meno']);
@@ -24,7 +24,7 @@
                         });
                     },
 
-                    error : function(xhr, textStatus, errorThrown) {
+                    error: function (xhr, textStatus, errorThrown) {
                         alert('Ajax request failed.');
                     }
                 });
@@ -35,11 +35,11 @@
 
 
 {% block body %}
-    <a id = "loaduser" href = "#">Zobraz userov</a>
+    <a id="loaduser" href="#">Zobraz userov</a>
     </br>
     </br>
 
-    <table class = "table">
-        <tbody id = "user"></tbody>
+    <table class="table">
+        <tbody id="user"></tbody>
     </table>
 {% endblock %}

@@ -51,6 +51,15 @@ class Article
      */
     private $img;
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="category_id", type="integer", nullable=true)
+     */
+    private $category_id;
+
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="category")
      */
@@ -128,4 +137,22 @@ class Article
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param int $category_id
+     */
+    public function setCategoryId(int $category_id): void
+    {
+        $this->category_id = $category_id;
+    }
+
+
 }

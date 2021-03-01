@@ -61,7 +61,6 @@ class Category
             $this->article[] = $article;
             $article->setCategory($this);
         }
-
         return $this;
     }
 
@@ -74,7 +73,6 @@ class Category
                 $article->setCategory(null);
             }
         }
-
         return $this;
     }
 

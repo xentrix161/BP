@@ -1,136 +1,85 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-    <div class="detail clear-fix">
-        <div class="image-wrapper float-left">
-            <div class="image-container">
-                <img src="{{ data.img }}" alt="">
-            </div>
+    <div class="container-article">
+        <div class="image-container">
+            <img src="{{ data.img }}" alt="">
         </div>
 
-        <div class="info-wrapper float-right">
-            <h1 class="headline">{{ data.title }}</h1>
-            <p class="description">{{ data.desc }}</p>
-
-            <div class="price-wrapper">
+        <div class="container-description">
+            <div>
+                <h1 class="headline">{{ data.title }}</h1>
+            </div>
+            <div class="des">
+                <p class="des">{{ data.desc }}</p>
+            </div>
+            <div>
                 <div class="price">
-                    {{ data.price |number_format(2, '.', ',')}} €
+                    {{ data.price |number_format(2, '.', ',') }} €
                 </div>
-
                 <div class="cart">
-                    <button class="btn" id="add-cart-btn" data-id="{{ data.id }}" title="Pridať do košíka"></button>
-                    <button class="btn" id="delete-cart-btn" data-id="{{ data.id }}" title="Vymazať z košíka"></button>
+                    <button class="btn add-cart-btn" data-id="{{ data.id }}" title="Pridať do košíka"></button>
+                    <button class="btn delete-cart-btn" data-id="{{ data.id }}" title="Vymazať z košíka"></button>
                 </div>
             </div>
-
             <div class="rate-wrapper">
                 <h1>Ohodnoť tovar</h1>
                 <div class="rate">
-                    <input type="radio" id="star5" name="rate" value="5" />
+                    <input type="radio" id="star5" name="rate" value="5"/>
                     <label for="star5" title="text">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4" />
+                    <input type="radio" id="star4" name="rate" value="4"/>
                     <label for="star4" title="text">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3" />
+                    <input type="radio" id="star3" name="rate" value="3"/>
                     <label for="star3" title="text">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2" />
+                    <input type="radio" id="star2" name="rate" value="2"/>
                     <label for="star2" title="text">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1" />
+                    <input type="radio" id="star1" name="rate" value="1"/>
                     <label for="star1" title="text">1 star</label>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        //lexikalny uzaver, scope
-        (function (){
-            function SendAndLoad(){
-                this.ajax = function (url, callback){
-                    $.ajax({
-                        url:        url,
-                        type:       'GET',
-                        dataType:   'json',
-                        async:      true,
-
-                        success: function(data, status) {
-                            try {
-                                callback(data, status);
-                            } catch (e){}
-                        },
-                        error : function(xhr, textStatus, errorThrown) {
-                            alert('Ajax request failed.');
-                        }
-                    });
-                }
-                this.addToCart = function (id, callback) {
-                    this.ajax("/shoppingcart/add/" + id, callback);
-                }
-
-                this.deleteFromCart = function (id, callback) {
-                    this.ajax("/shoppingcart/delete/" + id, callback);
-                }
-
-                this.getCartItems = function (callback) {
-                    this.ajax("/shoppingcart/get", callback);
-                }
-            }
-
-            function Cart(){
-                //trieda
-                //var = private, this. = public
-                var addButton = null;
-                var deleteButton = null;
 
 
-                var click = function (){
-                    if (addButton != null) {
-                        addButton.addEventListener("click", function (evt){
-                            evt.preventDefault();
-                            addItem(addButton.getAttribute("data-id"));
-                        })
-                    }
+    {# <div class="detail clear-fix"> #}
+    {# <div class="image-wrapper float-left"> #}
+    {# <div class="image-container"> #}
+    {# <img src="{{ data.img }}" alt=""> #}
+    {# </div> #}
+    {# </div> #}
 
-                    if (deleteButton != null) {
-                        deleteButton.addEventListener("click", function (evt){
-                            evt.preventDefault();
-                            deleteItem(deleteButton.getAttribute("data-id"));
-                        })
-                    }
+    {# <div class="info-wrapper float-right"> #}
+    {# <h1 class="headline">{{ data.title }}</h1> #}
+    {# <p class="description">{{ data.desc }}</p> #}
 
-                }
+    {# <div class="price-wrapper"> #}
+    {# <div class="price"> #}
+    {# {{ data.price |number_format(2, '.', ',')}} € #}
+    {# </div> #}
 
-                var addItem = function (id){
-                    sendAndLoad.addToCart(id, function(data, status) {
-                        console.log(data, status);
-                        document.querySelector("#item-counter span").textContent = data.length;
-                    })
-                }
+    {# <div class="cart"> #}
+    {# <button class="btn" id="add-cart-btn" data-id="{{ data.id }}" title="Pridať do košíka"></button> #}
+    {# <button class="btn" id="delete-cart-btn" data-id="{{ data.id }}" title="Vymazať z košíka"></button> #}
+    {# </div> #}
+    {# </div> #}
 
-                var deleteItem = function (id) {
-                    sendAndLoad.deleteFromCart(id, function (data, status) {
-                        console.log(data, status);
-                        var len = data.length;
-                        document.querySelector("#item-counter span").textContent = len ? len : 0;
-                    })
-                }
-                //ako konstruktor
-                this.init = function (){
-                    //button = document.querySelector("#cart-btn");
-                    addButton = document.getElementById("add-cart-btn");
-                    deleteButton = document.getElementById("delete-cart-btn");
-                    click();
-                }
-            }
-
-
-            //po nacitani stranky
-            (new Cart()).init();
-            var sendAndLoad = new SendAndLoad();
-        })()
-
-    </script>
+    {# <div class="rate-wrapper"> #}
+    {# <h1>Ohodnoť tovar</h1> #}
+    {# <div class="rate"> #}
+    {# <input type="radio" id="star5" name="rate" value="5" /> #}
+    {# <label for="star5" title="text">5 stars</label> #}
+    {# <input type="radio" id="star4" name="rate" value="4" /> #}
+    {# <label for="star4" title="text">4 stars</label> #}
+    {# <input type="radio" id="star3" name="rate" value="3" /> #}
+    {# <label for="star3" title="text">3 stars</label> #}
+    {# <input type="radio" id="star2" name="rate" value="2" /> #}
+    {# <label for="star2" title="text">2 stars</label> #}
+    {# <input type="radio" id="star1" name="rate" value="1" /> #}
+    {# <label for="star1" title="text">1 star</label> #}
+    {# </div> #}
+    {# </div> #}
+    {# </div> #}
+    {# </div> #}
 {% endblock %}
 
 

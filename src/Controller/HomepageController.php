@@ -31,6 +31,28 @@ class HomepageController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/homepage/category/{id}", name="app_homepage_category")
+     * @param $id
+     */
+    public function categoryIndex($id)
+    {
+        $allArticles = $this->getArticlesByCategoryId($id);
+        $allCategories = $this->getCategoryList();
+        return $this->render('homepage.html.twig', [
+            'controller_name' => 'HomepageController',
+            'data' => $allArticles,
+            'categories' => $allCategories
+        ]);
+    }
+
+    public function getArticlesByCategoryId($categoryId)
+    {
+        $articlesFromDB = $this->getDoctrine()
+            ->getRepository(Article::class);
+        return $articlesFromDB->findBy(["category_id" => $categoryId]);
+    }
+
     public function getArticleList()
     {
         $articlesFromDB = $this->getDoctrine()
@@ -43,5 +65,18 @@ class HomepageController extends AbstractController
         $categoriesFromDB = $this->getDoctrine()
             ->getRepository(Category::class);
         return $categoriesFromDB->findAll();
+    }
+
+    public function getCombineList()
+    {
+        $articlesFromDB = $this->getDoctrine()
+            ->getRepository(Article::class);
+        $all = $articlesFromDB->findAll();
+
+        foreach ($all as $item) {
+            $item->getCategoryId();
+        }
+//        $categoriesFromDB = $this->getDoctrine()
+//            ->getRepository(Category::class);
     }
 }

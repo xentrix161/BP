@@ -43,7 +43,7 @@ class UserController extends AbstractController
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             $jsonData = array();
-            foreach($usersFromDB as $user) {
+            foreach ($usersFromDB as $user) {
                 $temp = array(
                     'Meno' => $user->getName(),
                     'Email' => $user->getEmail()
@@ -125,7 +125,7 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();

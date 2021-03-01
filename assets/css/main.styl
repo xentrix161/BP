@@ -6,6 +6,7 @@
 @import "general/categoryPanel_layout.styl"
 @import "general/rateStars_layout.styl"
 @import "general/articlePanel_layout.styl"
+@import "general/shopping_cart_layout.styl"
 
 //kvoli rem
 :root {
@@ -13,7 +14,7 @@
 }
 
 html, body {
-  color black
+  color yellow
   font-size 1rem
   font-family 'Arial'
   background-color black
@@ -80,5 +81,20 @@ input[type="text"], input[type="password"], textarea, select, button
   &:focus
     outline none
 
+.button
+  color black
+  font-weight bold
+  background-color yellow
+  padding 5px 15px
+  display inline-block
+  text-align center
+  text-decoration none
+  border 2px solid grey
+  &:hover
+    color black
+    border-color white
+    text-decoration none
 
+.hide
+  display none
 

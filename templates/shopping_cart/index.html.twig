@@ -1,32 +1,54 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
+    <div class="shopping-cart-wrapper">
+        <h1 class="title">Nákupný košík</h1>
 
-    <div class="shopping-cart">
+        {% set class=isCartEmpty ? "hide" : "" %}
+        {% set infoClass=isCartEmpty ? "" : "hide" %}
 
-        <div>
-            <a class="far fa-times-circle"></a>
+        <h2 class="cart-visibility-switch empty-cart-info {{ infoClass }}">Váš košík je prázdny</h2>
+
+        {% for item in items %}
+            <div class="shopping-cart-row">
+                <div class="image">
+                    <a href="{{ url('produkt', {'id': item.id}) }}">
+                        <img src="{{ item.img }}" alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="{{ url('produkt', {'id': item.id}) }}">
+                        {{ item.title }}
+                    </a>
+                </div>
+
+                <div class="buttons">
+                    <span class="fas fa-minus-square delete-cart-btn" data-id="{{ item.id }}"></span>
+                    <span class="count" data-price="{{ item.price }}">
+                    <span>
+                        {{ count[item.id] }}
+                    </span>
+                </span>
+                    <span class="fas fa-plus-square add-cart-btn" data-id="{{ item.id }}"></span>
+                </div>
+                <span class="price"> {{ (item.price*count[item.id]) | number_format(2, '.', ',') }}€ </span>
+                <div>
+                    <a class="far fa-times-circle delete-item" href="#" data-id="{{ item.id }}"> Vymaž položku</a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="cart-visibility-switch {{ class }}">
+            <div class="total-price-container">
+                <span>Celková suma: <span id="total">{{ totalPrice | number_format(2, '.', ',') }}</span>€</span>
+            </div>
+            <a class="clear" id="cart-clear" href="#">Vymaž celý košík</a>
+
+            <div class="btn-next">
+                <a class="button" href="#">Pokračovať ku pokladni</a>
+            </div>
         </div>
-        <div class="delete-item" > Delete-item</div>
-        <div class="image"> Image</div>
-        <div class="title"> Title</div>
-
-        <div class="buttons">
-            <span class="plus"> Plus</span>
-            <span class="count"> Count</span>
-            <span class="minus"> Minus</span>
-        </div>
-        <span class="price"> Cena</span>
-
-
-        <div class="clear"> clear cart</div>
-
     </div>
-
-{% endblock %}
-
-{% block javascripts %}
-
 {% endblock %}
 
 
