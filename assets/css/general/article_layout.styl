@@ -1,19 +1,32 @@
-.container-article {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows 50vw
-  grid-gap 30px
+.container-article
+  display grid
+  grid-template-columns 50% 50%
+  grid-template-rows 110%
   max-width 960px
   margin auto
   margin-top 20px
-}
 
-.container-description {
+
+.container-description
   display grid
   grid-template-columns 100%
   grid-template-rows 20% 35% 15% 30%
-}
+  padding-left 15px
 
+  .headline
+    font-size 3em
+    color yellow
+
+  .des
+    color white
+    font-size 1.25em
+    margin 1em 0 2em 0
+
+  .price
+    font-size 2.5em
+    font-weight bold
+    display inline-block
+    color yellow
 
 .cart
   display inline-block
@@ -25,95 +38,65 @@
     padding 2em
     vertical-align: super
 
-.detail
-  max-width 960px
-  margin 5em auto 0 auto
-  position relative
+@media screen and (max-width: 968px) {
+  .container-article {
 
-  .image-wrapper
-    width 50%
-
-  .info-wrapper
-    width 50%
-    color white
-    padding-left 1em
-
-    .rate-wrapper
-      position absolute
-      bottom 0
-
-      h1
-        text-align center
-        font-size 1.75em
-
-    .headline
-      font-size 3em
-      color yellow
-
-    .description
-      font-size 1.25em
-      margin 1em 0 2em 0
-
-    .price-wrapper
+  }
+  .container-description {
+    .headline {
       font-size 2.5em
-
-      .price
-        font-weight bold
-        display inline-block
-        color yellow
-
-      .cart
-        display inline-block
-
-        button
-          background black url("../images/cart2.png") center center no-repeat
-          background-size contain
-          cursor pointer
-          padding 2em
-          vertical-align: super
-
-  h1
-    font-size 1em
-    line-height .75
+    }
+    .des {
+      font-size 1em
+    }
+    .price {
+      font-size 2.1em
+    }
+  }
+}
 
 @media screen and (max-width: 700px) {
   .container-article {
-    grid-template-columns 100%
-    grid-template-rows 100vw
-    grid-row-start 1
-    grid-row-end 1
+    display block
   }
-}
-
-@media screen and (max-width: 576px) {
-  .detail {
-    margin 0
-
-    .image-wrapper, .info-wrapper {
-      float none
-      width 100%
-      padding .5em
-
-      .rate-wrapper {
-        position static
-        width 45%
-        display inline-block
-        margin-left 35px
-
-        h1 {
-          display none
-        }
-      }
+  .container-description {
+    padding 15px
+    .headline {
+      text-align center
+      font-size 3em
     }
-
-    .info-wrapper {
-      margin-top 15px
-
-      .price-wrapper {
-        width 45%
-        display inline-block
-        margin-left 5px
-      }
+    .des {
+      text-align center
+      font-size 1.25em
+    }
+    .price {
+      font-size 2.5em
     }
   }
 }
+
+
+//
+//@media screen and (max-width: 576px) {
+//  .detail {
+//    margin 0
+//
+//    .image-wrapper, .info-wrapper {
+//      float none
+//      width 100%
+//      padding .5em
+//
+//      .rate-wrapper {
+//        position static
+//        width 45%
+//        display inline-block
+//        margin-left 35px
+//
+//        h1 {
+//          display none
+//        }
+//      }
+//    }
+//  }
+//}
+
