@@ -28,36 +28,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="priprava na kosik, pred gridom na article">
-      <change afterPath="$PROJECT_DIR$/assets/css/general/shopping_cart_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/articlePanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/articlePanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/article_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/article_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/categoryPanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/categoryPanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/crude_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/crude_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/form_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/form_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/general/topPanel_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/topPanel_layout.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/main.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/main.styl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/base.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ShoppingCartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ShoppingCartController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Article.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ajax.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ajax.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/articleDetail.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/articleDetail.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page_temps/base_temp.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/check_email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/check_email.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shopping_cart/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shopping_cart/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topPanel.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topPanel.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="košik rdy, category panel funkcnost rdy, idea gitignore" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
