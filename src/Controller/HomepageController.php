@@ -17,6 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
 //HOMEPAGE
+    private $limitArticlesPerPage = 1;
+
     /**
      * @Route("/homepage/{pageNumber}", name="app_homepage")
      * @param $pageNumber
@@ -24,15 +26,18 @@ class HomepageController extends AbstractController
      */
     public function index($pageNumber = 1): Response
     {
-        if (!is_numeric($pageNumber)) {
+        if (!is_numeric($pageNumber) || $pageNumber < 1) {
             $pageNumber = 1;
         }
         $allArticles = $this->getArticleList($pageNumber);
         $allCategories = $this->getCategoryList();
+        $totalPages = $this->generatePaginationBar($pageNumber);
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
-            'categories' => $allCategories
+            'categories' => $allCategories,
+            'totalPages' => $totalPages,
+            'pageNumber' => $pageNumber
         ]);
     }
 
@@ -52,11 +57,13 @@ class HomepageController extends AbstractController
         ]);
     }
 
-//    public function fsasfaf() {
-//        $query = $this->createQueryBuilder('p')
-//            ->orderBy('p.created', 'DESC')
-//            ->getQuery();
-//    }
+    public function generatePaginationBar($pageNumber)
+    {
+        $totalPages = $this->getTotalPages();
+//        $outputArray = [1, $pageNumber + 1, $pageNumber + 2, 0, $totalPages];
+        $outputArray = [1, 0, $pageNumber - 1, $pageNumber, $pageNumber + 1, 0, $totalPages];
+        return $outputArray;
+    }
 
     public function getArticlesByCategoryId($categoryId)
     {
@@ -67,13 +74,19 @@ class HomepageController extends AbstractController
 
     public function getArticleList($pageNumber = 1)
     {
-//        $paginator = new Paginator($query, $fetchJoinCollection = true);
-        $limit = 3;
-        $offset = ($pageNumber - 1) * $limit;
+        $offset = ($pageNumber - 1) * $this->limitArticlesPerPage;
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
-        return $articlesFromDB->findBy([], [], $limit, $offset);
-//        return $articlesFromDB->findAll();
+        return $articlesFromDB->findBy([], [], $this->limitArticlesPerPage, $offset);
+    }
+
+    public function getTotalPages()
+    {
+        $articlesFromDB = $this->getDoctrine()
+            ->getRepository(Article::class);
+        $all = $articlesFromDB->findAll();
+        $totalNumberOfArticles = count($all);
+        return ceil($totalNumberOfArticles / $this->limitArticlesPerPage);
     }
 
     public function getCategoryList()

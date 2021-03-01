@@ -28,7 +28,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="košik rdy, category panel funkcnost rdy, idea gitignore" />
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="košik rdy, category panel funkcnost rdy, idea gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/homepage_layout.styl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -384,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614444210571</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="košik rdy, category panel funkcnost rdy, idea gitignore">
+      <created>1614572593195</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1614572593195</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +453,8 @@
     <MESSAGE value="vytvoreny shoppCart control" />
     <MESSAGE value="ajax kosik, responzivita, ready na obhajobu" />
     <MESSAGE value="priprava na kosik, pred gridom na article" />
-    <option name="LAST_COMMIT_MESSAGE" value="priprava na kosik, pred gridom na article" />
+    <MESSAGE value="košik rdy, category panel funkcnost rdy, idea gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="košik rdy, category panel funkcnost rdy, idea gitignore" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Intentions" timestamp="1610474774785">
@@ -469,6 +482,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="540" y="254" key="IDE.errors.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1610482358458" />
+    <state x="751" y="242" key="NewPhpClassDialog" timestamp="1614573077518">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="751" y="242" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1614573077518" />
     <state x="775" y="240" key="RollbackChangesDialog" timestamp="1610634879335">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
