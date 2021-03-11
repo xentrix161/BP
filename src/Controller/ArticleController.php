@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/article")
+ * @Route("/article")
  */
 class ArticleController extends AbstractController
 {
@@ -36,21 +36,21 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/", name="article_index", methods={"GET"})
+     * @Route("/admin/", name="article_index", methods={"GET"})
      */
     public function index(): Response
     {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findAll();
-
+//        $articles = $this->getDoctrine()
+//            ->getRepository(Article::class)
+//            ->findAll();
+//        dump($articles);
         return $this->render('article/index.html.twig', [
-            'articles' => $articles,
+//            'articles' => $articles,
         ]);
     }
 
     /**
-     * @Route("/new", name="article_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="article_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -75,7 +75,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article_show", methods={"GET"})
+     * @Route("/admin/{id}", name="article_show", methods={"GET"})
      * @param Article $article
      * @return Response
      */
@@ -87,27 +87,30 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Article $article
+     * @return Response
      */
     public function edit(Request $request, Article $article): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('article_index');
-        }
-
+        dump($article);
+//        $form = $this->createForm(ArticleType::class, $article);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $this->getDoctrine()->getManager()->flush();
+//            return $this->redirectToRoute('article_index');
+////        }
+//
         return $this->render('article/edit.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+//            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="article_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="article_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Article $article): Response
     {

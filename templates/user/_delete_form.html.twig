@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Naozaj si želáte zmazať užívateľa?');">
+<form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Naozaj si želáte vymazať užívateľa?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-    <button class="btn">Delete</button>
+    <button class="btn">Vymazať</button>
 </form>

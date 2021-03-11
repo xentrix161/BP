@@ -1,12 +1,12 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Obnovenie hesla{% endblock %}
 
 {% block body %}
-    <h1>Reset your password</h1>
+    <h1>Obnovenie hesla</h1>
 
     {{ form_start(resetForm) }}
         {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
+        <button class="btn btn-primary">Obnov heslo</button>
     {{ form_end(resetForm) }}
 {% endblock %}

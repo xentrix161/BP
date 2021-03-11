@@ -17,7 +17,7 @@
 
 
     <div id="login">
-        <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Prihlásenie</h1>
         <div class="form-group">
             <label class="control-label required" for="inputEmail">Email</label>
             <input class="formInput form-control" placeholder="Zadaj svoj email" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
@@ -29,9 +29,9 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div class="checkbox mb-3">
-            <span for="remember_me">
+            <label>
                 <input type="checkbox" name="_remember_me" id="remember_me"> Zostať prihlásený
-            </span>
+            </label>
         </div>
         <div class="form-group">
             <a href="http://127.0.0.1:8000/reset-passwords">Zabudol som heslo</a>
@@ -39,7 +39,7 @@
 
         <div class="form-group">
             <button class="btn btn-form btn" type="submit">
-                Prihlásiť
+                Prihlásiť sa
             </button>
         </div>
     </div>

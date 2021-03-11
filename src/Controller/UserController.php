@@ -10,14 +10,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/admin/user")
+ * @Route("/user")
  */
 class UserController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
+
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/admin/", name="user_index", methods={"GET"})
      */
     public function index(): Response
     {
@@ -57,7 +66,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -69,6 +78,11 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
+
+//            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
+//            if ($pom == null) {
+            $user->setRole(['ROLE_USER']);
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -86,7 +100,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/admin/{id}", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response
     {
@@ -96,7 +110,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function edit(Request $request, User $user): Response
     {
@@ -104,6 +121,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash(
@@ -121,7 +139,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
     {

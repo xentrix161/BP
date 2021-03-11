@@ -1,14 +1,14 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
-    <h1>Category index</h1>
+    <h1>Category CRUDE - Category index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Názov</th>
                 <th>Slug</th>
-                <th>actions</th>
+                <th>Akcie</th>
             </tr>
         </thead>
         <tbody>
@@ -18,17 +18,17 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.slug }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('category_show', {'id': category.id}) }}">Zobraziť</a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}">Upraviť</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Žiadne položky na zobrazenie</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('category_new') }}">Create new</a>
+    <a href="{{ path('category_new') }}">Vytvoriť novú kategóriu</a>
 {% endblock %}

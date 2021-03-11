@@ -120,8 +120,9 @@ actualTime();
                 totalEl.textContent = bypassValue.toFixed(2);
                 return;
             }
-            var parent = totalEl.parentNode.parentNode.parentNode;
+            var parent = totalEl.parentNode.parentNode.parentNode.parentNode;
             var rowPriceList = parent.querySelectorAll(".shopping-cart-row .price");
+            console.log(rowPriceList);
             var total = 0;
             for (var i = 0; i < rowPriceList.length; i++) {
                 total += parseFloat(rowPriceList[i].innerText);
@@ -138,6 +139,7 @@ actualTime();
         }
 
         var click = function () {
+
             if (!!addButton && addButton.length > 0) {
                 for (var i = 0; i < addButton.length; i++) {
                     addButton[i].addEventListener("click", function (evt) { //prvy argument je pri com sa to vykona, a druha je callback, co sa vykona
@@ -235,7 +237,6 @@ actualTime();
 
         //ako konstruktor
         this.init = function () {
-            //button = document.querySelector("#cart-btn");
             addButton = document.querySelectorAll(".add-cart-btn");
             deleteButton = document.querySelectorAll(".delete-cart-btn");
             clearButton = document.querySelector("#cart-clear");

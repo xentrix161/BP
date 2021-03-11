@@ -1,6 +1,6 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
-{% block title %}Reset hesla{% endblock %}
+{% block title %}Obnovenie hesla{% endblock %}
 
 {% block body %}
     {% for flashError in app.flashes('reset_password_error') %}
@@ -10,16 +10,15 @@
 {#    {{ form_start(register_form, {'attr': {'id': 'custom_register_form',#}
 {#        'class': 'form-wrapper' }}) }}#}
     {{ form_start(requestForm, {'attr': {'class': 'form-wrapper'}}) }}
-    <h1 class="h3 mb-3 font-weight-normal">Reset your password</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Obnovenie hesla</h1>
 
         {{ form_row(requestForm.email) }}
     <div >
             <small>
-                Enter your email address and we we will send you a
-                link to reset your password.
+                Zadajte svoju e-mailovú adresu a my vám pošleme odkaz na obnovenie hesla.
             </small>
         </div>
 
-        <button class="btn btn-form">Send password reset email</button>
+        <button class="btn btn-form">Pošlite e-mail na obnovenie hesla</button>
     {{ form_end(requestForm) }}
 {% endblock %}

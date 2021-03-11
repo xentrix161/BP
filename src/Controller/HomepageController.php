@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
 //HOMEPAGE
-    private $limitArticlesPerPage = 1;
+    private $limitArticlesPerPage = 3;
 
     /**
      * @Route("/homepage/{pageNumber}", name="app_homepage")
@@ -46,14 +46,17 @@ class HomepageController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function categoryIndex($id)
+    public function categoryIndex($id, $pageNumber = 1)
     {
         $allArticles = $this->getArticlesByCategoryId($id);
         $allCategories = $this->getCategoryList();
+        $totalPages = $this->generatePaginationBar($pageNumber);
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
-            'categories' => $allCategories
+            'categories' => $allCategories,
+            'totalPages' => $totalPages,
+            'pageNumber' => $pageNumber
         ]);
     }
 

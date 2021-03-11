@@ -1,10 +1,9 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}E-mail na obnovu hesla bol odoslaný{% endblock %}
 
 {% block body %}
-    <p>An email has been sent that contains a link that you can click to reset your password. This link will expire
-        in {{ tokenLifetime|date('g') }} hour(s).</p>
-    <p>If you don't receive an email please check your spam folder or <a
-                href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    <p>Bol odoslaný e-mail s odkazom, na ktorý môžete kliknúť a nastaviť nové heslo. Platnosť tohto odkazu vyprší za {{ tokenLifetime|date('g') }} hodín.</p>
+    <p>Ak ste nedostali e-mail, skontrolujte priečinok so spamom alebo <a
+                href="{{ path('app_forgot_password_request') }}">skúste znovu</a>.</p>
 {% endblock %}

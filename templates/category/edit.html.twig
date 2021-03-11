@@ -1,10 +1,10 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
-    <h1>Edit Category</h1>
+    <h1>Upraviť kategóriu</h1>
 
     {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('category_index') }}">back to list</a>
+    <a href="{{ path('category_index') }}">Späť na zoznam</a>
 
     {{ include('category/_delete_form.html.twig') }}
 {% endblock %}

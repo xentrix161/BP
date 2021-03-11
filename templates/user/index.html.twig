@@ -2,7 +2,7 @@
 
 
 {% block body %}
-    <h1>User index</h1>
+    <h1>User CRUDE - User index</h1>
 
     {% for message in app.flashes('info') %}
     <div>
@@ -14,11 +14,12 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Surname</th>
+                <th>Meno</th>
+                <th>Priezvisko</th>
                 <th>Email</th>
-                <th>Password</th>
-                <th>actions</th>
+                <th>Heslo</th>
+                <th>Rola</th>
+                <th>Akcie</th>
             </tr>
         </thead>
         <tbody>
@@ -29,18 +30,19 @@
                 <td>{{ user.surname }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.password }}</td>
+                <td>{{ user.role|join(', ') }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">Zobraziť</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">Upraviť</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">Nenašli sa žiadne záznamy</td>
+                <td colspan="6">Žiadne položky na zobrazenie</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Vytvor nového užívateľa</a>
+    <a href="{{ path('user_new') }}">Vytvoriť nového užívateľa</a>
 {% endblock %}

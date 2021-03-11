@@ -1,11 +1,6 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
 
-    {% for message in app.flashes('info') %}
-        <div>
-            {{ message }}
-        </div>
-    {% endfor %}
 
 
     {{ form_start(register_form, {'attr': {'id': 'custom_register_form',
@@ -15,4 +10,10 @@
 
     {{ form_end(register_form) }}
 
+    {% for message in app.flashes('info') %}
+        <script>
+            var msg = "{{ message }}";
+            setTimeout(function (){alert(msg)}, 20);
+        </script>
+    {% endfor %}
 {% endblock %}

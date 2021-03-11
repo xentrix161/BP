@@ -1,10 +1,10 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
-    <h1>Edit Article</h1>
+    <h1>Upraviť article</h1>
 
     {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <a href="{{ path('article_index') }}">Späť na zoznam</a>
 
     {{ include('article/_delete_form.html.twig') }}
 {% endblock %}

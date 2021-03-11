@@ -20,34 +20,38 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('Name', TextType::class, [
+                'label' => 'Meno',
                 'attr' => [
-                    'placeholder' => 'Zadaj meno',
+                    'placeholder' => 'Zadajte meno',
                     'autofocus' => true,
-                    'class'=> 'formInput',
-                    'help' => 'The ZIP/Postal code for your credit card\'s billing address.'
+                    'class' => 'formInput',
                 ]
             ])
             ->add('surname', TextType::class, [
+                'label' => 'Priezvisko',
                 'attr' => [
-                    'placeholder' => 'Zadaj priezvisko',
+                    'placeholder' => 'Zadajte priezvisko',
                     'class'=> 'formInput'
                 ]
             ])
             ->add('email', EmailType::class, [
+                'label' => 'Email',
                 'attr' => [
-                    'placeholder' => 'Zadaj svoj email',
+                    'placeholder' => 'Zadajte svoj email',
                     'class'=> 'formInput'
                 ]
             ])
             ->add('password', PasswordType::class, [
+                'label' => 'Heslo',
                 'attr' => [
-                    'placeholder' => 'Zadaj heslo',
+                    'placeholder' => 'Zadajte heslo',
                     'class'=> 'formInput'
                 ]
             ])
             ->add('password2', PasswordType::class, [
+                'label' => 'Kontrolné heslo',
                 'attr' => [
-                    'placeholder' => 'Zadaj heslo znovu',
+                    'placeholder' => 'Zadajte heslo znovu',
                     'class'=> 'formInput',
                 ]
 
