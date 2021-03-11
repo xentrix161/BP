@@ -5,22 +5,22 @@
     <h1>User CRUDE - User index</h1>
 
     {% for message in app.flashes('info') %}
-    <div>
-        {{ message }}
-    </div>
+        <div>
+            {{ message }}
+        </div>
     {% endfor %}
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Meno</th>
-                <th>Priezvisko</th>
-                <th>Email</th>
-                <th>Heslo</th>
-                <th>Rola</th>
-                <th>Akcie</th>
-            </tr>
+        <tr>
+            <th class="id-class">Id</th>
+            <th class="name-surname">Meno</th>
+            <th class="name-surname">Priezvisko</th>
+            <th>Email</th>
+            <th>Heslo</th>
+            <th>Rola</th>
+            <th class="action">Akcie</th>
+        </tr>
         </thead>
         <tbody>
         {% for user in users %}
@@ -43,6 +43,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('user_new') }}">Vytvoriť nového užívateľa</a>
+    <div class="create-new">
+        <a href="{{ path('user_new') }}">Vytvoriť nového užívateľa</a>
+    </div>
 {% endblock %}

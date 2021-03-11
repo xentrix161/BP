@@ -19,6 +19,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/produkt/{id}", name="produkt")
      * @param $id
+     * @return Response
      */
     public function getArticle($id)
     {
@@ -40,12 +41,11 @@ class ArticleController extends AbstractController
      */
     public function index(): Response
     {
-//        $articles = $this->getDoctrine()
-//            ->getRepository(Article::class)
-//            ->findAll();
-//        dump($articles);
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->findAll();
         return $this->render('article/index.html.twig', [
-//            'articles' => $articles,
+            'articles' => $articles,
         ]);
     }
 
@@ -94,23 +94,25 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article): Response
     {
-        dump($article);
-//        $form = $this->createForm(ArticleType::class, $article);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->getDoctrine()->getManager()->flush();
-//            return $this->redirectToRoute('article_index');
-////        }
-//
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('article_index');
+        }
+
         return $this->render('article/edit.html.twig', [
             'article' => $article,
-//            'form' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/admin/{id}", name="article_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Article $article
+     * @return Response
      */
     public function delete(Request $request, Article $article): Response
     {
@@ -119,7 +121,6 @@ class ArticleController extends AbstractController
             $entityManager->remove($article);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('article_index');
     }
 }

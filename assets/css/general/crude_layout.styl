@@ -1,11 +1,47 @@
 .table
   color white
+  table-layout fixed
+  width 960px
+  margin auto
+
+  .name-surname
+    width 125px
+
+  .id-class
+    width 50px
+
+  .action
+    width 120px
 
   .table-head
     color yellow
 
   tbody
     tr
+      td
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding 1px 0
 
       td:first-of-type //pseudoselector
         color yellow
+
+  thead
+    tr
+      th
+        text-align left
+
+
+h1
+  display block
+  width 960px
+  padding 10px 0
+  margin auto
+
+.create-new
+  > a
+    display block
+    width 960px
+    margin auto
+    padding 10px 0
+

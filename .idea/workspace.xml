@@ -30,36 +30,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="košik rdy, category panel funkcnost rdy, idea gitignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/general/crude_layout.styl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/general/crude_layout.styl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ChangePasswordFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ChangePasswordFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegisterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegisterType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ResetPasswordRequestFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ResetPasswordRequestFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article/articleDetail.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/articleDetail.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/article/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/category/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/category/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/category/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/category/edit.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/category/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/category/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/category/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/category/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/category/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/category/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/form/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/check_email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/check_email.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/email.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/request.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/request.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/reset.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/reset.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/edit.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,7 +252,8 @@
       <workItem from="1614437428347" duration="32003000" />
       <workItem from="1614530559353" duration="26512000" />
       <workItem from="1615367194617" duration="1188000" />
-      <workItem from="1615392520563" duration="18003000" />
+      <workItem from="1615392520563" duration="18577000" />
+      <workItem from="1615494244755" duration="3678000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>

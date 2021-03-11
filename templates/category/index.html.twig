@@ -4,11 +4,11 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Názov</th>
-                <th>Slug</th>
-                <th>Akcie</th>
+        <tr>
+            <th class="id-class">Id</th>
+            <th class="name-surname">Názov</th>
+            <th class="name-surname">Slug</th>
+            <th class="action">Akcie</th>
             </tr>
         </thead>
         <tbody>
@@ -19,9 +19,9 @@
                 <td>{{ category.slug }}</td>
                 <td>
                     <a href="{{ path('category_show', {'id': category.id}) }}">Zobraziť</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">Upraviť</a>
-                </td>
-            </tr>
+            <a href="{{ path('category_edit', {'id': category.id}) }}">Upraviť</a>
+            </td>
+        </tr>
         {% else %}
             <tr>
                 <td colspan="4">Žiadne položky na zobrazenie</td>
@@ -30,5 +30,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('category_new') }}">Vytvoriť novú kategóriu</a>
+    <div class="create-new">
+        <a href="{{ path('category_new') }}">Vytvoriť novú kategóriu</a>
+    </div>
 {% endblock %}
