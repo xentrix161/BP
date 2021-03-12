@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use mysql_xdevapi\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +42,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/ajax", name="ajax")
+     * @param Request $request
      * @return Response
      */
     public function ajaxAction(Request $request): Response
@@ -101,6 +102,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/{id}", name="user_show", methods={"GET"})
+     * @param User $user
+     * @return Response
      */
     public function show(User $user): Response
     {
@@ -120,18 +123,44 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        dump($form);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
-            $this->getDoctrine()->getManager()->flush();
+            $flashMessage = "Užívateľ bol upravený úspešne!";
+            $userPassword = $form->get('password')->getData();
+            $userPassword2 = $form->get('password2')->getData();
+            $userName = $form->get('name')->getData();
+            $userSurname = $form->get('surname')->getData();
+            $userEmail = $form->get('email')->getData();
+
+            $lowerCase = preg_match('@[a-z]@', $userPassword);
+            $upperCase = preg_match('@[A-Z]@', $userPassword);
+            $number = preg_match('@[0-9]@', $userPassword);
+
+            $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+
+            if (strlen($userName) < 3 || strlen($userSurname) < 3) {
+                $flashMessage = "Meno alebo priezvisko je príliš krátke. Musí obsahovať aspoň 3 znaky!";
+            } elseif (!preg_match('/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/', strtolower($userEmail))) {
+                $flashMessage = "Váš email je zadaný v nesprávnom tvare!";
+            } elseif (strlen($userPassword) < 6) {
+                $flashMessage = "Heslo je príliš krátke. Musí obsahovať aspoň 6 znakov! Môzete použiť aj svoje staré heslo.";
+            } elseif (!$lowerCase || !$upperCase || !$number) {
+                $flashMessage = "Heslo musí obsahovať aspoň 1 veľké písmeno, 1 malé písmeno a jedno číslo! Môzete použiť aj svoje staré heslo.";
+            } elseif ($userPassword != $userPassword2) {
+                $flashMessage = "Vaše heslo sa nezhoduje s kontrolným heslom. Heslá sa musia zhodovať!";
+            } elseif (!empty($temp)) {
+                $flashMessage = "Váš email sa nepodarilo aktualizovať. Skúste skontrolovať preklepy.";
+            } else {
+                $user->setPassword($this->passwordEncoder->encodePassword($user, $userPassword));
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('user_index');
+            }
 
             $this->addFlash(
                 'info',
-                'Užívateľ bol upravený úspešne!'
+                $flashMessage
             );
-
-            return $this->redirectToRoute('user_index');
         }
-
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
@@ -140,6 +169,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/{id}", name="user_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function delete(Request $request, User $user): Response
     {

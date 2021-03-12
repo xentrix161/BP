@@ -7,8 +7,8 @@
             <tr>
                 <th class="id-class">Id</th>
                 <th class="name-surname">Názov</th>
-                <th class="name-surname">Popis</th>
-                <th>Cena</th>
+                <th>Popis</th>
+                <th class="name-surname">Cena</th>
                 <th>Obrázok</th>
                 <th class="action">Akcie</th>
             </tr>
@@ -19,7 +19,7 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.desc }}</td>
-                <td>{{ article.price }}</td>
+                <td>{{ article.price | number_format(2, '.', ',') }}</td>
                 <td>{{ article.img }}</td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">Zobraziť</a>

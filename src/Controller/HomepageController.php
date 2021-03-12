@@ -44,6 +44,7 @@ class HomepageController extends AbstractController
     /**
      * @Route("/homepage/category/{id}", name="app_homepage_category")
      * @param $id
+     * @param int $pageNumber
      * @return Response
      */
     public function categoryIndex($id, $pageNumber = 1)

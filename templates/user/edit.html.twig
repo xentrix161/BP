@@ -1,6 +1,8 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
     <h1>Upraviť používateľa</h1>
+    <div>(Pozn. Je nutné zadať svoje heslo na potvrdenie zmeny údajov. V prípade, že si želáte zmeniť heslo
+        môžete zadať nové heslo)</div>
 
     {% for message in app.flashes('info') %}
         <div>
@@ -8,7 +10,10 @@
         </div>
     {% endfor %}
 
+
+
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
     <br>
     {{ include('user/_delete_form.html.twig') }}
     <br>

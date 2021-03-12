@@ -4,15 +4,14 @@ namespace App\Form;
 
 use App\Entity\User;
 
-//use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Mime\Email;
 
 class RegisterType extends AbstractType
 {
@@ -31,38 +30,39 @@ class RegisterType extends AbstractType
                 'label' => 'Priezvisko',
                 'attr' => [
                     'placeholder' => 'Zadajte priezvisko',
-                    'class'=> 'formInput'
+                    'class' => 'formInput'
                 ]
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'Zadajte svoj email',
-                    'class'=> 'formInput'
+                    'class' => 'formInput'
                 ]
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Heslo',
                 'attr' => [
                     'placeholder' => 'Zadajte heslo',
-                    'class'=> 'formInput'
+                    'class' => 'formInput'
                 ]
             ])
             ->add('password2', PasswordType::class, [
                 'label' => 'Kontrolné heslo',
                 'attr' => [
                     'placeholder' => 'Zadajte heslo znovu',
-                    'class'=> 'formInput',
+                    'class' => 'formInput',
                 ]
 
             ])
+            ->add('role', ChoiceType::class)
+
             ->add('Zaregistrovat', SubmitType::class, [
                 'attr' => [
-                    'class'=> 'btn btn-form',
+                    'class' => 'button radius',
                     'id' => 'btn-register'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

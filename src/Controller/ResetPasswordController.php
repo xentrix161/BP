@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,9 @@ class ResetPasswordController extends AbstractController
      * Display & process form to request a password reset.
      *
      * @Route("", name="app_forgot_password_request")
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @return Response
      */
     public function request(Request $request, MailerInterface $mailer): Response
     {
@@ -75,6 +79,10 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      *
      * @Route("/reset/{token}", name="app_reset_password")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param string|null $token
+     * @return Response
      */
     public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
     {
@@ -151,10 +159,10 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
+             $this->addFlash('reset_password_error', sprintf(
+                 'There was a problem handling your password reset request - %s',
+                 $e->getReason()
+             ));
 
             return $this->redirectToRoute('app_check_email');
         }
@@ -169,7 +177,10 @@ class ResetPasswordController extends AbstractController
                 'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
             ]);
 
-        $mailer->send($email);
+        try {
+            $mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+        }
 
         return $this->redirectToRoute('app_check_email');
     }

@@ -37,15 +37,15 @@
                    href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
             </li>
             <li>
-                <a href="{{ path('app_logout') }}">Odhlásiť</a>
+                <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
             </li>
 
         {% else %}
             <li>
-                <a href="http://127.0.0.1:8000/login" class="button">Prihlásiť</a>
+                <a href="http://127.0.0.1:8000/login" class="button radius">Prihlásiť</a>
             </li>
             <li>
-                <a href="http://127.0.0.1:8000/registerForm" class="button">Registrovať</a>
+                <a href="http://127.0.0.1:8000/registerForm" class="button radius">Registrovať</a>
             </li>
         {% endif %}
     </ul>

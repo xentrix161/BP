@@ -57,15 +57,13 @@ class RegisterController extends AbstractController
                 $flashMessage = "Váš email je zadaný v nesprávnom tvare!";
             } elseif (strlen($userPass1) < 6) {
                 $flashMessage = "Heslo je príliš krátke. Musí obsahovať aspoň 6 znakov!";
-
             } elseif (!$lowerCase || !$upperCase || !$number) {
                 $flashMessage = "Heslo musí obsahovať aspoň 1 veľké písmeno, 1 malé písmeno a jedno číslo!";
-
             } elseif ($userPass1 != $userPass2) {
                 $flashMessage = "Vaše heslo sa nezhoduje s kontrolným heslom. Heslá sa musia zhodovať!";
             } else {
                 $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
-                if (empty($temp) || is_null($temp)) {
+                if (empty($temp)) {
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
                     $user->setRole(['ROLE_USER']);
                     $em->persist($user);

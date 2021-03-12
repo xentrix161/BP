@@ -8,10 +8,16 @@
   border 1px yellow solid
   z-index 1
 
-  //plati pre childov top-panel
+
+  .form-buttons
+    padding 0.25rem
+
+    #item-counter
+      padding 0 .5rem
 
   .navigation, .form-buttons
     buttonWidth = 20px
+
     // > iba priamy potomok, ostatne nie
 
     .navigation-hover
@@ -23,6 +29,12 @@
       > a
         display inline-block
         padding 0.5rem
+
+      .button
+        padding 0.25rem
+        font-size 0.8rem
+        margin 0
+
 
       .input-search
         padding 4px buttonWidth+ 8 4px 4px
