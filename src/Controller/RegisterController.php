@@ -29,6 +29,10 @@ class RegisterController extends AbstractController
      */
     public function registerU(Request $request)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_homepage');
+        }
+
         $user = new User();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(RegisterType::class, $user, [

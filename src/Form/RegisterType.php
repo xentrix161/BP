@@ -55,7 +55,7 @@ class RegisterType extends AbstractType
                 ]
 
             ])
-            ->add('role', ChoiceType::class)
+//            ->add('role', ChoiceType::class)
 
             ->add('Zaregistrovat', SubmitType::class, [
                 'attr' => [

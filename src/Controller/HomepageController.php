@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
 //HOMEPAGE
-    private $limitArticlesPerPage = 3;
+    private $limitArticlesPerPage = 1;
 
     /**
      * @Route("/homepage/{pageNumber}", name="app_homepage")
@@ -65,7 +65,7 @@ class HomepageController extends AbstractController
     {
         $totalPages = $this->getTotalPages();
 //        $outputArray = [1, $pageNumber + 1, $pageNumber + 2, 0, $totalPages];
-        $outputArray = [1, 0, $pageNumber - 1, $pageNumber, $pageNumber + 1, 0, $totalPages];
+        $outputArray = $this->pagination($pageNumber, $totalPages);
         return $outputArray;
     }
 
@@ -111,5 +111,45 @@ class HomepageController extends AbstractController
         }
 //        $categoriesFromDB = $this->getDoctrine()
 //            ->getRepository(Category::class);
+    }
+
+    private function pagination($pageNum, $totalPages)
+    {
+        $current = $pageNum;
+        $last = $totalPages;
+        $delta = 1; //pocet + - stranok od currentPage
+        $left = $current - $delta;
+        $right = $current + $delta + 1;
+        $range = array();
+        $rangeWithDots = array();
+        $l = -1;
+
+        for ($i = 1; $i <= $last; $i++)
+        {
+            if ($i == 1 || $i == $last || $i >= $left && $i < $right)
+            {
+                array_push($range, $i);
+            }
+        }
+
+        for($i = 0; $i<count($range); $i++)
+        {
+            if ($l != -1)
+            {
+                if ($range[$i] - $l === 2)
+                {
+                    array_push($rangeWithDots, $l + 1);
+                }
+                else if ($range[$i] - $l !== 1)
+                {
+                    array_push($rangeWithDots, 0);
+                }
+            }
+
+            array_push($rangeWithDots, $range[$i]);
+            $l = $range[$i];
+        }
+
+        return $rangeWithDots;
     }
 }

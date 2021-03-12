@@ -126,6 +126,11 @@ class ShoppingCartController extends AbstractController
     {
         $userEmailSes = $this->security->getUser()->getUsername();
         $sessionItems = $this->session->get($userEmailSes);
+
+        if (empty($sessionItems)) {
+            $sessionItems = [];
+        }
+
         $array = ["name" => $userEmailSes, "items" => $sessionItems, "isEmpty" => empty($sessionItems)];
         return (object)$array;
     }
