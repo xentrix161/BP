@@ -7,13 +7,14 @@
         'class': 'form-wrapper' }}) }}
     <h1 class="h3 mb-3 font-weight-normal">Register</h1>
     {{ form(register_form) }}
-
     {{ form_end(register_form) }}
 
     {% for message in app.flashes('info') %}
         <script>
             var msg = "{{ message }}";
-            setTimeout(function (){alert(msg)}, 20);
+            setTimeout(function () {
+                alert(msg)
+            }, 20);
         </script>
     {% endfor %}
 {% endblock %}

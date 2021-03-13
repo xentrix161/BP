@@ -59,7 +59,6 @@ class UserType extends AbstractType
                     'class'=> 'button'
                 ]
             ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

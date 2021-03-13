@@ -39,7 +39,6 @@ class UserController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/ajax", name="ajax")
      * @param Request $request
@@ -83,7 +82,7 @@ class UserController extends AbstractController
 
 //            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
 //            if ($pom == null) {
-            $user->setRole(['ROLE_USER']);
+            $user->setRole(['ROLE_NONE']);
             $entityManager->persist($user);
             $entityManager->flush();
 

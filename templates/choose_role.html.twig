@@ -1,0 +1,12 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+   <div>
+       <a>Prajete si predávat alebo nakupovat? Zvolte jednu moznost! (Volba je zavazna a neda sa zmenit)</a>
+       <form method="post">
+           <button type="submit" value="ROLE_USER" name="selection">Nakupca</button>
+           <button type="submit" value="ROLE_SELLER" name="selection">Predajca</button>
+       </form>
+   </div>
+{% endblock %}
+
