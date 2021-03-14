@@ -28,21 +28,17 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="pred vytvorenim accessDenied stranky">
-      <change afterPath="$PROJECT_DIR$/src/Services/FormValidationService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/access_denied.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/choose_role.html.twig" afterDir="false" />
+    <list default="true" id="b0042ebd-448d-4953-a9b8-dc810e621dc4" name="Default Changelist" comment="algo na pagination">
+      <change afterPath="$PROJECT_DIR$/src/Services/RoleService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/HomepageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomepageController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ArticleType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ArticleType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CategoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CategoryType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/ChangePasswordFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ChangePasswordFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegisterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegisterType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/form/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/new.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,7 +267,9 @@
       <workItem from="1615525279595" duration="692000" />
       <workItem from="1615525994966" duration="13000" />
       <workItem from="1615526543054" duration="7371000" />
-      <workItem from="1615591841218" duration="26208000" />
+      <workItem from="1615591841218" duration="26691000" />
+      <workItem from="1615669599438" duration="334000" />
+      <workItem from="1615675111622" duration="6258000" />
     </task>
     <task id="LOCAL-00001" summary="checkpoint2">
       <created>1606119923240</created>
@@ -441,7 +439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615591951313</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="algo na pagination">
+      <created>1615619232622</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1615619232622</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +506,8 @@
     <MESSAGE value="košik rdy, category panel funkcnost rdy, idea gitignore" />
     <MESSAGE value="commit pred zmenou DB" />
     <MESSAGE value="pred vytvorenim accessDenied stranky" />
-    <option name="LAST_COMMIT_MESSAGE" value="pred vytvorenim accessDenied stranky" />
+    <MESSAGE value="algo na pagination" />
+    <option name="LAST_COMMIT_MESSAGE" value="algo na pagination" />
   </component>
   <component name="WindowStateProjectService">
     <state x="540" y="226" key="#CLI_Interpreters" timestamp="1615527498434">
@@ -524,10 +530,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="518" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609295421137" />
-    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615520442471">
+    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615677207185">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615520442471" />
+    <state x="624" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615677207185" />
     <state x="736" y="432" width="447" height="279" key="ComposerInitDialogKey" timestamp="1615527505531">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -540,10 +546,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="540" y="254" key="IDE.errors.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615525978210" />
-    <state x="751" y="242" key="NewPhpClassDialog" timestamp="1615607357563">
+    <state x="751" y="242" key="NewPhpClassDialog" timestamp="1615676836399">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="751" y="242" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615607357563" />
+    <state x="751" y="242" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615676836399" />
     <state x="794" y="443" key="NewPhpFileDialog" timestamp="1615607147335">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -556,10 +562,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1615593485876" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1610736278239">
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1615619693676">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1610736278239" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1615619693676" />
     <state x="733" y="411" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614548830536">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -572,10 +578,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="803" y="292" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1610486606035" />
-    <state x="531" y="236" key="run.anything.popup" timestamp="1610230361921">
+    <state x="531" y="236" key="run.anything.popup" timestamp="1615675528754">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="531" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1610230361921" />
+    <state x="531" y="236" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1615675528754" />
     <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1615616839355">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

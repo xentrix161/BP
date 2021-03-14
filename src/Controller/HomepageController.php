@@ -5,11 +5,9 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\User;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use App\Services\RoleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +18,12 @@ class HomepageController extends AbstractController
 //HOMEPAGE
     private $limitArticlesPerPage = 3;
     private $security;
+    private $roleService;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, RoleService $roleService)
     {
         $this->security = $security;
+        $this->roleService = $roleService;
     }
 
     /**
@@ -33,8 +33,7 @@ class HomepageController extends AbstractController
      */
     public function index($pageNumber = 1): Response
     {
-        $user = $this->security->getUser();
-        if (!is_null($user) && !empty($user->getRoles()[0]) && $user->getRoles()[0] == "ROLE_NONE") {
+        if (!$this->roleService->isNot($this->roleService::ROLE_NONE)) {
             return $this->redirectToRoute('app_role');
         }
 
@@ -62,6 +61,11 @@ class HomepageController extends AbstractController
      */
     public function categoryIndex($id, $pageNumber = 1)
     {
+        if (!$this->roleService->isNot($this->roleService::ROLE_NONE)) {
+            return $this->redirectToRoute('app_role');
+        }
+
+
         if (!is_numeric($pageNumber) || $pageNumber < 1) {
             $pageNumber = 1;
         }
@@ -90,7 +94,7 @@ class HomepageController extends AbstractController
     /**
      * @Route("/roles", name="app_role")
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse|Response
      */
     public function chooseRole(Request $request)
     {

@@ -5,9 +5,12 @@
         môžete zadať nové heslo)</div>
 
     {% for message in app.flashes('info') %}
-        <div>
-            {{ message }}
-        </div>
+        <script>
+            var msg = "{{ message }}";
+            setTimeout(function () {
+                alert(msg)
+            }, 20);
+        </script>
     {% endfor %}
 
 

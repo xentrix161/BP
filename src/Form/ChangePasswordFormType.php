@@ -22,12 +22,12 @@ class ChangePasswordFormType extends AbstractType
                         new NotBlank([
                             'message' => 'Prosím zadajte heslo',
                         ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Vaše heslo by malo byť minimálne {{ limit }} znakov dlhé.',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
+//                        new Length([
+//                            'min' => 6,
+//                            'minMessage' => 'Vaše heslo by malo byť minimálne {{ limit }} znakov dlhé.',
+//                            // max length allowed by Symfony for security reasons
+//                            'max' => 4096,
+//                        ]),
                     ],
                     'label' => 'Nové heslo',
                 ],

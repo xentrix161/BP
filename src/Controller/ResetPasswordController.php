@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Services\FormValidationService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,10 +28,12 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     private $resetPasswordHelper;
+    private $formValidationService;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper)
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, FormValidationService $formValidationService)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
+        $this->formValidationService = $formValidationService;
     }
 
     /**
@@ -115,22 +118,41 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // A password reset token should be used only once, remove it.
-            $this->resetPasswordHelper->removeResetRequest($token);
 
-            // Encode the plain password, and set it.
-            $encodedPassword = $passwordEncoder->encodePassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            );
+            $password = $form->get('plainPassword')->getData();
+            //TU TO VYTVOR MATKY PICI
+            $bool = $this->formValidationService
+                ->passwordLength($password)
+                ->passwordChars($password)
+                ->validate();
 
-            $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
+            $message = $this->formValidationService->getMessage();
 
-            // The session is cleaned up after the password has been changed.
-            $this->cleanSessionAfterReset();
+            if ($bool) {
+                // A password reset token should be used only once, remove it.
+                $this->resetPasswordHelper->removeResetRequest($token);
 
-            return $this->redirectToRoute('app_homepage');
+                // Encode the plain password, and set it.
+                $encodedPassword = $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                );
+                $user->setPassword($encodedPassword);
+                $this->getDoctrine()->getManager()->flush();
+
+                // The session is cleaned up after the password has been changed.
+                $this->cleanSessionAfterReset();
+                $message = "Heslo bolo resetované!";
+
+                if (!empty($message)) {
+                    $this->addFlash(
+                        'info',
+                        $message
+                    );
+                }
+
+                return $this->redirectToRoute('app_homepage');
+            }
         }
 
         return $this->render('reset_password/reset.html.twig', [

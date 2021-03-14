@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\FormValidationService;
+use App\Services\RoleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,15 +15,25 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
 {
-    private $roleTypes = [['["ROLE_USER"]', 'Nákupca'], ['["ROLE_SELLER"]', 'Predajca']];
+    private $roleTypes = [];
     private $passwordEncoder;
     private $formValidationService;
+    private $roleService;
 
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, FormValidationService $formValidationService)
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        FormValidationService $formValidationService,
+        RoleService $roleService)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->formValidationService = $formValidationService;
+        $this->roleService = $roleService;
+
+        $user = $this->roleService::ROLE_USER;
+        $seller = $this->roleService::ROLE_SELLER;
+
+        $this->roleTypes = [["['${$user}']", 'Nákupca'], ["['${$seller}']", 'Predajca']];
     }
 
     /**
@@ -68,12 +79,18 @@ class RegisterController extends AbstractController
                 $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
                 if (empty($temp)) {
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
-                    $user->setRole(['ROLE_NONE']);
+                    $user->setRole([$this->roleService::ROLE_NONE]);
                     $em->persist($user);
                     $em->flush();
                     $message = "Používateľ bol zaregistrovaný";
+
+                    if (!empty($message)) {
+                        $this->addFlash('info', $message);
+                    }
+
+                    return $this->redirectToRoute('app_login');
                 } else {
-                    $message = "Email sa už používa! Zadajte iný";
+                    $message = "Email sa už používa! Zadajte iný prosím.";
                 }
             }
 
@@ -89,18 +106,5 @@ class RegisterController extends AbstractController
             'register_form' => $form->createView(),
             'user_roles' => $this->roleTypes
         ]);
-    }
-
-    /**
-     * @Route("/formCout", name="formCout")
-     * @param Request $request
-     */
-    public
-    function showUserTable(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class)->findAll();
-        dump($users);
-        exit;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use mysql_xdevapi\Exception;
+use App\Services\FormValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +18,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     private $passwordEncoder;
+    private $formValidationService;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, FormValidationService $formValidationService)
     {
         $this->passwordEncoder = $passwordEncoder;
+        $this->formValidationService = $formValidationService;
     }
-
 
     /**
      * @Route("/admin/", name="user_index", methods={"GET"})
@@ -78,20 +79,46 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
+            $formData = $form->getData();
 
-//            $pom = $this->getDoctrine()->getRepository(User::class)->findOneBy($email);
-//            if ($pom == null) {
-            $user->setRole(['ROLE_NONE']);
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userName = $formData->getName();
+            $userSurname = $formData->getSurname();
+            $userEmail = $formData->getEmail();
+            $userPass1 = $formData->getPassword();
+            $userPass2 = $formData->getPassword2();
 
-            $this->addFlash(
-                'info',
-                'Užívateľ bol vytvorený úspešne!'
-            );
+            $bool = $this->formValidationService
+                ->name($userName)
+                ->surname($userSurname)
+                ->email($userEmail)
+                ->passwordLength($userPass1)
+                ->passwordChars($userPass1)
+                ->passwordMatch($userPass1, $userPass2)
+                ->validate();
 
-            return $this->redirectToRoute('user_index');
+            $message = $this->formValidationService->getMessage();
+
+            if ($bool) {
+                $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+                if (empty($temp)) {
+                    $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
+                    $user->setRole(['ROLE_NONE']);
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    $message = "Používateľ bol vytvorený úspešne.";
+                    return $this->redirectToRoute('user_index');
+                } else {
+                    $message = "Email sa už používa! Zadajte iný prosím.";
+                }
+            }
+
+            if (!empty($message)) {
+                $this->addFlash(
+                    'info',
+                    $message
+                );
+            }
+//            return $this->redirectToRoute('user_index');
         }
         return $this->render('user/new.html.twig', [
             'user' => $user,
@@ -124,41 +151,43 @@ class UserController extends AbstractController
 
         dump($form);
         if ($form->isSubmitted() && $form->isValid()) {
-            $flashMessage = "Užívateľ bol upravený úspešne!";
-            $userPassword = $form->get('password')->getData();
-            $userPassword2 = $form->get('password2')->getData();
-            $userName = $form->get('name')->getData();
-            $userSurname = $form->get('surname')->getData();
-            $userEmail = $form->get('email')->getData();
 
-            $lowerCase = preg_match('@[a-z]@', $userPassword);
-            $upperCase = preg_match('@[A-Z]@', $userPassword);
-            $number = preg_match('@[0-9]@', $userPassword);
+            $formData = $form->getData();
+            $userName = $formData->getName();
+            $userSurname = $formData->getSurname();
+            $userEmail = $formData->getEmail();
+            $userPass1 = $formData->getPassword();
+            $userPass2 = $formData->getPassword2();
 
-            $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+            $bool = $this->formValidationService
+                ->name($userName)
+                ->surname($userSurname)
+                ->email($userEmail)
+                ->passwordLength($userPass1)
+                ->passwordChars($userPass1)
+                ->passwordMatch($userPass1, $userPass2)
+                ->validate();
 
-            if (strlen($userName) < 3 || strlen($userSurname) < 3) {
-                $flashMessage = "Meno alebo priezvisko je príliš krátke. Musí obsahovať aspoň 3 znaky!";
-            } elseif (!preg_match('/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/', strtolower($userEmail))) {
-                $flashMessage = "Váš email je zadaný v nesprávnom tvare!";
-            } elseif (strlen($userPassword) < 6) {
-                $flashMessage = "Heslo je príliš krátke. Musí obsahovať aspoň 6 znakov! Môzete použiť aj svoje staré heslo.";
-            } elseif (!$lowerCase || !$upperCase || !$number) {
-                $flashMessage = "Heslo musí obsahovať aspoň 1 veľké písmeno, 1 malé písmeno a jedno číslo! Môzete použiť aj svoje staré heslo.";
-            } elseif ($userPassword != $userPassword2) {
-                $flashMessage = "Vaše heslo sa nezhoduje s kontrolným heslom. Heslá sa musia zhodovať!";
-            } elseif (!empty($temp)) {
-                $flashMessage = "Váš email sa nepodarilo aktualizovať. Skúste skontrolovať preklepy.";
-            } else {
-                $user->setPassword($this->passwordEncoder->encodePassword($user, $userPassword));
-                $this->getDoctrine()->getManager()->flush();
-                return $this->redirectToRoute('user_index');
+            $message = $this->formValidationService->getMessage();
+
+            if ($bool) {
+                $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+                if (empty($temp)) {
+                    $user->setPassword($this->passwordEncoder->encodePassword($user, $userPass1));
+                    $this->getDoctrine()->getManager()->flush();
+                    $message = "Používateľ bol upravený úspešne.";
+                    return $this->redirectToRoute('user_index');
+                } else {
+                    $message = "Email sa už používa! Zadajte iný prosím.";
+                }
             }
 
-            $this->addFlash(
-                'info',
-                $flashMessage
-            );
+            if (!empty($message)) {
+                $this->addFlash(
+                    'info',
+                    $message
+                );
+            }
         }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
@@ -181,7 +210,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'info',
-                'Užívatel bol vymazaný úspešne!'
+                'Používateľ bol vymazaný úspešne!'
             );
 
         }
