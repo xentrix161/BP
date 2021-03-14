@@ -64,6 +64,21 @@ class User implements UserInterface
     private $role = [];
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $earning;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $expense;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rating;
+
+    /**
      * @return string
      */
     public function getPassword2(): string
@@ -175,5 +190,41 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getEarning(): ?float
+    {
+        return $this->earning;
+    }
+
+    public function setEarning(?float $earning): self
+    {
+        $this->earning = $earning;
+
+        return $this;
+    }
+
+    public function getExpense(): ?float
+    {
+        return $this->expense;
+    }
+
+    public function setExpense(?float $expense): self
+    {
+        $this->expense = $expense;
+
+        return $this;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?float $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
     }
 }
