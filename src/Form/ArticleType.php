@@ -3,9 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Article;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,11 +23,11 @@ class ArticleType extends AbstractType
             ->add('price', TextType::class, [
                 'label' => 'Cena',
             ])
-            ->add('img')
-            ->add('category', EntityType::class, [
-                'label' => 'Kategória',
-                'class' => 'App\Entity\Category'
-            ]);
+            ->add('img', TextType::class, array('data_class' => null))
+            ->add('available')
+            ->add('amount')
+            ->add('cat_id')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

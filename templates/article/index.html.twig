@@ -21,6 +21,8 @@
                 <td>{{ article.desc }}</td>
                 <td>{{ article.price | number_format(2, '.', ',') }}</td>
                 <td>{{ article.img }}</td>
+                <td>{{ article.available ? 'Yes' : 'No' }}</td>
+                <td>{{ article.amount }}</td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">Zobraziť</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">Upraviť</a>

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Category;
 
 
 /**
@@ -33,9 +32,9 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="string", length=255, nullable=false)
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var float
@@ -51,33 +50,38 @@ class Article
      */
     private $img;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     */
+    private $cat_id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="category_id", type="integer", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $category_id;
-
+    private $available;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="category")
+     * @ORM\Column(type="integer")
      */
-    private $category;
+    private $amount;
 
-    public function getCategory(): ?self
+    public function getCatId(): ?Category
     {
-        return $this->category;
+        return $this->cat_id;
     }
 
-    public function setCategory(?self $category): self
+    public function setCatId(?Category $cat_id): self
     {
-        $this->category = $category;
+        $this->cat_id = $cat_id;
 
         return $this;
     }
 
-    public function getId(): ?int
+
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
@@ -90,69 +94,91 @@ class Article
         $this->id = $id;
     }
 
-    public function getTitle(): ?string
+    /**
+     * @return string
+     */
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
-    public function getDesc(): ?string
+    /**
+     * @return string
+     */
+    public function getDesc(): string
     {
-        return $this->desc;
+        return $this->description;
     }
 
-    public function setDesc(string $desc): self
+    /**
+     * @param string $desc
+     */
+    public function setDesc(string $desc): void
     {
-        $this->desc = $desc;
-
-        return $this;
+        $this->description = $desc;
     }
 
-    public function getPrice(): ?float
+    /**
+     * @return float
+     */
+    public function getPrice(): float
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    /**
+     * @param float $price
+     */
+    public function setPrice(float $price): void
     {
         $this->price = $price;
-
-        return $this;
     }
 
-    public function getImg(): ?string
+    /**
+     * @return string
+     */
+    public function getImg(): string
     {
         return $this->img;
     }
 
-    public function setImg(string $img): self
+    /**
+     * @param string $img
+     */
+    public function setImg(string $img): void
     {
         $this->img = $img;
+    }
+
+    public function getAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): self
+    {
+        $this->available = $available;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getCategoryId(): int
+    public function getAmount(): ?int
     {
-        return $this->category_id;
+        return $this->amount;
     }
 
-    /**
-     * @param int $category_id
-     */
-    public function setCategoryId(int $category_id): void
+    public function setAmount(int $amount): self
     {
-        $this->category_id = $category_id;
+        $this->amount = $amount;
+
+        return $this;
     }
-
-
 }

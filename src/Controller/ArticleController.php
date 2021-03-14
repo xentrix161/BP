@@ -98,6 +98,8 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $form->get('img')->getData();
+
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('article_index');
         }
