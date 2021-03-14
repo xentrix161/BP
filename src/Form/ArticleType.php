@@ -23,7 +23,7 @@ class ArticleType extends AbstractType
             ->add('price', TextType::class, [
                 'label' => 'Cena',
             ])
-            ->add('img', TextType::class, array('data_class' => null))
+            ->add('img', FileType::class, array('data_class' => null))
             ->add('available')
             ->add('amount')
             ->add('cat_id')
