@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<title>Order</title>
+
+{% block body %}
+    <h1>Order</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ order.date ? order.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ order.address }}</td>
+            </tr>
+            <tr>
+                <th>User_id</th>
+                <td>{{ order.userId }}</td>
+            </tr>
+            <tr>
+                <th>Total_price</th>
+                <td>{{ order.totalPrice }}</td>
+            </tr>
+            <tr>
+                <th>Invoice_number</th>
+                <td>{{ order.invoiceNumber }}</td>
+            </tr>
+            <tr>
+                <th>Payment_method</th>
+                <td>{{ order.paymentMethod ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Paid</th>
+                <td>{{ order.paid ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('order_index') }}">back to list</a>
+
+    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+
+    {{ include('order/_delete_form.html.twig') }}
+{% endblock %}

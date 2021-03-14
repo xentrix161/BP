@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<title>Order index</title>
+
+{% block body %}
+    <h1>Order index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>User_id</th>
+                <th>Total_price</th>
+                <th>Invoice_number</th>
+                <th>Payment_method</th>
+                <th>Paid</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date ? order.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.userId }}</td>
+                <td>{{ order.totalPrice }}</td>
+                <td>{{ order.invoiceNumber }}</td>
+                <td>{{ order.paymentMethod ? 'Yes' : 'No' }}</td>
+                <td>{{ order.paid ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('order_show', {'id': order.id}) }}">show</a>
+                    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('order_new') }}">Create new</a>
+{% endblock %}
