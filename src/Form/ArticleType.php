@@ -23,7 +23,11 @@ class ArticleType extends AbstractType
             ->add('price', TextType::class, [
                 'label' => 'Cena',
             ])
-            ->add('img', FileType::class, array('data_class' => null))
+            ->add('img', FileType::class, [
+                'required' => $options['img_is_required'],
+                'mapped' => false,
+                'label' => 'Prosím vložte obrázok'
+            ])
             ->add('available')
             ->add('amount')
             ->add('cat_id')
@@ -34,6 +38,9 @@ class ArticleType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Article::class,
+            'img_is_required' => false
         ]);
+
+        $resolver->setAllowedTypes('img_is_required', 'bool');
     }
 }

@@ -46,7 +46,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="img", type="string", length=255, nullable=false)
+     * @ORM\Column(name="img", type="string", length=255, nullable=true)
      */
     private $img;
 
@@ -145,7 +145,7 @@ class Article
     /**
      * @return string
      */
-    public function getImg(): string
+    public function getImg(): ?string
     {
         return $this->img;
     }

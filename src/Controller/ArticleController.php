@@ -57,10 +57,23 @@ class ArticleController extends AbstractController
     public function new(Request $request): Response
     {
         $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article, [
+            'img_is_required' => true
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $request->files->get('article')['img'];
+            $uploads_directory = $this->getParameter('uploads_directory');
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            $file->move(
+                $uploads_directory,
+                $fileName
+            );
+
+            $article->setImg($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
@@ -94,11 +107,28 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article, [
+            'img_is_required' => false
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $form->get('img')->getData();
+
+
+
+
+            $file = $request->files->get('article')['img'];
+
+            if (!empty($file)) {
+                $uploads_directory = $this->getParameter('uploads_directory');
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move(
+                    $uploads_directory,
+                    $fileName
+                );
+                $article->setImg($fileName);
+            }
+
 
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('article_index');
@@ -106,6 +136,7 @@ class ArticleController extends AbstractController
 
         return $this->render('article/edit.html.twig', [
             'article' => $article,
+            'image' => $article->getImg(),
             'form' => $form->createView(),
         ]);
     }
