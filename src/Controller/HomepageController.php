@@ -135,7 +135,7 @@ class HomepageController extends AbstractController
         $offset = ($pageNumber - 1) * $this->limitArticlesPerPage;
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
-        return $articlesFromDB->findBy(["category_id" => $categoryId], [], $this->limitArticlesPerPage, $offset);
+        return $articlesFromDB->findBy(["cat_id" => $categoryId], [], $this->limitArticlesPerPage, $offset);
     }
 
     public function getArticleList($pageNumber = 1)
@@ -159,7 +159,7 @@ class HomepageController extends AbstractController
     {
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
-        $all = $articlesFromDB->findBy(['category_id' => $categoryId]);
+        $all = $articlesFromDB->findBy(['cat_id' => $categoryId]);
         $totalNumberOfArticles = count($all);
         return ceil($totalNumberOfArticles / $this->limitArticlesPerPage);
     }

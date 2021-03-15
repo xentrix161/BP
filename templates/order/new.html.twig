@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-
-<title>New Order</title>
-
+{% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
-    <h1>Create new Order</h1>
+    <h1>Vytvoriť novú objednávku</h1>
 
     {{ include('order/_form.html.twig') }}
 
-    <a href="{{ path('order_index') }}">back to list</a>
+    <a href="{{ path('order_index') }}">Späť na zoznam</a>
 {% endblock %}

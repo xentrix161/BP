@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-
-<title>Order index</title>
-
+{% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
-    <h1>Order index</h1>
+    <h1>Objednávka CRUDE - Objednávka index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Date</th>
-                <th>Address</th>
-                <th>User_id</th>
-                <th>Total_price</th>
-                <th>Invoice_number</th>
-                <th>Payment_method</th>
-                <th>Paid</th>
-                <th>actions</th>
+                <th>Dátum</th>
+                <th>Adresa</th>
+                <th>ID zákazníka</th>
+                <th>Celková suma</th>
+                <th>Číslo faktúry</th>
+                <th>Spôsob platby</th>
+                <th>Zaplatené</th>
+                <th>Akcie</th>
             </tr>
         </thead>
         <tbody>
@@ -31,17 +28,19 @@
                 <td>{{ order.paymentMethod ? 'Yes' : 'No' }}</td>
                 <td>{{ order.paid ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('order_show', {'id': order.id}) }}">show</a>
-                    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+                    <a href="{{ path('order_show', {'id': order.id}) }}">Zobraziť</a>
+                    <a href="{{ path('order_edit', {'id': order.id}) }}">Upraviť</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Žiadne položky na zobrazenie</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('order_new') }}">Create new</a>
+    <div class="create-new">
+        <a href="{{ path('order_new') }}">Vytvoriť novú objednávku</a>
+    </div>
 {% endblock %}
