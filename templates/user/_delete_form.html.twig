@@ -2,9 +2,5 @@
       onsubmit="return confirm('Naozaj si želáte vymazať užívateľa?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-
-    
     <button class="button radius">Vymazať</button>
-
-
 </form>

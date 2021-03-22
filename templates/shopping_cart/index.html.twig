@@ -13,7 +13,7 @@
             <div class="shopping-cart-row">
                 <div class="image">
                     <a href="{{ url('produkt', {'id': item.id}) }}">
-                        <img src="{{ item.img }}" alt="">
+                        <img src="/uploads/{{ item.img }}" alt="">
                     </a>
                 </div>
                 <div class="item">
@@ -45,7 +45,7 @@
             <a class="clear" id="cart-clear" href="#">Vymaž celý košík</a>
 
             <div class="btn-next">
-                <a class="button radius" href="#">Pokračovať ku pokladni</a>
+                <a class="button radius" href="{{ url('cash_desk') }}">Pokračovať ku pokladni</a>
             </div>
         </div>
     </div>

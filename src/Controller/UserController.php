@@ -41,32 +41,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/ajax", name="ajax")
-     * @param Request $request
-     * @return Response
-     */
-    public function ajaxAction(Request $request): Response
-    {
-        $usersFromDB = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findAll();
-
-        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
-            $jsonData = array();
-            foreach ($usersFromDB as $user) {
-                $temp = array(
-                    'Meno' => $user->getName(),
-                    'Email' => $user->getEmail()
-                );
-                array_push($jsonData, $temp);
-            }
-            return new JsonResponse($jsonData);
-        } else {
-            return $this->render('ajax.html.twig');
-        }
-    }
-
-    /**
      * @Route("/admin/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -215,5 +189,22 @@ class UserController extends AbstractController
 
         }
         return $this->redirectToRoute('user_index');
+    }
+
+    public function getTop3Earners()
+    {
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+
+
+    }
+
+    public function getTop3Spenders()
+    {
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
     }
 }

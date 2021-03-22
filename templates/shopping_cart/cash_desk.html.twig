@@ -1,0 +1,60 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+
+{#    <style>#}
+{#        form label {#}
+{#            display: block#}
+{#        }#}
+{#    </style>#}
+    <div class="form-wrapper">
+        <form method="post">
+
+            <div>
+                <h3>Pokladňa</h3>
+                <div>
+                    <label for="cashdesk-name">Meno</label>
+                    <input type="text" name="cashdesk[name]" id="cashdesk-name" minlength="3" required>
+                </div>
+
+                <div>
+                    <label for="cashdesk-surname">Priezvisko</label>
+                    <input type="text" name="cashdesk[surname]" id="cashdesk-surname" minlength="3" required>
+                </div>
+
+                <div>
+                    <label for="cashdesk-address">Ulica</label>
+                    <input type="text" name="cashdesk[address]" id="cashdesk-address" minlength="4" required>
+                </div>
+
+                <div>
+                    <label for="cashdesk-city">Mesto</label>
+                    <input type="text" name="cashdesk[city]" id="cashdesk-city" minlength="3" required>
+                </div>
+
+                <div>
+                    <label for="cashdesk-zip">PSČ</label>
+                    <input type="number" name="cashdesk[zip]" id="cashdesk-zip" minlength="5" required>
+                </div>
+
+                <div>
+                    <label for="cashdesk-phone">Tel. číslo</label>
+                    <input type="number" name="cashdesk[phone]" id="cashdesk-phone" minlength="13" required>
+                </div>
+
+                <div>
+                    <label for="cashdesk-method">Spôsob platby</label>
+                    <select name="cashdesk[method]" id="cashdesk-method">
+                        <option value="0">Dobierka - platba v hotovosti</option>
+                        <option value="1">Dobierka - platba kartou</option>
+                    </select>
+                </div>
+
+                <div>
+                    <button class="button radius" type="submit" name="cashdesk[submit]" value="submit">Objednať</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+

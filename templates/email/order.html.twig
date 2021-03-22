@@ -1,0 +1,31 @@
+<h1>Dobrý deň <code>{{ email.to[0].address }}</code>!</h1>
+
+<p>Potvrdenie Vašej objednávky.<p>
+<p>Číslo objednávky (faktúry): {{ invoice_number }}.<p>
+<p>&nbsp;</p>
+<div>Objednali ste si tovar v hodnote {{ totalPrice | number_format(2, '.', ',') }}€</div>
+<div>Ďakujeme, že nakupujete u nás!</div>
+<p>&nbsp;</p>
+<div>pAnkst0re! CREW</div>
+<p>&nbsp;</p>
+<div>Zoznam objednaných položiek</div>
+{% for item in items %}
+    <div>
+        <div>
+            <a href="{{ url('produkt', {'id': item.id}) }}">
+                {{ item.title }}
+            </a>
+            <span>
+                {{ count[item.id] }}x, jednotková cena {{ item.price | number_format(2, '.', ',') }}€
+                    ({{ (item.price*count[item.id]) | number_format(2, '.', ',') }}€)
+            </span>
+        </div>
+    </div>
+{% endfor %}
+<div class="total-price-container">
+    <span>Celková suma košíku: {{ totalPrice | number_format(2, '.', ',') }}€</span>
+</div>
+<p>
+    <a href="{{ url('app_homepage') }}">Na návrat na stránku kliknite tu</a>
+    {# (this link is valid until {{ expiration_date|date('F jS') }}) #}
+</p>

@@ -29,16 +29,34 @@
 
         {% set sesionName = app.user.username|default('undefined') %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <li>
-                <label>{{ app.user.name|default('undefined') }}</label>
-            </li>
-            <li>
-                <a id="item-counter"
-                   href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
-            </li>
-            <li>
-                <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
-            </li>
+            {% set userRole = app.user.roles %}
+            {% if userRole[0] == 'ROLE_SELLER' %}
+                <li>
+                    <label>{{ app.user.name|default('undefined') }}</label>
+                </li>
+                <li>
+                    <a id="item-counter"
+                       href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
+                </li>
+                <li>
+                    <a id="" href="http://127.0.0.1:8000/article/admin/new">Predať</a>
+                </li>
+                <li>
+                    <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
+                </li>
+            {% else %}
+                <li>
+                    <label>{{ app.user.name|default('undefined') }}</label>
+                </li>
+
+                <li>
+                    <a id="item-counter"
+                       href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
+                </li>
+                <li>
+                    <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
+                </li>
+            {% endif %}
 
         {% else %}
             <li>

@@ -114,10 +114,6 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-
-
             $file = $request->files->get('article')['img'];
 
             if (!empty($file)) {
@@ -129,7 +125,6 @@ class ArticleController extends AbstractController
                 );
                 $article->setImg($fileName);
             }
-
 
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('article_index');
