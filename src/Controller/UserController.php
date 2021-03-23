@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/user")
@@ -19,11 +20,15 @@ class UserController extends AbstractController
 {
     private $passwordEncoder;
     private $formValidationService;
+    private $security;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, FormValidationService $formValidationService)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder,
+                                FormValidationService $formValidationService,
+                                Security $security)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->formValidationService = $formValidationService;
+        $this->security = $security;
     }
 
     /**
@@ -31,6 +36,9 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
+//        $this->getTop3Earners();
+//        $this->getTop3Spenders();
+//        $this->getTop3RatedSellers(); die;
         $users = $this->getDoctrine()
             ->getRepository(User::class)
             ->findAll();
@@ -113,17 +121,23 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
      * @return Response
      */
     public function edit(Request $request, User $user): Response
     {
+        $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+        if (!empty($temp)) {
+            if ($temp->getId() !== (int)$request->get('id') && $temp->getRole()[0] !== 'ROLE_ADMIN') {
+                return $this->redirectToRoute('access_denied');
+            }
+        }
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        dump($form);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $formData = $form->getData();
@@ -189,22 +203,5 @@ class UserController extends AbstractController
 
         }
         return $this->redirectToRoute('user_index');
-    }
-
-    public function getTop3Earners()
-    {
-        $users = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findAll();
-
-
-
-    }
-
-    public function getTop3Spenders()
-    {
-        $users = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findAll();
     }
 }

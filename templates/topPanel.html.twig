@@ -28,27 +28,28 @@
         </li>
 
         {% set sesionName = app.user.username|default('undefined') %}
+
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
             {% set userRole = app.user.roles %}
-            {% if userRole[0] == 'ROLE_SELLER' %}
+            {% if userRole[0] == 'ROLE_SELLER' or userRole[0] == 'ROLE_ADMIN' %}
                 <li>
-                    <label>{{ app.user.name|default('undefined') }}</label>
+                    <a href="http://127.0.0.1:8000/user/{{ app.user.id }}/edit">{{ app.user.name|default('undefined') }}</a>
                 </li>
                 <li>
                     <a id="item-counter"
                        href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
                 </li>
                 <li>
-                    <a id="" href="http://127.0.0.1:8000/article/admin/new">Predať</a>
+                    <a id="" href="{{ path('article_new') }}">Predať</a>
                 </li>
                 <li>
                     <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
                 </li>
             {% else %}
                 <li>
-                    <label>{{ app.user.name|default('undefined') }}</label>
+                    <a href="http://127.0.0.1:8000/user/{{ app.user.id }}/edit">{{ app.user.name|default('undefined') }}</a>
                 </li>
-
                 <li>
                     <a id="item-counter"
                        href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>

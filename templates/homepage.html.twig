@@ -12,6 +12,29 @@
         {% for ctg in categories %}
             <a href="{{ url('app_homepage_category', {'id': ctg.id}) }}">{{ ctg.name }}</a>
         {% endfor %}
+        <div class="chart">
+            <h2 class="chart-main-label">Kategórie</h2>
+            <ul class="chart-content-box">
+                {% for key, value in charts %}
+                    <li class="chart-single-box">
+                        <input type="checkbox" id="chart-{{ loop.index }}">
+                        <span class="chart-title">
+                            <label for="chart-{{ loop.index }}">{{ key }}</label>
+                        </span>
+                        <ol class="chart-data">
+                            {% for data in value %}
+                                <li class="chart-row">
+                                    <span>{{ loop.index }}.</span>
+                                    <span>{{ data['name'] }}</span>
+                                    <span>{{ data['data'] }}</span>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
     </div>
 
     <div id="main">
@@ -43,7 +66,8 @@
                     <span class="page-button dots">. . .</span>
                 {% else %}
                     {% if categoryBool %}
-                        <a href="{{ url('app_homepage_category', {'pageNumber': i, 'id': id}) }}" class="page-button button">{{ i }}</a>
+                        <a href="{{ url('app_homepage_category', {'pageNumber': i, 'id': id}) }}"
+                           class="page-button button">{{ i }}</a>
                     {% else %}
                         <a href="{{ url('app_homepage', {'pageNumber': i}) }}" class="page-button button">{{ i }}</a>
                     {% endif %}

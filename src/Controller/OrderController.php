@@ -17,6 +17,8 @@ class OrderController extends AbstractController
 {
     /**
      * @Route("/admin/", name="order_index", methods={"GET"})
+     * @param OrderRepository $orderRepository
+     * @return Response
      */
     public function index(OrderRepository $orderRepository): Response
     {
@@ -27,6 +29,8 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/admin/new", name="order_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +54,8 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/admin/{id}", name="order_show", methods={"GET"})
+     * @param Order $order
+     * @return Response
      */
     public function show(Order $order): Response
     {
@@ -60,6 +66,9 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/admin/{id}/edit", name="order_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Order $order
+     * @return Response
      */
     public function edit(Request $request, Order $order): Response
     {
@@ -80,6 +89,9 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/admin/{id}", name="order_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Order $order
+     * @return Response
      */
     public function delete(Request $request, Order $order): Response
     {

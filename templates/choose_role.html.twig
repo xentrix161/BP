@@ -1,11 +1,13 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-   <div>
-       <a>Prajete si predávat alebo nakupovat? Zvolte jednu moznost! (Volba je zavazna a neda sa zmenit)</a>
+   <div class="form-wrapper">
+       <h2>Prajete si zriadiť účet ako predajca?</h2>
+       <a>(Pozn. PREDAJCA môže aj nakupovať aj predávať, NÁKUPCA len nakupuje tovar)</a><br>
+       <a>Zvoľte 1 možnosť. Voľba je závezná a nedá sa zmeniť!</a>
        <form method="post">
-           <button type="submit" value="ROLE_USER" name="selection">Nakupca</button>
-           <button type="submit" value="ROLE_SELLER" name="selection">Predajca</button>
+           <button class="button radius" type="submit" value="ROLE_USER" name="selection">Nakupca</button>
+           <button class="button radius" type="submit" value="ROLE_SELLER" name="selection">Predajca</button>
        </form>
    </div>
 {% endblock %}

@@ -1,10 +1,14 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-
-    POJEB SA KOKOTKO
-    tu sa prihlas a nepičuj
-    <a href="{{ url('app_login') }}">PRIHLASIT</a>
-
+    <div class="form-wrapper">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <h2>Prístup zamietnutý(403)</h2>
+            <a href="{{ url('app_homepage') }}">Návrat na hlavnú stránku</a>
+        {% else %}
+            <h2>Prístup zamietnutý(401)</h2>
+            <a href="{{ url('app_login') }}">Prihlásiť sa</a>
+        {% endif %}
+    </div>
 {% endblock %}
 

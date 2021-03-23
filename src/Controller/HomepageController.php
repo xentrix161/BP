@@ -43,13 +43,15 @@ class HomepageController extends AbstractController
         $allArticles = $this->getArticleList($pageNumber);
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBar($pageNumber);
+        $allCharts = $this->getTopCharts();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
             'categories' => $allCategories,
             'totalPages' => $totalPages,
             'pageNumber' => $pageNumber,
-            'categoryBool' => false
+            'categoryBool' => false,
+            'charts' => $allCharts
         ]);
     }
 
@@ -65,13 +67,13 @@ class HomepageController extends AbstractController
             return $this->redirectToRoute('app_role');
         }
 
-
         if (!is_numeric($pageNumber) || $pageNumber < 1) {
             $pageNumber = 1;
         }
         $allArticles = $this->getArticlesByCategoryId($id, $pageNumber);
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBarForCategories($pageNumber, $id);
+        $allCharts = $this->getTopCharts();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
@@ -79,7 +81,8 @@ class HomepageController extends AbstractController
             'totalPages' => $totalPages,
             'pageNumber' => $pageNumber,
             'id' => $id,
-            'categoryBool' => true
+            'categoryBool' => true,
+            'charts' => $allCharts
         ]);
     }
 
@@ -103,13 +106,20 @@ class HomepageController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $userToUpadate = $em->getRepository(User::class)->findOneBy([
+            'email' => $user->getUsername()
+        ]);
+
+        $userRole = $userToUpadate->getRole();
+
+        if ($userRole[0] != 'ROLE_NONE') {
+            return $this->redirectToRoute('app_homepage');
+        }
+
         $selection = $request->get('selection');
         if (!empty($selection)) {
 
-            $em = $this->getDoctrine()->getManager();
-            $userToUpadate = $em->getRepository(User::class)->findOneBy([
-                'email' => $user->getUsername()
-            ]);
 
             $userToUpadate->setRole([$selection]);
             $em->flush();
@@ -212,5 +222,59 @@ class HomepageController extends AbstractController
             $l = $range[$i];
         }
         return $rangeWithDots;
+    }
+
+    public function getTopCharts()
+    {
+        return [
+            'TOP 3 predajci' => $this->getTopRatedSellers(),
+            'TOP 10 tovarov' => $this->getTopArticles(),
+            'TOP 3 profit' => $this->getTopEarners()
+        ];
+    }
+
+    public function getTopEarners($numberOfItems = 3)
+    {
+        $top3Earners = $this->getDoctrine()->getRepository(User::class)
+            ->findBy(array(), array('earning' => 'DESC'), $numberOfItems, 0);
+
+        $outputArray = [];
+        for ($i = 0; $i < $numberOfItems; $i++) {
+            $earner = $top3Earners[$i];
+            $outputArray[] = [
+                'name' => $earner->getName() . " " . $earner->getSurname(),
+                'data' => $earner->getEarning()
+            ];
+        }
+        return $outputArray;
+    }
+
+    public function getTopArticles($numberOfItems = 10)
+    {
+        $outputArray = [];
+
+        $outputArray[] = [
+            'name' => '',
+            'data' => ''
+        ];
+
+        return $outputArray;
+    }
+
+    public function getTopRatedSellers($numberOfItems = 3)
+    {
+        $top3RatedSellers = $this->getDoctrine()->getRepository(User::class)
+            ->findBy(array(), array('rating' => 'DESC'), $numberOfItems, 0);
+
+        $outputArray = [];
+        for ($i = 0; $i < $numberOfItems; $i++) {
+            $seller = $top3RatedSellers[$i];
+            $outputArray[] = [
+                'name' => $seller->getName() . " " . $seller->getSurname(),
+                'data' => $seller->getRating()
+            ];
+
+        }
+        return $outputArray;
     }
 }

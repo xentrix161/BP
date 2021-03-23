@@ -1,6 +1,61 @@
 #panel-open-close
   display none
 
+.chart
+  .chart-main-label
+    margin 0
+
+  .chart-content-box
+    margin 10px 0
+
+    .chart-single-box
+      margin 10px 0
+
+
+      input[id^="chart-"]
+        display none
+
+        &:checked
+          ~ .chart-data
+           display block
+
+      .chart-title
+
+        label
+          cursor pointer
+          padding 5px 0
+          display block
+          background black
+          -webkit-touch-callout none
+          -webkit-user-select none
+          -khtml-user-select none
+          -moz-user-select none
+          -ms-user-select none
+          user-select none
+
+      .chart-data
+        background #1b1919
+        display none
+
+        .chart-row
+          padding 5px
+
+          &:nth-child(odd)
+            background #100f0f
+
+          span
+            &:nth-child(1)
+              color yellow
+              font-size .75rem
+
+            &:nth-child(2)
+              color white
+
+            &:nth-child(3)
+              display block
+              text-align right
+
+
 .category-panel
   height 100%
   width 14em
@@ -42,7 +97,7 @@
     margin-left 50px
     color white
 
-  > h2
+  h2
     margin-left 15px
     font-size 1.5em
     color yellow
@@ -109,3 +164,6 @@
     }
   }
 }
+
+
+

@@ -1,6 +1,8 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
 
+{#    {% if  %}#}
+
     <div class="form-title">
         <h1>Upraviť používateľa</h1>
         <div>(Pozn. Je nutné zadať svoje heslo na potvrdenie zmeny údajov. V prípade, že si želáte zmeniť heslo
@@ -24,8 +26,10 @@
     <br>
     {{ include('user/_delete_form.html.twig') }}
     <br>
-    <div class="create-new">
 
+
+
+    <div class="create-new">
         <a href="{{ path('user_index') }}">Späť na zoznam</a>
     </div>
 

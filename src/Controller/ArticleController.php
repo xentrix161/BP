@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArticleController extends AbstractController
 {
-
-
     /**
      * @Route("/produkt/{id}", name="produkt")
      * @param $id
@@ -51,7 +49,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/admin/new", name="article_new", methods={"GET","POST"})
+     * @Route("/seller/new", name="article_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -113,18 +111,30 @@ class ArticleController extends AbstractController
         ]);
         $form->handleRequest($request);
 
+        $oldImageName = "";
+
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $request->files->get('article')['img'];
 
-            if (!empty($file)) {
-                $uploads_directory = $this->getParameter('uploads_directory');
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                $file->move(
-                    $uploads_directory,
-                    $fileName
-                );
-                $article->setImg($fileName);
+            $oldImageName = $article->getImg();
+
+            try {
+                if (!empty($file)) {
+                    $uploads_directory = $this->getParameter('uploads_directory');
+                    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                    $file->move(
+                        $uploads_directory,
+                        $fileName
+                    );
+                    $article->setImg($fileName);
+                    if (!empty($oldImageName) && file_exists($uploads_directory . '/' . $oldImageName)) {
+                        unlink($uploads_directory . '/' . $oldImageName);
+                    }
+                }
+            } catch (\Exception $exception) {
+                //TODO: alert dorobit
             }
+
 
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('article_index');

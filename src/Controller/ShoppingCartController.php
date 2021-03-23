@@ -82,10 +82,10 @@ class ShoppingCartController extends AbstractController
             $currTime = new \DateTime();
             $currTime->modify('+ 1 hour');
 
-            $fullAdress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
+            $fullAddress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
 
             $order->setDate($currTime);
-            $order->setAddress($fullAdress);
+            $order->setAddress($fullAddress);
             $order->setTotalPrice($this->getTotalPrice());
             $order->setUserId($userToUpdate->getId());
             $order->setInvoiceNumber($this->createInvoiceNumber());

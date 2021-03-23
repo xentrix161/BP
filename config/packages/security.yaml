@@ -6,11 +6,16 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+    role_hierarchy:
+        ROLE_USER: [ROLE_NONE]
+        ROLE_SELLER: [ROLE_USER, ROLE_NONE]
+        ROLE_ADMIN: [ROLE_USER, ROLE_SELLER, ROLE_NONE]
+#    enable_authenticator_manager: true
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             anonymous: true
             lazy: true
@@ -30,6 +35,10 @@ security:
                 # checkbox in the login form (see below), uncomment the
                 # following line to always enable it.
                 #always_remember_me: true
+            access_denied_handler: App\Security\AccessDeniedHandler
+#        default:
+#            login_throttling:
+#                max_attempts: 5
 
     encoders:
         # use your user class name here
@@ -51,6 +60,9 @@ security:
 
         # require ROLE_ADMIN for /admin*
         - { path: '/admin', roles: ROLE_ADMIN }
+
+        # require ROLE_SELLER for /seller*
+        - { path: '/seller', roles: ROLE_SELLER }
 
         # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
         - { path: '/admin', roles: [ IS_AUTHENTICATED_FULLY, ROLE_ADMIN ] }
