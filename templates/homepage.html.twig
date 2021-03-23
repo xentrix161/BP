@@ -13,24 +13,32 @@
             <a href="{{ url('app_homepage_category', {'id': ctg.id}) }}">{{ ctg.name }}</a>
         {% endfor %}
         <div class="chart">
-            <h2 class="chart-main-label">Kategórie</h2>
+            <h2 class="chart-main-label">Rebríčky</h2>
             <ul class="chart-content-box">
+                {% if charts == null %}
+                    <div>&lt;žiadne k dispozícii&gt;</div>
+                {% endif %}
+
+
+
                 {% for key, value in charts %}
-                    <li class="chart-single-box">
-                        <input type="checkbox" id="chart-{{ loop.index }}">
-                        <span class="chart-title">
+                    {% if value != null %}
+                        <li class="chart-single-box">
+                            <input type="checkbox" id="chart-{{ loop.index }}">
+                            <span class="chart-title">
                             <label for="chart-{{ loop.index }}">{{ key }}</label>
                         </span>
-                        <ol class="chart-data">
-                            {% for data in value %}
-                                <li class="chart-row">
-                                    <span>{{ loop.index }}.</span>
-                                    <span>{{ data['name'] }}</span>
-                                    <span>{{ data['data'] }}</span>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </li>
+                            <ol class="chart-data">
+                                {% for data in value %}
+                                    <li class="chart-row">
+                                        <span>{{ loop.index }}.</span>
+                                        <span>{{ data['name'] }}</span>
+                                        <span>{{ data['data'] }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
 

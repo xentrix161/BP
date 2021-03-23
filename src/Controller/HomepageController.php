@@ -226,11 +226,23 @@ class HomepageController extends AbstractController
 
     public function getTopCharts()
     {
-        return [
+        $outputArray = [
             'TOP 3 predajci' => $this->getTopRatedSellers(),
             'TOP 10 tovarov' => $this->getTopArticles(),
             'TOP 3 profit' => $this->getTopEarners()
         ];
+
+        $empty = false;
+
+        foreach ($outputArray as $item) {
+            if (empty($item)) {
+                $empty = true;
+            } else {
+                $empty = false;
+            }
+        }
+
+        return $empty ? null : $outputArray;
     }
 
     public function getTopEarners($numberOfItems = 3)
@@ -239,8 +251,7 @@ class HomepageController extends AbstractController
             ->findBy(array(), array('earning' => 'DESC'), $numberOfItems, 0);
 
         $outputArray = [];
-        for ($i = 0; $i < $numberOfItems; $i++) {
-            $earner = $top3Earners[$i];
+        foreach ($top3Earners as $earner) {
             $outputArray[] = [
                 'name' => $earner->getName() . " " . $earner->getSurname(),
                 'data' => $earner->getEarning()
@@ -251,14 +262,7 @@ class HomepageController extends AbstractController
 
     public function getTopArticles($numberOfItems = 10)
     {
-        $outputArray = [];
-
-        $outputArray[] = [
-            'name' => '',
-            'data' => ''
-        ];
-
-        return $outputArray;
+        return [];
     }
 
     public function getTopRatedSellers($numberOfItems = 3)
@@ -267,13 +271,11 @@ class HomepageController extends AbstractController
             ->findBy(array(), array('rating' => 'DESC'), $numberOfItems, 0);
 
         $outputArray = [];
-        for ($i = 0; $i < $numberOfItems; $i++) {
-            $seller = $top3RatedSellers[$i];
+        foreach ($top3RatedSellers as $seller) {
             $outputArray[] = [
                 'name' => $seller->getName() . " " . $seller->getSurname(),
                 'data' => $seller->getRating()
             ];
-
         }
         return $outputArray;
     }
