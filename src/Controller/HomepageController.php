@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\User;
+use App\Services\ChartsService;
 use App\Services\RoleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,11 +20,13 @@ class HomepageController extends AbstractController
     private $limitArticlesPerPage = 3;
     private $security;
     private $roleService;
+    private $chartService;
 
-    public function __construct(Security $security, RoleService $roleService)
+    public function __construct(Security $security, RoleService $roleService, ChartsService $chartService)
     {
         $this->security = $security;
         $this->roleService = $roleService;
+        $this->chartService = $chartService;
     }
 
     /**
@@ -43,7 +46,7 @@ class HomepageController extends AbstractController
         $allArticles = $this->getArticleList($pageNumber);
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBar($pageNumber);
-        $allCharts = $this->getTopCharts();
+        $allCharts = $this->chartService->getTopCharts();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
@@ -73,7 +76,7 @@ class HomepageController extends AbstractController
         $allArticles = $this->getArticlesByCategoryId($id, $pageNumber);
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBarForCategories($pageNumber, $id);
-        $allCharts = $this->getTopCharts();
+        $allCharts = $this->chartService->getTopCharts();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
@@ -222,61 +225,5 @@ class HomepageController extends AbstractController
             $l = $range[$i];
         }
         return $rangeWithDots;
-    }
-
-    public function getTopCharts()
-    {
-        $outputArray = [
-            'TOP 3 predajci' => $this->getTopRatedSellers(),
-            'TOP 10 tovarov' => $this->getTopArticles(),
-            'TOP 3 profit' => $this->getTopEarners()
-        ];
-
-        $empty = false;
-
-        foreach ($outputArray as $item) {
-            if (empty($item)) {
-                $empty = true;
-            } else {
-                $empty = false;
-            }
-        }
-
-        return $empty ? null : $outputArray;
-    }
-
-    public function getTopEarners($numberOfItems = 3)
-    {
-        $top3Earners = $this->getDoctrine()->getRepository(User::class)
-            ->findBy(array(), array('earning' => 'DESC'), $numberOfItems, 0);
-
-        $outputArray = [];
-        foreach ($top3Earners as $earner) {
-            $outputArray[] = [
-                'name' => $earner->getName() . " " . $earner->getSurname(),
-                'data' => $earner->getEarning()
-            ];
-        }
-        return $outputArray;
-    }
-
-    public function getTopArticles($numberOfItems = 10)
-    {
-        return [];
-    }
-
-    public function getTopRatedSellers($numberOfItems = 3)
-    {
-        $top3RatedSellers = $this->getDoctrine()->getRepository(User::class)
-            ->findBy(array(), array('rating' => 'DESC'), $numberOfItems, 0);
-
-        $outputArray = [];
-        foreach ($top3RatedSellers as $seller) {
-            $outputArray[] = [
-                'name' => $seller->getName() . " " . $seller->getSurname(),
-                'data' => $seller->getRating()
-            ];
-        }
-        return $outputArray;
     }
 }

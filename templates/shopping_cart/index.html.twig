@@ -10,7 +10,11 @@
         <h2 class="cart-visibility-switch empty-cart-info {{ infoClass }}">Váš košík je prázdny</h2>
 
         {% for item in items %}
-            <div class="shopping-cart-row">
+            {% set errorClass = item.id in notAvailableItems ? "error-border" : "" %}
+            {% if item.id in notAvailableItems %}
+                <h3 style="color: red; margin-top: 20px">Produkt uvedený nižšie nie je v dostatočnom množstve na sklade!</h3>
+            {% endif %}
+            <div class="shopping-cart-row {{ errorClass }}">
                 <div class="image">
                     <a href="{{ url('produkt', {'id': item.id}) }}">
                         <img src="/uploads/{{ item.img }}" alt="">
@@ -41,6 +45,10 @@
         <div class="cart-visibility-switch {{ class }}">
             <div class="total-price-container">
                 <span>Celková suma: <span id="total">{{ totalPrice | number_format(2, '.', ',') }}</span>€</span>
+            </div>
+            <div class="total-price-container">
+                <span>Celková suma bez DPH: <span
+                            id="total-vat">{{ totalPrice*0.8 | number_format(2, '.', ',') }}</span>€</span>
             </div>
             <a class="clear" id="cart-clear" href="#">Vymaž celý košík</a>
 

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Shop</title>
+
+{% block body %}
+    <h1>Create new Shop</h1>
+
+    {{ include('shop/_form.html.twig') }}
+
+    <a href="{{ path('shop_index') }}">back to list</a>
+{% endblock %}

@@ -53,6 +53,11 @@ class Order
      */
     private $paid;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mobile;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +143,18 @@ class Order
     public function setPaid(bool $paid): self
     {
         $this->paid = $paid;
+
+        return $this;
+    }
+
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(string $mobile): self
+    {
+        $this->mobile = $mobile;
 
         return $this;
     }

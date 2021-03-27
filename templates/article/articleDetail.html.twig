@@ -1,6 +1,7 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
+    {% include "categoryPanel.html.twig" %}
     <div class="container-article">
         <div class="image-container">
             <img src="/uploads/{{ data.img }}" alt="">
@@ -12,15 +13,27 @@
             </div>
             <div class="des">
                 <p class="des">{{ data.desc }}</p>
+                <a href="{{ url('app_homepage_category', {'id': data.catId.id}) }}">Prehliadať túto kategóriu</a>
+                <p>ID majitela: {{ data.userId }}</p>
+                <p>Pocet KS na sklade: {{ data.amount }}</p>
             </div>
             <div>
                 <div class="price">
                     {{ data.price |number_format(2, '.', ',') }} €
                 </div>
-                <div class="cart">
-                    <button class="btn add-cart-btn" data-id="{{ data.id }}" title="Pridať do košíka"></button>
-                    <button class="btn delete-cart-btn" data-id="{{ data.id }}" title="Vymazať z košíka"></button>
+                <div>
+                    bez DPH ({{ data.price*0.8 |number_format(2, '.', ',') }} €)
                 </div>
+
+                {% if data.amount > 0 and data.available == 1 %}
+                    <div class="cart">
+                        <button class="btn add-cart-btn" data-id="{{ data.id }}" title="Pridať do košíka"></button>
+                        <button class="btn delete-cart-btn" data-id="{{ data.id }}" title="Vymazať z košíka"></button>
+                    </div>
+                {% else %}
+                    <div>Tovar momentálne nie je k dispozícii.</div>
+                {% endif %}
+
             </div>
             <div class="rate-wrapper">
                 <h1>Ohodnoť tovar</h1>

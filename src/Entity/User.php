@@ -79,6 +79,16 @@ class User implements UserInterface
     private $rating;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $activate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
      * @return string
      */
     public function getPassword2(): string
@@ -224,6 +234,30 @@ class User implements UserInterface
     public function setRating(?float $rating): self
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getActivate(): ?bool
+    {
+        return $this->activate;
+    }
+
+    public function setActivate(?bool $activate): self
+    {
+        $this->activate = $activate;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }

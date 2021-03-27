@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Order;
+use App\Entity\Shop;
 use App\Entity\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,11 +38,18 @@ class ShoppingCartController extends AbstractController
 
     /**
      * @Route("/", name="shopping_cart")
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('access_denied');
+        }
+        $error = $request->query->get('error');
+        $decoded = [];
+        if (!empty($error)) {
+            $decoded = explode('-', base64_decode($error));
         }
 
         return $this->render('shopping_cart/index.html.twig', [
@@ -49,7 +57,8 @@ class ShoppingCartController extends AbstractController
             'items' => $this->getItemsFromDbById(),
             'count' => $this->countNumberOfUniqueItems(),
             'totalPrice' => $this->getTotalPrice(),
-            'isCartEmpty' => $this->getSessionItems()->isEmpty
+            'isCartEmpty' => $this->getSessionItems()->isEmpty,
+            'notAvailableItems' => $decoded
         ]);
     }
 
@@ -60,6 +69,14 @@ class ShoppingCartController extends AbstractController
      * @return RedirectResponse|Response
      */
     public function cashDesk(MailerInterface $mailer, Request $request) {
+        $notAvailableItems = $this->checkAvailableItems();
+
+        if (!empty($notAvailableItems)) {
+
+            return $this->redirectToRoute('shopping_cart',
+                ['error' => base64_encode(join('-', $notAvailableItems))]);
+        }
+
 
         $this->mailer = $mailer;
 
@@ -71,35 +88,52 @@ class ShoppingCartController extends AbstractController
         $user = $this->security->getUser();
         $user->getUsername();
 
-        $userToUpdate = $this->getDoctrine()->getRepository(User::class)
+        $userToUpdateBuyer = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(['email' => $user->getUsername()]);
 
+        $userToUpdateSeller = $this->getDoctrine()->getRepository(User::class)
+            ->findBy(['id' => []]);
 
         $requestData = $request->request->get('cashdesk');
 
         if (!is_null($requestData) && !empty($requestData['submit'])) {
             $order = new Order();
+            $shopProfit = new Shop();
             $currTime = new \DateTime();
             $currTime->modify('+ 1 hour');
 
             $fullAddress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
 
+            $newInvoiceNumber = $this->createInvoiceNumber();
+            $shopProf = $this->getTotalPrice()*0.05;
+
             $order->setDate($currTime);
             $order->setAddress($fullAddress);
             $order->setTotalPrice($this->getTotalPrice());
-            $order->setUserId($userToUpdate->getId());
-            $order->setInvoiceNumber($this->createInvoiceNumber());
+            $order->setUserId($userToUpdateBuyer->getId());
+            $order->setMobile($requestData['phone']);
+            $order->setInvoiceNumber($newInvoiceNumber);
             $order->setPaymentMethod($requestData['method']);
             $order->setPaid(rand(0,1));
-
             $em->persist($order);
 
-            $userToUpdate->setExpense($userToUpdate->getExpense() + $this->getTotalPrice());
+            $userToUpdateBuyer->setExpense($userToUpdateBuyer->getExpense() + $this->getTotalPrice());
 
-            $em->persist($userToUpdate);
+            $em->persist($userToUpdateBuyer);
+            $em->flush();
+
+            $tempOrder = $this->getDoctrine()->getRepository(Order::class)
+                ->findOneBy(['invoice_number' => $newInvoiceNumber]);
+
+            $shopProfit->setOrderId($tempOrder->getId());
+            $shopProfit->setProfit($shopProf);
+            $em->persist($shopProfit);
+
+            $this->setExpensesToArticleOwners();
             $em->flush();
 
             $this->sendEmail($mailer, $order->getInvoiceNumber());
+
             $this->deleteFullShoppingCart();
         }
 
@@ -195,6 +229,9 @@ class ShoppingCartController extends AbstractController
         return new JsonResponse($this->getSessionItems()->items);
     }
 
+    /**
+     * @return object ["name" => $sessionName, "items" => array, "isEmpty" => true/false]
+     */
     public function getSessionItems()
     {
         $userEmailSes = $this->security->getUser()->getUsername();
@@ -208,6 +245,10 @@ class ShoppingCartController extends AbstractController
         return (object)$array;
     }
 
+    /**
+     * Vráti ID tovaru a k nemu počet.
+     * @return array ['article_id' => 'count']
+     */
     private function countNumberOfUniqueItems()
     {
         $sessionItems = $this->getSessionItems()->items;
@@ -255,6 +296,7 @@ class ShoppingCartController extends AbstractController
     /**
      * @Route("/email")
      * @param MailerInterface $mailer
+     * @param int $invoice
      */
     public function sendEmail(MailerInterface $mailer, int $invoice)
     {
@@ -293,7 +335,63 @@ class ShoppingCartController extends AbstractController
         } else {
             $newInvoiceNumber = $currDate . '0001';
         }
-
         return (int)$newInvoiceNumber;
+    }
+
+    /**
+     * Metóda spracuje údaje v košíku a príslušným majiteľom tovarov pridá profit z predaného tovaru.
+     * Metóda tiež upraví počet tovarov na sklade poďla toho, koľko ich bolo v košíku objednaných.
+     * @return void
+     */
+    private function setExpensesToArticleOwners()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $uniqueItemsList =  $this->countNumberOfUniqueItems();
+
+        foreach ($uniqueItemsList as $id => $count) {
+            //vytiahnem podla ID z db tovar,
+            $article = $this->getDoctrine()->getRepository(Article::class)
+                ->findOneBy(['id' => $id]);
+            //z tovaru vytiahnem ID usera,
+            $userId = $article->getUserId();
+            // jednotkovu cenu,
+            $pricePerUnit = $article->getPrice();
+            // amout tovarov v DB
+            $amountOfArticleInDB = $article->getAmount();
+            //vytiahnem podla ID z db USERA,
+            $userToUpdate = $this->getDoctrine()->getRepository(User::class)
+                ->findOneBy(['id' => $userId]);
+            // nastavim mu profit podla $count a jednotkovej ceny,
+            $profit = $userToUpdate->getEarning() + ($count * $pricePerUnit);
+            $userToUpdate->setEarning($profit*0.95);
+
+            $em->persist($userToUpdate);
+            // odpocitam amout tovarov podla kosiku,
+            $article->setAmount($amountOfArticleInDB - $count);
+            // flushnem tovary
+            // usera flushnem,
+            $em->persist($article);
+            $em->flush();
+        }
+    }
+
+    private function checkAvailableItems()
+    {
+        $uniqueItemsList =  $this->countNumberOfUniqueItems();
+
+        $outputArray = [];
+
+        foreach ($uniqueItemsList as $id => $count) {
+            $article = $this->getDoctrine()->getRepository(Article::class)
+                ->findOneBy(['id' => $id]);
+
+            $amountOfArticleInDB = $article->getAmount();
+
+            if ($amountOfArticleInDB < $count) {
+                $outputArray[] = $id;
+            }
+        }
+
+        return $outputArray;
     }
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<title>Shop index</title>
+
+{% block body %}
+    <h1>Shop index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Profit</th>
+                <th>Order_id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for shop in shops %}
+            <tr>
+                <td>{{ shop.id }}</td>
+                <td>{{ shop.profit }}</td>
+                <td>{{ shop.orderId }}</td>
+                <td>
+                    <a href="{{ path('shop_show', {'id': shop.id}) }}">show</a>
+                    <a href="{{ path('shop_edit', {'id': shop.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('shop_new') }}">Create new</a>
+{% endblock %}

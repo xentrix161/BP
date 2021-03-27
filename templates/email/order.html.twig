@@ -1,31 +1,422 @@
-<h1>Dobrý deň <code>{{ email.to[0].address }}</code>!</h1>
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
-<p>Potvrdenie Vašej objednávky.<p>
-<p>Číslo objednávky (faktúry): {{ invoice_number }}.<p>
-<p>&nbsp;</p>
-<div>Objednali ste si tovar v hodnote {{ totalPrice | number_format(2, '.', ',') }}€</div>
-<div>Ďakujeme, že nakupujete u nás!</div>
-<p>&nbsp;</p>
-<div>pAnkst0re! CREW</div>
-<p>&nbsp;</p>
-<div>Zoznam objednaných položiek</div>
-{% for item in items %}
-    <div>
-        <div>
-            <a href="{{ url('produkt', {'id': item.id}) }}">
-                {{ item.title }}
-            </a>
-            <span>
-                {{ count[item.id] }}x, jednotková cena {{ item.price | number_format(2, '.', ',') }}€
-                    ({{ (item.price*count[item.id]) | number_format(2, '.', ',') }}€)
-            </span>
-        </div>
+<head>
+    <title>
+    </title>
+    <!--[if !mso]><!-- -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        #outlook a {
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        p {
+            display: block;
+            margin: 13px 0;
+        }
+    </style>
+    <!--[if mso]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <!--[if lte mso 11]>
+    <style type="text/css">
+        .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+    </style>
+    <!--<![endif]-->
+    <style type="text/css">
+        @media only screen and (min-width:480px) {
+            .mj-column-per-100 {
+                width: 100% !important;
+                max-width: 100%;
+            }
+        }
+    </style>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+<div style="">
+    <!--[if mso | IE]>
+    <table
+            align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
+    >
+        <tr>
+            <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+    <![endif]-->
+    <div style="background:black;background-color:black;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:black;background-color:black;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                        <tr>
+
+                            <td
+                                    class="" style="vertical-align:top;width:600px;"
+                            >
+                    <![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:25px;font-style:italic;font-weight:bold;line-height:1;text-align:left;color:red;">pAnkst0re! - Váš obľúbený internetový portál!</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-{% endfor %}
-<div class="total-price-container">
-    <span>Celková suma košíku: {{ totalPrice | number_format(2, '.', ',') }}€</span>
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+
+    <table
+            align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
+    >
+        <tr>
+            <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+    <![endif]-->
+    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                        <tr>
+
+                            <td
+                                    class="" style="vertical-align:top;width:600px;"
+                            >
+                    <![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#999999;">Dobrý deň {{ app.user.name }} {{ app.user.surname }}!</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+
+    <table
+            align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
+    >
+        <tr>
+            <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+    <![endif]-->
+    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                        <tr>
+
+                            <td
+                                    class="" style="vertical-align:top;width:600px;"
+                            >
+                    <![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:18px;font-weight:bold;line-height:1;text-align:left;color:#000000;">Potvrdenie Vašej objednávky.</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-style:italic;line-height:1;text-align:left;color:#000000;">Číslo objednávky (faktúry): <b>{{ invoice_number }}</b>.</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+
+    <table
+            align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
+    >
+        <tr>
+            <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+    <![endif]-->
+    <div style="background:white;background-color:white;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:white;background-color:white;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                        <tr>
+
+                            <td
+                                    class="" style="vertical-align:top;width:600px;"
+                            >
+                    <![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:20px;line-height:1;text-align:left;color:#000000;"><b>Zoznam objednaných položiek</b></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
+                                        <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+                                            <th style="padding: 0 15px 0 0;">Názov tovaru</th>
+                                            <th style="padding: 0 15px;">ks</th>
+                                            <th style="padding: 0 0 0 15px;">cena/ks</th>
+                                            <th style="padding: 0 0 0 15px;">cena celkovo</th>
+                                        </tr> {% for item in items %} <tr>
+                                            <td style="padding: 0 15px 0 0;"><a href="{{ url('produkt', {'id': item.id}) }}">
+                                                    {{ item.title }}
+                                                </a></td>
+                                            <td style="padding: 0 15px;">{{ count[item.id] }}</td>
+                                            <td style="padding: 0 0 0 15px;">{{ item.price | number_format(2, '.', ',') }}€</td>
+                                            <td style="padding: 0 0 0 15px;">{{ (item.price*count[item.id]) | number_format(2, '.', ',') }}€</td>
+                                        </tr> {% endfor %}
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <p style="border-top:solid 4px #000000;font-size:1px;margin:0px auto;width:100%;">
+                                    </p>
+                                    <!--[if mso | IE]>
+                      <table
+                         align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 4px #000000;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px"
+                      >
+                        <tr>
+                          <td style="height:0;line-height:0;">
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </table>
+                    <![endif]-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;">
+                                        <tr>
+                                            <td style="padding: 0 15px 0 0;"></td>
+                                            <td style="padding: 0 15px;"></td>
+                                            <td style="padding: 0 0 0 15px;">Celková suma košíku</td>
+                                            <td style="padding: 0 0 0 15px;"><b>{{ totalPrice | number_format(2, '.', ',') }}€</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0 15px 0 0;"></td>
+                                            <td style="padding: 0 15px;"></td>
+                                            <td style="padding: 0 0 0 15px;">Celkom bez DPH</td>
+                                            <td style="padding: 0 0 0 15px;"><b>{{ (totalPrice*0.8) | number_format(2, '.', ',') }}€</b></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+
+    <table
+            align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
+    >
+        <tr>
+            <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+    <![endif]-->
+    <div style="background:black;background-color:black;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:black;background-color:black;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                        <tr>
+
+                            <td
+                                    class="" style="vertical-align:top;width:600px;"
+                            >
+                    <![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tr>
+                                <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:yellow;">Ďakujeme, že nakupujete u nás!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;line-height:1;text-align:center;color:red;">pAnkst0re! CREW</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+
+    <table
+            align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600"
+    >
+        <tr>
+            <td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;">
+    <![endif]-->
+    <div style="background:black;background-color:black;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:black;background-color:black;width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
+                    <!--[if mso | IE]>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                        <tr>
+
+                            <td
+                                    class="" style="vertical-align:top;width:600px;"
+                            >
+                    <![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tr>
+                                <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#000000;"><a style="color: white" href="{{ url('app_homepage') }}">Pre ďalší nákup môžete navštíviť náš portál.</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]>
+                    </td>
+
+                    </tr>
+
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
 </div>
-<p>
-    <a href="{{ url('app_homepage') }}">Na návrat na stránku kliknite tu</a>
-    {# (this link is valid until {{ expiration_date|date('F jS') }}) #}
-</p>
+</body>
+
+</html>

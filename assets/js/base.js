@@ -116,8 +116,10 @@ actualTime();
 
         var setTotalPrice = function (bypassValue) {
             var totalEl = document.querySelector("#total");
+            var totalElVat = document.querySelector("#total-vat");
             if (typeof bypassValue !== "undefined" && !isNaN(parseInt(bypassValue))) {
                 totalEl.textContent = bypassValue.toFixed(2);
+                totalElVat.textContent = (bypassValue*0.8).toFixed(2);
                 return;
             }
             var parent = totalEl.parentNode.parentNode.parentNode.parentNode;
@@ -128,6 +130,7 @@ actualTime();
                 total += parseFloat(rowPriceList[i].innerText);
             }
             totalEl.textContent = total.toFixed(2);
+            totalElVat.textContent = (total*0.8).toFixed(2);
         }
 
         //upravuje finalnu cenu v kosiku za dany druh tovaru

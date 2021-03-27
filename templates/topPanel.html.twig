@@ -34,11 +34,11 @@
             {% set userRole = app.user.roles %}
             {% if userRole[0] == 'ROLE_SELLER' or userRole[0] == 'ROLE_ADMIN' %}
                 <li>
-                    <a href="http://127.0.0.1:8000/user/{{ app.user.id }}/edit">{{ app.user.name|default('undefined') }}</a>
+                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
                 </li>
                 <li>
                     <a id="item-counter"
-                       href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
+                       href={{ path('shopping_cart') }}>Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
                 </li>
                 <li>
                     <a id="" href="{{ path('article_new') }}">Predať</a>
@@ -48,11 +48,11 @@
                 </li>
             {% else %}
                 <li>
-                    <a href="http://127.0.0.1:8000/user/{{ app.user.id }}/edit">{{ app.user.name|default('undefined') }}</a>
+                    <a href="{{ url('user_edit', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
                 </li>
                 <li>
                     <a id="item-counter"
-                       href="http://127.0.0.1:8000/shoppingcart/">Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
+                       href={{ path('shopping_cart') }}>Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
                 </li>
                 <li>
                     <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
@@ -61,10 +61,10 @@
 
         {% else %}
             <li>
-                <a href="http://127.0.0.1:8000/login" class="button radius">Prihlásiť</a>
+                <a class="button radius" href={{ path('app_login') }}>Prihlásiť</a>
             </li>
             <li>
-                <a href="http://127.0.0.1:8000/registerForm" class="button radius">Registrovať</a>
+                <a class="button radius" href={{ path('register-form') }}>Registrovať</a>
             </li>
         {% endif %}
     </ul>

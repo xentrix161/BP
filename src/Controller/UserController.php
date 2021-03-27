@@ -36,9 +36,6 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
-//        $this->getTop3Earners();
-//        $this->getTop3Spenders();
-//        $this->getTop3RatedSellers(); die;
         $users = $this->getDoctrine()
             ->getRepository(User::class)
             ->findAll();
@@ -203,5 +200,15 @@ class UserController extends AbstractController
 
         }
         return $this->redirectToRoute('user_index');
+    }
+
+
+    /**
+     * @Route("/profile", name="profile_info", methods={"GET"})
+     * @return Response
+     */
+    public function profileInfo()
+    {
+        return $this->render('profileInfo.htlm.twig');
     }
 }

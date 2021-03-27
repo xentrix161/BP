@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use App\Entity\User;
 use App\Form\ArticleType;
+use App\Services\ChartsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,24 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArticleController extends AbstractController
 {
-    /**
-     * @Route("/produkt/{id}", name="produkt")
-     * @param $id
-     * @return Response
-     */
-    public function getArticle($id)
-    {
-        $article = new Article();
-        //cela tabulka articlov
-        $articlesFromDB = $this->getDoctrine()
-            ->getRepository(Article::class);
-        dump($articlesFromDB->findAll());
-        $data = $articlesFromDB->findOneBy(['id' => $id]);
+    private $chartService;
 
-        return $this->render('article/articleDetail.html.twig', [
-            'controller_name' => 'ArticleController',
-            'data' => $data
-        ]);
+    public function __construct(ChartsService $chartService)
+    {
+        $this->chartService = $chartService;
     }
 
     /**
@@ -49,6 +39,33 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/produkt/{id}", name="produkt")
+     * @param $id
+     * @return Response
+     */
+    public function getArticle($id)
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("access_denied");
+        }
+
+        $article = new Article();
+        $articlesFromDB = $this->getDoctrine()
+            ->getRepository(Article::class);
+        $data = $articlesFromDB->findOneBy(['id' => $id]);
+
+        $allCategories = $this->getCategoryList();
+        $allCharts = $this->chartService->getTopCharts();
+
+        return $this->render('article/articleDetail.html.twig', [
+            'controller_name' => 'ArticleController',
+            'categories' => $allCategories,
+            'charts' => $allCharts,
+            'data' => $data
+        ]);
+    }
+
+    /**
      * @Route("/seller/new", name="article_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -56,6 +73,11 @@ class ArticleController extends AbstractController
     public function new(Request $request): Response
     {
         $article = new Article();
+
+        $userRepository = $this->getDoctrine()
+            ->getRepository(User::class);
+        $loggedUser = $userRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
+
         $form = $this->createForm(ArticleType::class, $article, [
             'img_is_required' => true
         ]);
@@ -73,6 +95,7 @@ class ArticleController extends AbstractController
             );
 
             $article->setImg($fileName);
+            $article->setUserId((int)$loggedUser->getId());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
@@ -161,5 +184,12 @@ class ArticleController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('article_index');
+    }
+
+    public function getCategoryList()
+    {
+        $categoriesFromDB = $this->getDoctrine()
+            ->getRepository(Category::class);
+        return $categoriesFromDB->findAll();
     }
 }

@@ -15,11 +15,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
 {
-    private $roleTypes = [];
     private $passwordEncoder;
     private $formValidationService;
     private $roleService;
-
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -29,11 +27,6 @@ class RegisterController extends AbstractController
         $this->passwordEncoder = $passwordEncoder;
         $this->formValidationService = $formValidationService;
         $this->roleService = $roleService;
-
-        $user = $this->roleService::ROLE_USER;
-        $seller = $this->roleService::ROLE_SELLER;
-
-        $this->roleTypes = [["['${$user}']", 'Nákupca'], ["['${$seller}']", 'Predajca']];
     }
 
     /**
@@ -104,7 +97,6 @@ class RegisterController extends AbstractController
 
         return $this->render('form/index.html.twig', [
             'register_form' => $form->createView(),
-            'user_roles' => $this->roleTypes
         ]);
     }
 }
