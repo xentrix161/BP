@@ -41,6 +41,45 @@ class HomepageController extends AbstractController
             return $this->redirectToRoute('app_role');
         }
 
+        if (!empty($this->security->getUser())) {
+            $userEmail = $this->security->getUser()->getUsername();
+            if (!empty($userEmail)) {
+                $tempUser = $this->getDoctrine()->getRepository(User::class)
+                    ->findOneBy(['email' => $userEmail]);
+            }
+        }
+
+//        if (!empty($tempUser)) {
+//
+//            if ($tempUser->getActivate() == true) {
+//                return $this->redirectToRoute('app_homepage');
+//            } else {
+//                $actualDate = new \DateTime();
+//                if ($tempUser->getTokenDate()->modify('+ 7 days') < $actualDate) {
+//                    $status = 'tokExp';
+//                } else {
+//                    $status = 'notActivated';
+//                }
+//                return $this->render('activateAcc.html.twig', [
+//                    'status' => $status
+//                ]);
+//            }
+//        }
+
+        if (!empty($tempUser)) {
+            if ($tempUser->getActivate() == false) {
+                $actualDate = new \DateTime();
+                if ($tempUser->getTokenDate()->modify('+ 7 days') < $actualDate) {
+                    $status = 'tokExp';
+                } else {
+                    $status = 'notActivated';
+                }
+                return $this->render('activateAcc.html.twig', [
+                    'status' => $status
+                ]);
+            }
+        }
+
         if (!is_numeric($pageNumber) || $pageNumber < 1) {
             $pageNumber = 1;
         }

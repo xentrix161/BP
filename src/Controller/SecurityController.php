@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -13,27 +15,36 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
+     * @param Request $request
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
-         if ($this->getUser()) {
-             return $this->redirectToRoute('app_homepage');
-         } else {
-//             $tempUser = $this->getDoctrine()->getRepository(User::class)
-//                 ->findOneBy(['email' => $this->getUser()->getUsername()]);
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_homepage');
+        }
+        //        $tempUser = $this->getDoctrine()->getRepository(User::class)
+//            ->findOneBy(['email' => '']);
 //
-//             if ($tempUser->getActivate() !== 1) {
-//                 return $this->redirectToRoute('activate_account', ['token' => 'login']);
-//             }
-         }
+//
+//
+//
+//
+//        if (!empty($tempUser)) {
+////            return $this->redirectToRoute('activate_account', ['token' => $tempUser->getEmail()]);
+//
+//            return $this->redirectToRoute('activate_account', ['token' => 'filipkosmel@gmail.com']);
+//        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            ]);
     }
 
     /**

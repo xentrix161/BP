@@ -118,44 +118,66 @@ class RegisterController extends AbstractController
 
     /**
      * Overí platnosť aktivačného tokenu a presmeruje na aktivačný formulár.
-     * @Route("/activate-account/{token}", name="activate_account")
-     * @param $token
+     * @Route("/activate-account/", name="activate_account")
+     * @param $status
      * @return RedirectResponse|Response
      */
-    public function accountActivation($token)
+    public function accountActivation($status)
     {
-        $status = '';
-        if ($token === 'login') {
-            $status = 'notActivated';
-        } else {
-            $tempUser = $this->getDoctrine()->getRepository(User::class)
-                ->findOneBy(['token' => $token]);
-
-//            if (empty($tempUser)) {
-//                return $this->redirectToRoute('app_homepage');
-//            }
-
-            $tokenDateExp = $tempUser->getTokenDate();
-            $actualDate = new \DateTime();
-
-//        if ($tempUser->getActivate() == 0 || $token === 'login') {
+//        $tempUser = $this->getDoctrine()->getRepository(User::class)
+//            ->findOneBy(['token' => $token]);
+//
+//        if (empty($tempUser)) {
+//            $tempUser = $this->getDoctrine()->getRepository(User::class)
+//                ->findOneBy(['email' => $token]);
+//        }
+//
+//        if (empty($tempUser)) {
+//            //TODO: Upravit na registraciu
+//            return $this->redirectToRoute('shopping_cart');
+//        }
+//
+//        $tokenDateExp = $tempUser->getTokenDate()->modify('+ 7 days');
+//        $actualDate = new \DateTime();
+//
+//        if ($tokenDateExp < $actualDate) {
+//            $status = 'tokExp';
+//        } elseif ($tempUser->getActivate() == true) {
+//            $status = 'success';
+//        } else {
 //            $status = 'notActivated';
 //        }
 
-            if ($tokenDateExp < $actualDate) {
-                $status = 'tokExp';
-            }
-
-            elseif ($tempUser->getActivate() == 1) {
-                $status = 'success';
-            }
-        }
-
-
+//        $status = '';
+//        if ($token === 'login') {
+//            $status = 'notActivated';
+//        } else {
+//            $tempUser = $this->getDoctrine()->getRepository(User::class)
+//                ->findOneBy(['token' => $token]);
+//
+////            if (empty($tempUser)) {
+////                return $this->redirectToRoute('app_homepage');
+////            }
+//
+//            $tokenDateExp = $tempUser->getTokenDate();
+//            $actualDate = new \DateTime();
+//
+////        if ($tempUser->getActivate() == 0 || $token === 'login') {
+////            $status = 'notActivated';
+////        }
+//
+//            if ($tokenDateExp < $actualDate) {
+//                $status = 'tokExp';
+//            }
+//
+//            elseif ($tempUser->getActivate() == 1) {
+//                $status = 'success';
+//            }
+//        }
 
         return $this->render('activateAcc.html.twig', [
             'status' => $status,
-            'email' => $tempUser->getEmail()
+//            'email' => $tempUser->getEmail(),
         ]);
     }
 

@@ -7,24 +7,24 @@
     <div class="form-wrapper">
         Vypršala platnosť aktivačného emailu.
         <form method="post">
-            <input type="hidden" value="{{ email }}" name="email">
+            <input type="hidden" value="email" name="email">
             <button class="button radius">Poslať nový aktivačný email</button>
         </form>
     </div>
 
     {% elseif status == 'notActivated' %}
 
-    <div>
+    <div class="form-wrapper">
         Váš účet ešte nebol aktivovaný. Prosím aktivujte si ho cez Vám zaslaný aktivačný email.
         <form method="post">
-            <input type="hidden" value="{{ email }}" name="email">
+            <input type="hidden" value="email" name="email">
             <button class="button radius">Poslať nový aktivačný email</button>
         </form>
     </div>
 
     {% elseif status == 'success' %}
 
-    <div>
+    <div class="form-wrapper">
         Váš účet bol úspešne aktivovaný. Môžete pokračovať na <a href="{{ path('app_login') }}">prihlásenie</a>
         Automatické presmerovanie na prihlásenie prebehne za 10 sekúnd.
     </div>

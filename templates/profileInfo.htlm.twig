@@ -2,15 +2,21 @@
 
 {% block body %}
     {% if app.user.role[0] == 'ROLE_USER' or app.user.role[0] == 'ROLE_NONE' %}
-        <div>Minul si: {{ app.user.expense }}</div>
-        <div>Aktivovany: {{ app.user.activate }}</div>
-        <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+        <div class="form-wrapper">
+            <div>Minul si: {{ app.user.expense }}</div>
+            <div>Aktivovany: {{ app.user.activate }}</div>
+{#            <div>Rola: {{ app.user.role }}</div>#}
+            <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+        </div>
     {% else %}
-        <div>Minul si: {{ app.user.expense }}</div>
-        <div>Aktivovany: {{ app.user.activate }}</div>
-        <div>Zárobok: {{ app.user.earning }}</div>
-        <div>Hodnotenie: {{ app.user.rating }}</div>
-        <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+        <div class="form-wrapper">
+            <div>Minul si: {{ app.user.expense }}</div>
+            <div>Aktivovany: {{ app.user.activate }}</div>
+{#            <div>Rola: {{ app.user.role }}</div>#}
+            <div>Zárobok: {{ app.user.earning }}</div>
+            <div>Hodnotenie: {{ app.user.rating }}</div>
+            <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+        </div>
     {% endif %}
 {% endblock %}
 

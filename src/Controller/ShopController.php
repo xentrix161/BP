@@ -30,7 +30,7 @@ class ShopController extends AbstractController
 
     /**
      * Vyrendruje formulár na vytvorenie nového záznamu o portáli.
-     * @Route("/new", name="shop_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="shop_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -56,7 +56,7 @@ class ShopController extends AbstractController
 
     /**
      * Zobrazí záznam o portáli podľa ID.
-     * @Route("/{id}", name="shop_show", methods={"GET"})
+     * @Route("/admin/{id}", name="shop_show", methods={"GET"})
      * @param Shop $shop
      * @return Response
      */
@@ -69,7 +69,7 @@ class ShopController extends AbstractController
 
     /**
      * Vyrendruje formulár na edit záznamu o portáli podľa ID.
-     * @Route("/{id}/edit", name="shop_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="shop_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Shop $shop
      * @return Response
@@ -93,7 +93,7 @@ class ShopController extends AbstractController
 
     /**
      * Vymaže záznam o portáli podľa ID.
-     * @Route("/{id}", name="shop_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="shop_delete", methods={"DELETE"})
      * @param Request $request
      * @param Shop $shop
      * @return Response

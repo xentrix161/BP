@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/article")
@@ -18,21 +19,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     private $chartService;
+    private $security;
 
-    public function __construct(ChartsService $chartService)
+    public function __construct(ChartsService $chartService, Security $security)
     {
         $this->chartService = $chartService;
+        $this->security = $security;
+
     }
 
     /**
      * Vyrendruje zoznam všetkých articlov.
-     * @Route("/admin/", name="article_index", methods={"GET"})
+     * @Route("/seller/", name="article_index", methods={"GET"})
      */
     public function index(): Response
     {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findAll();
+        $tempUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+
+        if (!empty($tempUser->getRole()[0] == 'ROLE_ADMIN')) {
+            $articles = $this->getDoctrine()
+                ->getRepository(Article::class)
+                ->findAll();
+        } else {
+            $articles = $this->getDoctrine()
+                ->getRepository(Article::class)
+                ->findBy(['user_id' => $tempUser->getId()]);
+        }
 
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
@@ -114,12 +127,26 @@ class ArticleController extends AbstractController
 
     /**
      * Zobrazí article podľa ID.
-     * @Route("/admin/{id}", name="article_show", methods={"GET"})
+     * @Route("/seller/{id}", name="article_show", methods={"GET"})
      * @param Article $article
+     * @param Request $request
      * @return Response
      */
-    public function show(Article $article): Response
+    public function show(Article $article, Request $request): Response
     {
+        $tempUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+
+        $tempArticle = $this->getDoctrine()->getRepository(Article::class)
+            ->findOneBy(['id' => (int)$request->get('id')]);
+
+        if (!empty($tempUser)) {
+            if ($tempUser->getId() !== $tempArticle->getUserId()
+                && $tempUser->getRole()[0] !== 'ROLE_ADMIN') {
+                return $this->redirectToRoute('access_denied');
+            }
+        }
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
         ]);
@@ -127,13 +154,27 @@ class ArticleController extends AbstractController
 
     /**
      * Vyrendruje formulár na edit articlu podľa ID.
-     * @Route("/admin/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @Route("/seller/{id}/edit", name="article_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Article $article
      * @return Response
      */
     public function edit(Request $request, Article $article): Response
     {
+        $tempUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+
+        $tempArticle = $this->getDoctrine()->getRepository(Article::class)
+            ->findOneBy(['id' => (int)$request->get('id')]);
+
+        if (!empty($tempUser)) {
+            if ($tempUser->getId() !== $tempArticle->getUserId()
+                && $tempUser->getRole()[0] !== 'ROLE_ADMIN') {
+                return $this->redirectToRoute('access_denied');
+            }
+        }
+
+
         $form = $this->createForm(ArticleType::class, $article, [
             'img_is_required' => false
         ]);
@@ -177,13 +218,26 @@ class ArticleController extends AbstractController
 
     /**
      * Vymaže article podľa ID.
-     * @Route("/admin/{id}", name="article_delete", methods={"DELETE"})
+     * @Route("/seller/{id}", name="article_delete", methods={"DELETE"})
      * @param Request $request
      * @param Article $article
      * @return Response
      */
     public function delete(Request $request, Article $article): Response
     {
+        $tempUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+
+        $tempArticle = $this->getDoctrine()->getRepository(Article::class)
+            ->findOneBy(['id' => (int)$request->get('id')]);
+
+        if (!empty($tempUser)) {
+            if ($tempUser->getId() !== $tempArticle->getUserId()
+                && $tempUser->getRole()[0] !== 'ROLE_ADMIN') {
+                return $this->redirectToRoute('access_denied');
+            }
+        }
+
         if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);

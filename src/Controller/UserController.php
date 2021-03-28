@@ -131,9 +131,12 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
-        $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+        $temp = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+
         if (!empty($temp)) {
-            if ($temp->getId() !== (int)$request->get('id') && $temp->getRole()[0] !== 'ROLE_ADMIN') {
+            if ($temp->getId() !== (int)$request->get('id')
+                && $temp->getRole()[0] !== 'ROLE_ADMIN') {
                 return $this->redirectToRoute('access_denied');
             }
         }
