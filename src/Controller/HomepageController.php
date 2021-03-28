@@ -49,23 +49,6 @@ class HomepageController extends AbstractController
             }
         }
 
-//        if (!empty($tempUser)) {
-//
-//            if ($tempUser->getActivate() == true) {
-//                return $this->redirectToRoute('app_homepage');
-//            } else {
-//                $actualDate = new \DateTime();
-//                if ($tempUser->getTokenDate()->modify('+ 7 days') < $actualDate) {
-//                    $status = 'tokExp';
-//                } else {
-//                    $status = 'notActivated';
-//                }
-//                return $this->render('activateAcc.html.twig', [
-//                    'status' => $status
-//                ]);
-//            }
-//        }
-
         if (!empty($tempUser)) {
             if ($tempUser->getActivate() == false) {
                 $actualDate = new \DateTime();
@@ -265,21 +248,6 @@ class HomepageController extends AbstractController
             ->getRepository(Category::class);
         return $categoriesFromDB->findAll();
     }
-
-//    /**
-//     *
-//     */
-//    public function getCombineList()
-//    {
-//        $articlesFromDB = $this->getDoctrine()
-//            ->getRepository(Article::class);
-//        $all = $articlesFromDB->findAll();
-//
-//        foreach ($all as $item) {
-//            $item->getCategoryId();
-//        }
-//    }
-
 
     /**
      * Vráti pole obsahujúce dáta, ktoré určujú ako bude vypadať čislovací bar na stránke.

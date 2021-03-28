@@ -25,7 +25,6 @@ class ArticleController extends AbstractController
     {
         $this->chartService = $chartService;
         $this->security = $security;
-
     }
 
     /**
@@ -64,7 +63,6 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute("access_denied");
         }
 
-        $article = new Article();
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
         $data = $articlesFromDB->findOneBy(['id' => $id]);

@@ -136,44 +136,7 @@ class RegisterController extends AbstractController
 //            //TODO: Upravit na registraciu
 //            return $this->redirectToRoute('shopping_cart');
 //        }
-//
-//        $tokenDateExp = $tempUser->getTokenDate()->modify('+ 7 days');
-//        $actualDate = new \DateTime();
-//
-//        if ($tokenDateExp < $actualDate) {
-//            $status = 'tokExp';
-//        } elseif ($tempUser->getActivate() == true) {
-//            $status = 'success';
-//        } else {
-//            $status = 'notActivated';
-//        }
 
-//        $status = '';
-//        if ($token === 'login') {
-//            $status = 'notActivated';
-//        } else {
-//            $tempUser = $this->getDoctrine()->getRepository(User::class)
-//                ->findOneBy(['token' => $token]);
-//
-////            if (empty($tempUser)) {
-////                return $this->redirectToRoute('app_homepage');
-////            }
-//
-//            $tokenDateExp = $tempUser->getTokenDate();
-//            $actualDate = new \DateTime();
-//
-////        if ($tempUser->getActivate() == 0 || $token === 'login') {
-////            $status = 'notActivated';
-////        }
-//
-//            if ($tokenDateExp < $actualDate) {
-//                $status = 'tokExp';
-//            }
-//
-//            elseif ($tempUser->getActivate() == 1) {
-//                $status = 'success';
-//            }
-//        }
 
         return $this->render('activateAcc.html.twig', [
             'status' => $status,
