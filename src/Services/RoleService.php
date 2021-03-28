@@ -21,6 +21,11 @@ class RoleService
         $this->security = $security;
     }
 
+    /**
+     * Vráti TRUE ak USER neexistuje, nemá rolu, alebo jeho rola nesedí s rolou v parametri funkcie.
+     * @param string $role
+     * @return bool
+     */
     public function isNot(string $role = self::ROLE_NONE): bool
     {
         $user = $this->security->getUser();

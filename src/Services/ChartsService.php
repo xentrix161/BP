@@ -8,11 +8,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ChartsService
 {
+    private $em;
 
     public function __construct(EntityManagerInterface $em) {
         $this->em = $em;
     }
 
+    /**
+     * Vráti všetky TOP štatistiky.
+     * @return array[]|null
+     */
     public function getTopCharts()
     {
         $outputArray = [
@@ -34,6 +39,12 @@ class ChartsService
         return $empty ? null : $outputArray;
     }
 
+
+    /**
+     * Vráti TOP x zarabajúcich predajcov celkovo.
+     * @param int $numberOfItems
+     * @return array
+     */
     public function getTopEarners($numberOfItems = 3)
     {
         $top3Earners = $this->em->getRepository(User::class)
@@ -49,11 +60,22 @@ class ChartsService
         return $outputArray;
     }
 
+    /**
+     * Vráti TOP x hodnotených articlov celkovo.
+     * @param int $numberOfItems
+     * @return array
+     */
     public function getTopArticles($numberOfItems = 10)
     {
         return [];
     }
 
+
+    /**
+     * Vráti TOP x hodnotených predajcov celkovo.
+     * @param int $numberOfItems
+     * @return array
+     */
     public function getTopRatedSellers($numberOfItems = 3)
     {
         $top3RatedSellers = $this->em->getRepository(User::class)

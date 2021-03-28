@@ -37,6 +37,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vyrendruje nákupný košík.
      * @Route("/", name="shopping_cart")
      * @param Request $request
      * @return RedirectResponse|Response
@@ -63,6 +64,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vyrendruje pokladňu. (Krok po nákupnom košíku)
      * @Route("/cash-desk", name="cash_desk")
      * @param MailerInterface $mailer
      * @param Request $request
@@ -91,16 +93,13 @@ class ShoppingCartController extends AbstractController
         $userToUpdateBuyer = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(['email' => $user->getUsername()]);
 
-        $userToUpdateSeller = $this->getDoctrine()->getRepository(User::class)
-            ->findBy(['id' => []]);
-
         $requestData = $request->request->get('cashdesk');
 
         if (!is_null($requestData) && !empty($requestData['submit'])) {
             $order = new Order();
             $shopProfit = new Shop();
             $currTime = new \DateTime();
-            $currTime->modify('+ 1 hour');
+//            $currTime->modify('+ 1 hour');
 
             $fullAddress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
 
@@ -147,6 +146,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Pridá item do nákupného košíka podľa ID.
      * @Route("/add/{itemId}", name="add_to_cart")
      * @param $itemId
      * @return JsonResponse
@@ -166,6 +166,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vymaže item z nákupného košíka podľa ID.
      * @Route("/delete/{itemId}", name="delete_from_cart")
      * @param $itemId
      * @return JsonResponse
@@ -193,6 +194,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vymaže celý nákupný košík.
      * @Route("/delete-cart", name="delete_cart")
      */
     public function deleteFullShoppingCart()
@@ -202,6 +204,8 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vymaže item z nákupného košíka podľa ID. V prípade, že z daného druhu tovaru je v košíku viac ako 1 kus,
+     * vymaže všetky!!!
      * @Route("/delete-item/{itemId}", name="delete_item")
      * @param $itemId
      * @return JsonResponse
@@ -221,6 +225,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vráti zoznam itemov v nákupnom košíku v JSON formáte.
      * @Route("/get", name="get_cart")
      * @return JsonResponse
      */
@@ -230,6 +235,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
+     * Vráti zoznam itemov v nákupnom košíku.
      * @return object ["name" => $sessionName, "items" => array, "isEmpty" => true/false]
      */
     public function getSessionItems()
@@ -246,7 +252,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
-     * Vráti ID tovaru a k nemu počet.
+     * Vráti ID tovaru a k nemu počet kusov v nákupnom košíku.
      * @return array ['article_id' => 'count']
      */
     private function countNumberOfUniqueItems()
@@ -263,6 +269,10 @@ class ShoppingCartController extends AbstractController
         return $outputArray;
     }
 
+    /**
+     * Z databázy vytiahne itemy v nákupnom košíku podľa ID.
+     * @return Article[]|object[]
+     */
     private function getItemsFromDbById()
     {
         $itemsObject = $this->countNumberOfUniqueItems();
@@ -272,6 +282,10 @@ class ShoppingCartController extends AbstractController
         return $articlesFromDB->findBy(['id' => array_keys($itemsObject)]);
     }
 
+    /**
+     * Vráti celkovú hodnotu nákupného košíku.
+     * @return float|int
+     */
     private function getTotalPrice()
     {
         $countedItems = $this->countNumberOfUniqueItems(); //na indexe je ID itemu a v poli je pocet itemov
@@ -294,7 +308,7 @@ class ShoppingCartController extends AbstractController
     }
 
     /**
-     * @Route("/email")
+     * Vytvorí email pre objednávku.
      * @param MailerInterface $mailer
      * @param int $invoice
      */
@@ -322,6 +336,10 @@ class ShoppingCartController extends AbstractController
         }
     }
 
+    /**
+     * Vytvorí unikátne číslo faktúry.
+     * @return int
+     */
     private function createInvoiceNumber()
     {
         $currDate = date("ym");
@@ -375,6 +393,10 @@ class ShoppingCartController extends AbstractController
         }
     }
 
+    /**
+     * Skontroluje, či sú itemy v nákupnom košíku dostupné.
+     * @return array
+     */
     private function checkAvailableItems()
     {
         $uniqueItemsList =  $this->countNumberOfUniqueItems();

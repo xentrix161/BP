@@ -14,17 +14,15 @@
         </div>
     {% endif %}
 
-
-
     <div id="login">
         <h1 class="h3 mb-3 font-weight-normal">Prihlásenie</h1>
         <div class="form-group">
             <label class="control-label required" for="inputEmail">Email</label>
-            <input class="formInput form-control" placeholder="Zadaj svoj email" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+            <input class="formInput form-control" placeholder="Zadaj svoj email" type="email" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
         </div>
         <div class="form-group">
             <label class="control-label required" for="inputPassword">Heslo</label>
-            <input class="formInput form-control" placeholder="Zadaj svoje heslo" type="password" name="password" id="inputPassword" class="form-control" required>
+            <input class="formInput form-control" placeholder="Zadaj svoje heslo" type="password" name="password" id="inputPassword" required>
         </div>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

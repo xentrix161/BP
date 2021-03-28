@@ -89,6 +89,11 @@ class User implements UserInterface
     private $token;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $token_date;
+
+    /**
      * @return string
      */
     public function getPassword2(): string
@@ -258,6 +263,18 @@ class User implements UserInterface
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getTokenDate(): ?\DateTimeInterface
+    {
+        return $this->token_date;
+    }
+
+    public function setTokenDate(\DateTimeInterface $token_date): self
+    {
+        $this->token_date = $token_date;
 
         return $this;
     }

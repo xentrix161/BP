@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,13 @@ class SecurityController extends AbstractController
     {
          if ($this->getUser()) {
              return $this->redirectToRoute('app_homepage');
+         } else {
+//             $tempUser = $this->getDoctrine()->getRepository(User::class)
+//                 ->findOneBy(['email' => $this->getUser()->getUsername()]);
+//
+//             if ($tempUser->getActivate() !== 1) {
+//                 return $this->redirectToRoute('activate_account', ['token' => 'login']);
+//             }
          }
 
         // get the login error if there is one

@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     /**
+     * Vyrendruje zoznam všetkých objednávok.
      * @Route("/admin/", name="order_index", methods={"GET"})
      * @param OrderRepository $orderRepository
      * @return Response
@@ -28,6 +29,7 @@ class OrderController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na vytvorenie novej objednávky.
      * @Route("/admin/new", name="order_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -53,6 +55,7 @@ class OrderController extends AbstractController
     }
 
     /**
+     * Zobrazí objednávku podľa ID.
      * @Route("/admin/{id}", name="order_show", methods={"GET"})
      * @param Order $order
      * @return Response
@@ -65,6 +68,7 @@ class OrderController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na edit objednávky podľa ID.
      * @Route("/admin/{id}/edit", name="order_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Order $order
@@ -88,6 +92,7 @@ class OrderController extends AbstractController
     }
 
     /**
+     * Vymaže objednávku poďla ID.
      * @Route("/admin/{id}", name="order_delete", methods={"DELETE"})
      * @param Request $request
      * @param Order $order

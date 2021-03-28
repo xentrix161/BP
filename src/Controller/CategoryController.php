@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
+     * Vyrendruje zoznam všetkých kategórií.
      * @Route("/admin/", name="category_index", methods={"GET"})
      */
     public function index(): Response
@@ -29,6 +30,7 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na vytvorenie novej kategórie.
      * @Route("/admin/new", name="category_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -54,6 +56,7 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Zobrazí kategóriu podľa ID.
      * @Route("/admin/{id}", name="category_show", methods={"GET"})
      * @param Category $category
      * @return Response
@@ -66,6 +69,7 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na edit kategórie podľa ID.
      * @Route("/admin/{id}/edit", name="category_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Category $category
@@ -89,6 +93,7 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Vymaže kategóriu podľa ID.
      * @Route("/admin/{id}", name="category_delete", methods={"DELETE"})
      * @param Request $request
      * @param Category $category

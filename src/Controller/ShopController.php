@@ -16,7 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShopController extends AbstractController
 {
     /**
+     * Vyrendruje zoznam všetkých záznamov o portáli.
      * @Route("/", name="shop_index", methods={"GET"})
+     * @param ShopRepository $shopRepository
+     * @return Response
      */
     public function index(ShopRepository $shopRepository): Response
     {
@@ -26,7 +29,10 @@ class ShopController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na vytvorenie nového záznamu o portáli.
      * @Route("/new", name="shop_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -49,7 +55,10 @@ class ShopController extends AbstractController
     }
 
     /**
+     * Zobrazí záznam o portáli podľa ID.
      * @Route("/{id}", name="shop_show", methods={"GET"})
+     * @param Shop $shop
+     * @return Response
      */
     public function show(Shop $shop): Response
     {
@@ -59,7 +68,11 @@ class ShopController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na edit záznamu o portáli podľa ID.
      * @Route("/{id}/edit", name="shop_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Shop $shop
+     * @return Response
      */
     public function edit(Request $request, Shop $shop): Response
     {
@@ -79,7 +92,11 @@ class ShopController extends AbstractController
     }
 
     /**
+     * Vymaže záznam o portáli podľa ID.
      * @Route("/{id}", name="shop_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Shop $shop
+     * @return Response
      */
     public function delete(Request $request, Shop $shop): Response
     {

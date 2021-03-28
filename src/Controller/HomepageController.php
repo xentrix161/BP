@@ -30,6 +30,7 @@ class HomepageController extends AbstractController
     }
 
     /**
+     * Vyrendruje homepage portálu.
      * @Route("/homepage/{pageNumber}", name="app_homepage")
      * @param $pageNumber
      * @return Response
@@ -59,6 +60,7 @@ class HomepageController extends AbstractController
     }
 
     /**
+     * Vyrendruje homepage podľa zvolenej kategórie.
      * @Route("/homepage/category/{id}/{pageNumber}", name="app_homepage_category")
      * @param $id
      * @param int $pageNumber
@@ -90,6 +92,7 @@ class HomepageController extends AbstractController
     }
 
     /**
+     * Vyrendruje stránku zamietnutého prístupu.
      * @Route("/access-denied", name="access_denied")
      */
     public function accessDeniedPage()
@@ -98,6 +101,7 @@ class HomepageController extends AbstractController
     }
 
     /**
+     * Vyrendruje stránku na voľbu role používateľa. Umožní zvoliť si rolu a uloží ju do databázy.
      * @Route("/roles", name="app_role")
      * @param Request $request
      * @return RedirectResponse|Response
@@ -131,18 +135,37 @@ class HomepageController extends AbstractController
         return $this->render('choose_role.html.twig');
     }
 
+    /**
+     * Vygeneruje číslovanie stránky bez zvolenej kategórie.
+     * @param $pageNumber
+     * @return array
+     */
     public function generatePaginationBar($pageNumber)
     {
         $totalPages = $this->getTotalPages();
         return $this->pagination($pageNumber, $totalPages);
     }
 
+
+    /**
+     * Vygeneruje číslovanie stránky so zvolenou kategóriou.
+     * @param $pageNumber
+     * @param $category_id
+     * @return array
+     */
     public function generatePaginationBarForCategories($pageNumber, $category_id)
     {
         $totalPages = $this->getTotalPagesForCategories($category_id);
         return $this->pagination($pageNumber, $totalPages);
     }
 
+
+    /**
+     * Vráti list articlov podľa zadanej kategórie.
+     * @param $categoryId
+     * @param int $pageNumber
+     * @return Article[]|object[]
+     */
     public function getArticlesByCategoryId($categoryId, $pageNumber = 1)
     {
         $offset = ($pageNumber - 1) * $this->limitArticlesPerPage;
@@ -151,6 +174,11 @@ class HomepageController extends AbstractController
         return $articlesFromDB->findBy(["cat_id" => $categoryId], [], $this->limitArticlesPerPage, $offset);
     }
 
+    /**
+     * Vráti list všetkých articlov. (Bez zvolenej kategórie)
+     * @param int $pageNumber
+     * @return Article[]|object[]
+     */
     public function getArticleList($pageNumber = 1)
     {
         $offset = ($pageNumber - 1) * $this->limitArticlesPerPage;
@@ -159,6 +187,11 @@ class HomepageController extends AbstractController
         return $articlesFromDB->findBy([], [], $this->limitArticlesPerPage, $offset);
     }
 
+
+    /**
+     * Vráti počet potrebných strán na vykreslenie všetkých articlov.
+     * @return false|float
+     */
     public function getTotalPages()
     {
         $articlesFromDB = $this->getDoctrine()
@@ -168,6 +201,12 @@ class HomepageController extends AbstractController
         return ceil($totalNumberOfArticles / $this->limitArticlesPerPage);
     }
 
+
+    /**
+     * Vráti počet potrebných strán na vykreslenie všetkých articlov v danej kategórii.
+     * @param $categoryId
+     * @return false|float
+     */
     public function getTotalPagesForCategories($categoryId)
     {
         $articlesFromDB = $this->getDoctrine()
@@ -177,6 +216,10 @@ class HomepageController extends AbstractController
         return ceil($totalNumberOfArticles / $this->limitArticlesPerPage);
     }
 
+    /**
+     * Vráti všetky kategórie.
+     * @return Category[]|array
+     */
     public function getCategoryList()
     {
         $categoriesFromDB = $this->getDoctrine()
@@ -184,17 +227,27 @@ class HomepageController extends AbstractController
         return $categoriesFromDB->findAll();
     }
 
-    public function getCombineList()
-    {
-        $articlesFromDB = $this->getDoctrine()
-            ->getRepository(Article::class);
-        $all = $articlesFromDB->findAll();
+//    /**
+//     *
+//     */
+//    public function getCombineList()
+//    {
+//        $articlesFromDB = $this->getDoctrine()
+//            ->getRepository(Article::class);
+//        $all = $articlesFromDB->findAll();
+//
+//        foreach ($all as $item) {
+//            $item->getCategoryId();
+//        }
+//    }
 
-        foreach ($all as $item) {
-            $item->getCategoryId();
-        }
-    }
 
+    /**
+     * Vráti pole obsahujúce dáta, ktoré určujú ako bude vypadať čislovací bar na stránke.
+     * @param $pageNum
+     * @param $totalPages
+     * @return array
+     */
     private function pagination($pageNum, $totalPages)
     {
         $current = $pageNum;

@@ -32,6 +32,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Vyrendruje zoznam všetkých používateľov.
      * @Route("/admin/", name="user_index", methods={"GET"})
      */
     public function index(): Response
@@ -46,6 +47,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na vytvorenie nového používateľa. Skontroluje, či heslo spĺňa bezpečnostné kritéria,
+     * zahashuje heslo a pridá použivateľa do databázy.
      * @Route("/admin/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -82,6 +85,8 @@ class UserController extends AbstractController
                 if (empty($temp)) {
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
                     $user->setRole(['ROLE_NONE']);
+                    $user->setToken(md5(uniqid()));
+                    $user->setTokenDate(new \DateTime());
                     $entityManager->persist($user);
                     $entityManager->flush();
                     $message = "Používateľ bol vytvorený úspešne.";
@@ -97,7 +102,6 @@ class UserController extends AbstractController
                     $message
                 );
             }
-//            return $this->redirectToRoute('user_index');
         }
         return $this->render('user/new.html.twig', [
             'user' => $user,
@@ -106,6 +110,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Zobrazí používateľa poďla ID.
      * @Route("/admin/{id}", name="user_show", methods={"GET"})
      * @param User $user
      * @return Response
@@ -118,6 +123,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na edit používateľa podľa ID.
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
@@ -181,6 +187,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Vymaže používateľa podľa ID.
      * @Route("/admin/{id}", name="user_delete", methods={"DELETE"})
      * @param Request $request
      * @param User $user
@@ -204,6 +211,7 @@ class UserController extends AbstractController
 
 
     /**
+     * Vyrendruje stránku pre informácie o profile a úpravu profilu.
      * @Route("/profile", name="profile_info", methods={"GET"})
      * @return Response
      */

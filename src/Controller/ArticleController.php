@@ -25,6 +25,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Vyrendruje zoznam všetkých articlov.
      * @Route("/admin/", name="article_index", methods={"GET"})
      */
     public function index(): Response
@@ -39,6 +40,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Vyrendruje article podľa ID.
      * @Route("/produkt/{id}", name="produkt")
      * @param $id
      * @return Response
@@ -66,6 +68,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na vytvorenie nového articlu.
      * @Route("/seller/new", name="article_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -110,6 +113,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Zobrazí article podľa ID.
      * @Route("/admin/{id}", name="article_show", methods={"GET"})
      * @param Article $article
      * @return Response
@@ -122,6 +126,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Vyrendruje formulár na edit articlu podľa ID.
      * @Route("/admin/{id}/edit", name="article_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Article $article
@@ -171,6 +176,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * Vymaže article podľa ID.
      * @Route("/admin/{id}", name="article_delete", methods={"DELETE"})
      * @param Request $request
      * @param Article $article
