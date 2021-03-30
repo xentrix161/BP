@@ -58,7 +58,8 @@ class HomepageController extends AbstractController
                     $status = 'notActivated';
                 }
                 return $this->render('activateAcc.html.twig', [
-                    'status' => $status
+                    'status' => $status,
+                    'token' => $tempUser->getToken()
                 ]);
             }
         }

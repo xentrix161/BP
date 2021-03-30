@@ -17,7 +17,7 @@ class ShopController extends AbstractController
 {
     /**
      * Vyrendruje zoznam všetkých záznamov o portáli.
-     * @Route("/", name="shop_index", methods={"GET"})
+     * @Route("/admin/", name="shop_index", methods={"GET"})
      * @param ShopRepository $shopRepository
      * @return Response
      */

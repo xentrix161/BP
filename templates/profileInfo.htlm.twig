@@ -3,20 +3,114 @@
 {% block body %}
     {% if app.user.role[0] == 'ROLE_USER' or app.user.role[0] == 'ROLE_NONE' %}
         <div class="form-wrapper">
+            {# <div>Email: {{ app.user.email }}</div> #}
             <div>Minul si: {{ app.user.expense }}</div>
             <div>Aktivovany: {{ app.user.activate }}</div>
-{#            <div>Rola: {{ app.user.role }}</div>#}
+            {# <div>Rola: {{ app.user.role }}</div> #}
             <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+            <a class="delete-acc" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
         </div>
     {% else %}
         <div class="form-wrapper">
+            {# <div>Email: {{ app.user.email }}</div> #}
             <div>Minul si: {{ app.user.expense }}</div>
             <div>Aktivovany: {{ app.user.activate }}</div>
-{#            <div>Rola: {{ app.user.role }}</div>#}
+            {# <div>Rola: {{ app.user.role }}</div> #}
             <div>Zárobok: {{ app.user.earning }}</div>
             <div>Hodnotenie: {{ app.user.rating }}</div>
             <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+            <a class="delete-acc" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
         </div>
     {% endif %}
+
+    <div class="delete-modal form-wrapper">
+        <div id="delete-modal-message"></div>
+        <form id="delete-user-form" method="post">
+            <input type="hidden" value="{{ app.user.id }}" name="delete[id]">
+            <div>
+                <label for="delete-email">Email</label>
+                <input type="text" value="" name="delete[email]" id="delete-email">
+            </div>
+            <div>
+                <label for="delete-password">Heslo</label>
+                <input type="password" value="" name="delete[password]" id="delete-password">
+            </div>
+            <button type="submit" name="delete[submit]" class="button radius" id="delete-submit" value="delete">
+                Potvrdiť
+            </button>
+            <button type="reset" class="button radius" id="delete-reset">Zrušiť</button>
+        </form>
+    </div>
+
+
+    <script>
+        (function () {
+            var modal = $('.delete-modal');
+            var form = $('#delete-user-form');
+            var deleteBtn = $('.delete-acc');
+            var submitBtn = $('#delete-submit');
+            var resetBtn = $('#delete-reset');
+            var messageContent = $('#delete-modal-message');
+
+            deleteBtn.on('click', function (e) {
+                e.preventDefault();
+                modal.show();
+            });
+
+            resetBtn.on('click', function (e) {
+                e.preventDefault();
+                form.trigger('reset');
+                modal.hide();
+            });
+
+            submitBtn.on('click', function (e) {
+                e.preventDefault();
+
+                var inputs = $('#delete-user-form :input');
+                var values = {};
+                inputs.each(function () {
+                    values[this.name] = $(this).val();
+                });
+
+                $.post('/user/user-account-delete', values)
+                    .done(function (response) {
+                        console.log(response);
+                        if (response.success === true) {
+                            timerMessage(response.message, 1);
+                        } else {
+                            if (!!response.message) {
+                                timerMessage(response.message);
+                            } else {
+                                timerMessage('Niečo sa nepodarilo. Skúste znovu prosím.');
+                            }
+                        }
+                    })
+                    .fail(function (xhr) {
+                        if (xhr.status === 500 || xhr.status === 0) {
+                            timerMessage('Niečo sa nepodarilo. Skúste znovu prosím.');
+                        }
+                    });
+            });
+
+            function timerMessage(message, type) {
+                form.hide();
+                messageContent.show();
+                messageContent.text(message);
+                setTimeout(function () {
+                    form.trigger('reset');
+                    modal.hide();
+                    messageContent.text('');
+                    form.show();
+                    messageContent.hide();
+                    if (type === 1) {
+                        window.location.reload();
+                        // window.location.href = 'adresa';
+                    } else {
+                        //
+                    }
+                }, 5000);
+            }
+        })();
+    </script>
 {% endblock %}
 

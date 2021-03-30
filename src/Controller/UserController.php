@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\Order;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Services\FormValidationService;
@@ -210,6 +212,80 @@ class UserController extends AbstractController
 
         }
         return $this->redirectToRoute('user_index');
+    }
+
+
+    /**
+     * Vymaže používateľa, ktorý je aktualne prihlásený.
+     * Používateľ musí akciu potvrdiť svojím heslom.
+     * Ak má používateľ nezaplatené objednávky používateľa nie je možné vymazať
+     * Po vymazaní používateľa sa vymažú aj jeho pridané tovary!
+     *
+     * @Route("/user-account-delete", name="user_account_delete")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return JsonResponse
+     */
+    public function deleteUser(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $data['id'];
+        $data = $request->request->get('delete');
+        //TODO: Funguje ale vyhodi akysi error, napriek nemu vsetko prebehne ako má.
+        $em = $this->getDoctrine()->getManager();
+        $acutalLoggedUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['id' => $data['id']]);
+
+
+        $actualLoggedUserPassword = $data['password']; //Z FORMULARA
+        $actualLoggedUserEmail = $data['email'];
+
+        $encodedPassword = $encoder->encodePassword($acutalLoggedUser, $acutalLoggedUser->getPassword());
+
+        $actualLoggedUserPasswordDB = $acutalLoggedUser->getPassword();
+        $actualLoggedUserEmailDB = $acutalLoggedUser->getEmail();
+
+//        return new JsonResponse(['success' => true, 'message' => 'Používateľ bol úspešne odstránený.']);
+//        return new JsonResponse(['success' => false, 'message' => 'Nesprávne prihlasovacie údaje. Skúste znovu.']);
+        return new JsonResponse(['success' => false, 'message' => 'Nemáte zaplatené niektoré objednávky, účet nie je možné zmazať.']);
+
+        //ESTE POROVNAT HESLA, MAILY, AK SEDI TAK VYKONAT CO SA MA PRI MAZANI
+
+//        if () {
+//
+//        }
+
+//        if ($this->isDeletable($acutalLoggedUser)) {
+//            $usersArticles = $this->getDoctrine()->getRepository(Article::class)
+//                ->findBy(['user_id' => $acutalLoggedUser->getId()]);
+//
+//            foreach ($usersArticles as $article) {
+//                $em->remove($article);
+//            }
+//
+//            $em->remove($acutalLoggedUser);
+//            $em->flush();
+//        }
+//        return $this->redirectToRoute('app_homepage');
+
+    }
+
+//    /**
+//     * Ak má aktuálne prihlásený používateľ zaplatené všetky objednávky, môže byť vymazaný.
+//     */
+    private function isDeletable(User $user)
+    {
+        $choosenUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $user->getEmail()]);
+
+        $usersOrders = $this->getDoctrine()->getRepository(Order::class)
+            ->findBy(['user_id' => $choosenUser->getId()]);
+
+        foreach ($usersOrders as $order) {
+            if ($order->getPaid() == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

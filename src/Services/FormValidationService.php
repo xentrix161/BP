@@ -10,7 +10,6 @@ class FormValidationService
     private $validateArray = [];
     private $flashMessage = "";
 
-
     /**
      * Vráti TRUE ak zadané kontrolné funkcie splnili podmienky.
      * @return bool

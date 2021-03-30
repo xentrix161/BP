@@ -16,7 +16,6 @@ use App\Entity\User;
 use App\Form\RegisterType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Constraints\Date;
 
 
 class RegisterController extends AbstractController
@@ -42,7 +41,7 @@ class RegisterController extends AbstractController
      * @param MailerInterface $mailer
      * @return Response
      */
-    public function registerU(Request $request, MailerInterface $mailer)
+    public function registerNewUser(Request $request, MailerInterface $mailer)
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_homepage');
@@ -117,29 +116,50 @@ class RegisterController extends AbstractController
 
 
     /**
-     * Overí platnosť aktivačného tokenu a presmeruje na aktivačný formulár.
-     * @Route("/activate-account/", name="activate_account")
-     * @param $status
+     * @Route("/activate-account/{token}", name="activate_account")     *
+     * @param $token
      * @return RedirectResponse|Response
      */
-    public function accountActivation($status)
+    public function accountActivation($token)
     {
-//        $tempUser = $this->getDoctrine()->getRepository(User::class)
-//            ->findOneBy(['token' => $token]);
-//
-//        if (empty($tempUser)) {
-//            $tempUser = $this->getDoctrine()->getRepository(User::class)
-//                ->findOneBy(['email' => $token]);
-//        }
-//
-//        if (empty($tempUser)) {
-//            //TODO: Upravit na registraciu
-//            return $this->redirectToRoute('shopping_cart');
-//        }
+        $em = $this->getDoctrine()->getManager();
+        $tempUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['token' => $token]);
 
+        if (empty($tempUser)) {
+            return $this->redirectToRoute('register-form');
+        }
+
+        $actualDate = new \DateTime();
+
+        //vydumpovat request, zobrat token, najast v DB podla tokenu, zobrat email, poslat nan novy token datum a link
+
+
+        if ($tempUser->getTokenDate()->modify('+ 7 days') > $actualDate
+            && $token == $tempUser->getToken()) {
+            $status = 'success';
+
+            $tempUser->setToken('activated');
+            $tempUser->setActivate(true);
+            $em->persist($tempUser);
+            $em->flush();
+
+            return $this->render('activateAcc.html.twig', [
+                'status' => $status,
+                'token' => $token
+            ]);
+        }
+
+        if ($tempUser->getTokenDate()->modify('+ 7 days') < $actualDate) {
+            $status = 'tokExp';
+        } elseif ($tempUser->getTokenDate()->modify('+ 7 days') > $actualDate
+            && $tempUser->getActivate() == false) {
+            $status = 'notActivated';
+        }
 
         return $this->render('activateAcc.html.twig', [
             'status' => $status,
+            'token' => $token
 //            'email' => $tempUser->getEmail(),
         ]);
     }
@@ -166,6 +186,52 @@ class RegisterController extends AbstractController
             $mailer->send($email);
         } catch (TransportExceptionInterface $e) {
         }
+    }
+
+    /**
+     * Vytvorí nový aktivačný email.
+     *
+     * @Route("/resend-activate-email/{token}", name="resend_activate_mail")
+     * @param MailerInterface $mailer
+     * @param $token
+     * @return RedirectResponse
+     */
+    public function resendEmail(MailerInterface $mailer, $token)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $userForEmail = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['token' => $token]);
+
+        if (empty($userForEmail)) {
+            return $this->redirectToRoute('activate_account');
+        }
+
+        $userEmail = $userForEmail->getEmail();
+        $newToken = md5(uniqid());
+
+
+
+        $email = (new TemplatedEmail())
+            ->from('filipkosmel@gmail.com')
+            ->to($userEmail)
+            ->priority(Email::PRIORITY_HIGH)
+            ->subject('Registrácia - aktivácia účtu')
+            ->htmlTemplate('email/register.html.twig')
+            ->context([
+                'token' => $newToken
+            ]);
+
+        try {
+            $userForEmail->setToken($newToken);
+            $userForEmail->setTokenDate(new \DateTime());
+            $em->persist($userForEmail);
+            $em->flush();
+
+            $mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+        }
+        return $this->redirectToRoute('app_login');
     }
 
     /**

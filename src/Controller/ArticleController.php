@@ -57,7 +57,7 @@ class ArticleController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function getArticle($id)
+    public function getArticleDetail($id)
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute("access_denied");
@@ -97,8 +97,11 @@ class ArticleController extends AbstractController
         ]);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
+//            dump($request); die;
+            $catId = $request->request->get('article')['cat_id'];
             $file = $request->files->get('article')['img'];
             $uploads_directory = $this->getParameter('uploads_directory');
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
@@ -107,6 +110,14 @@ class ArticleController extends AbstractController
                 $uploads_directory,
                 $fileName
             );
+
+
+            //Nezaradené
+            $category = $this->getDoctrine()->getRepository(Category::class)->find(9);
+            // ak nezvolia kategóriu tak nezaradené
+            if (empty($catId)) {
+                $article->setCatId($category);
+            }
 
             $article->setImg($fileName);
             $article->setUserId((int)$loggedUser->getId());
