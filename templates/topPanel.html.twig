@@ -48,7 +48,7 @@
                 </li>
             {% else %}
                 <li>
-                    <a href="{{ url('user_edit', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
+                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
                 </li>
                 <li>
                     <a id="item-counter"

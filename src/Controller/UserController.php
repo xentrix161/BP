@@ -9,6 +9,7 @@ use App\Form\UserType;
 use App\Services\FormValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -224,49 +225,41 @@ class UserController extends AbstractController
      * @Route("/user-account-delete", name="user_account_delete")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
-     * @return JsonResponse
+     * @return JsonResponse|RedirectResponse
      */
     public function deleteUser(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        $data['id'];
         $data = $request->request->get('delete');
         //TODO: Funguje ale vyhodi akysi error, napriek nemu vsetko prebehne ako má.
         $em = $this->getDoctrine()->getManager();
+
         $acutalLoggedUser = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(['id' => $data['id']]);
-
-
         $actualLoggedUserPassword = $data['password']; //Z FORMULARA
         $actualLoggedUserEmail = $data['email'];
 
-        $encodedPassword = $encoder->encodePassword($acutalLoggedUser, $acutalLoggedUser->getPassword());
+        if ($acutalLoggedUser->getEmail() == $actualLoggedUserEmail) {
+            if ($this->passwordEncoder->isPasswordValid($acutalLoggedUser, $actualLoggedUserPassword)) {
+                if ($this->isDeletable($acutalLoggedUser)) {
+                    $usersArticles = $this->getDoctrine()->getRepository(Article::class)
+                        ->findBy(['user_id' => $acutalLoggedUser->getId()]);
 
-        $actualLoggedUserPasswordDB = $acutalLoggedUser->getPassword();
-        $actualLoggedUserEmailDB = $acutalLoggedUser->getEmail();
+                    foreach ($usersArticles as $article) {
+                        $em->remove($article);
+                    }
 
-//        return new JsonResponse(['success' => true, 'message' => 'Používateľ bol úspešne odstránený.']);
-//        return new JsonResponse(['success' => false, 'message' => 'Nesprávne prihlasovacie údaje. Skúste znovu.']);
-        return new JsonResponse(['success' => false, 'message' => 'Nemáte zaplatené niektoré objednávky, účet nie je možné zmazať.']);
-
-        //ESTE POROVNAT HESLA, MAILY, AK SEDI TAK VYKONAT CO SA MA PRI MAZANI
-
-//        if () {
-//
-//        }
-
-//        if ($this->isDeletable($acutalLoggedUser)) {
-//            $usersArticles = $this->getDoctrine()->getRepository(Article::class)
-//                ->findBy(['user_id' => $acutalLoggedUser->getId()]);
-//
-//            foreach ($usersArticles as $article) {
-//                $em->remove($article);
-//            }
-//
-//            $em->remove($acutalLoggedUser);
-//            $em->flush();
-//        }
-//        return $this->redirectToRoute('app_homepage');
-
+                    $em->remove($acutalLoggedUser);
+                    $em->flush();
+                    return $this->redirectToRoute('app_homepage');
+//                    return new JsonResponse(['success' => true, 'message' => 'Používateľ bol úspešne odstránený.']);
+                } else {
+                    return new JsonResponse(['success' => false, 'message' => 'Nemáte zaplatené niektoré objednávky, účet nie je možné zmazať.']);
+                }
+            } else {
+                return new JsonResponse(['success' => false, 'message' => 'Nesprávne prihlasovacie údaje. Skúste znovu.']);
+            }
+        }
+        return new JsonResponse(['success' => false, 'message' => 'Nastala neznáma chyba.']);
     }
 
 //    /**

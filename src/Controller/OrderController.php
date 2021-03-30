@@ -41,7 +41,11 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newInvoiceNumber = $this->createInvoiceNumber();
+
             $entityManager = $this->getDoctrine()->getManager();
+            $order->setDate(new \DateTime());
+            $order->setInvoiceNumber($newInvoiceNumber);
             $entityManager->persist($order);
             $entityManager->flush();
 
@@ -107,5 +111,25 @@ class OrderController extends AbstractController
         }
 
         return $this->redirectToRoute('order_index');
+    }
+
+    /**
+     * Vytvorí unikátne číslo faktúry.
+     * @return int
+     */
+    private function createInvoiceNumber()
+    {
+        $currDate = date("ym");
+
+        $lastInvoiceThisMonth = $this->getDoctrine()->getRepository(Order::class)
+            ->findBy(array(),array('invoice_number'=>'DESC'),1,0);
+        $invoiceNum = (int)$lastInvoiceThisMonth[0]->getInvoiceNumber();
+
+        if (!is_null($invoiceNum) && substr((string)$invoiceNum, 0, 4) === $currDate) {
+            $newInvoiceNumber = $invoiceNum + 1;
+        } else {
+            $newInvoiceNumber = $currDate . '0001';
+        }
+        return (int)$newInvoiceNumber;
     }
 }

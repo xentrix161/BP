@@ -103,8 +103,10 @@
                     form.show();
                     messageContent.hide();
                     if (type === 1) {
-                        window.location.reload();
-                        // window.location.href = 'adresa';
+                        form.preventDefault();
+                        window.location.href = 'http://127.0.0.1:8000/homepage';
+                        // window.open('http://127.0.0.1:8000/homepage');
+                        // window.location.reload();
                     } else {
                         //
                     }

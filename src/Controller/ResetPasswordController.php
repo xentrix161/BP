@@ -120,7 +120,6 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $password = $form->get('plainPassword')->getData();
-            //TU TO VYTVOR MATKY PICI
             $bool = $this->formValidationService
                 ->passwordLength($password)
                 ->passwordChars($password)
@@ -192,7 +191,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('filipkosmel@gmail.com', 'Admin Filip'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Obnova hesla')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
