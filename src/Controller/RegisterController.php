@@ -87,15 +87,15 @@ class RegisterController extends AbstractController
                     $user->setActivate(0);
                     $em->persist($user);
                     $em->flush();
-                    $message = "Používateľ bol zaregistrovaný. Na Váš email bol zaslaný aktivačný email.";
-
                     $this->sendEmail($mailer, $userEmail, $token);
+
+                    $message = "Používateľ bol zaregistrovaný. Na Váš email bol zaslaný aktivačný email.";
 
                     if (!empty($message)) {
                         $this->addFlash('info', $message);
                     }
 
-                    return $this->redirectToRoute('app_login');
+                    return $this->redirectToRoute('register-form');
                 } else {
                     $message = "Email sa už používa! Zadajte iný prosím.";
                 }
@@ -209,7 +209,6 @@ class RegisterController extends AbstractController
 
         $userEmail = $userForEmail->getEmail();
         $newToken = md5(uniqid());
-
 
 
         $email = (new TemplatedEmail())

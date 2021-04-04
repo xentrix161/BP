@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Security;
 class HomepageController extends AbstractController
 {
 //HOMEPAGE
-    private $limitArticlesPerPage = 3;
+    private $limitArticlesPerPage = 1;
     private $security;
     private $roleService;
     private $chartService;

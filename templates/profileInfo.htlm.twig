@@ -1,27 +1,18 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-    {% if app.user.role[0] == 'ROLE_USER' or app.user.role[0] == 'ROLE_NONE' %}
-        <div class="form-wrapper">
-            {# <div>Email: {{ app.user.email }}</div> #}
-            <div>Minul si: {{ app.user.expense }}</div>
-            <div>Aktivovany: {{ app.user.activate }}</div>
-            {# <div>Rola: {{ app.user.role }}</div> #}
-            <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
-            <a class="delete-acc" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
-        </div>
-    {% else %}
-        <div class="form-wrapper">
-            {# <div>Email: {{ app.user.email }}</div> #}
-            <div>Minul si: {{ app.user.expense }}</div>
-            <div>Aktivovany: {{ app.user.activate }}</div>
-            {# <div>Rola: {{ app.user.role }}</div> #}
+    <div class="form-wrapper">
+        <div>Minul si: {{ app.user.expense }}</div>
+        <div>Aktivovany: {{ app.user.activate }}</div>
+
+        {% if app.user.role[0] == 'ROLE_SELLER' or app.user.role[0] == 'ROLE_ADMIN' %}
             <div>Zárobok: {{ app.user.earning }}</div>
             <div>Hodnotenie: {{ app.user.rating }}</div>
-            <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
-            <a class="delete-acc" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
-        </div>
-    {% endif %}
+        {% endif %}
+
+        <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+        <a class="delete-acc" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
+    </div>
 
     <div class="delete-modal form-wrapper">
         <div id="delete-modal-message"></div>
@@ -103,12 +94,8 @@
                     form.show();
                     messageContent.hide();
                     if (type === 1) {
-                        form.preventDefault();
                         window.location.href = 'http://127.0.0.1:8000/homepage';
-                        // window.open('http://127.0.0.1:8000/homepage');
-                        // window.location.reload();
                     } else {
-                        //
                     }
                 }, 5000);
             }

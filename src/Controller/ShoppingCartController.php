@@ -79,7 +79,6 @@ class ShoppingCartController extends AbstractController
                 ['error' => base64_encode(join('-', $notAvailableItems))]);
         }
 
-
         $this->mailer = $mailer;
 
         if (!$this->getUser()) {

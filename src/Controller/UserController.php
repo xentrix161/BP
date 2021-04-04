@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
@@ -24,14 +25,20 @@ class UserController extends AbstractController
     private $passwordEncoder;
     private $formValidationService;
     private $security;
+    private $session;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder,
-                                FormValidationService $formValidationService,
-                                Security $security)
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        FormValidationService $formValidationService,
+        Security $security,
+        SessionInterface $session
+    )
+
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->formValidationService = $formValidationService;
         $this->security = $security;
+        $this->session = $session;
     }
 
     /**
@@ -247,11 +254,12 @@ class UserController extends AbstractController
                     foreach ($usersArticles as $article) {
                         $em->remove($article);
                     }
-
                     $em->remove($acutalLoggedUser);
                     $em->flush();
-                    return $this->redirectToRoute('app_homepage');
-//                    return new JsonResponse(['success' => true, 'message' => 'Používateľ bol úspešne odstránený.']);
+
+                    $this->get('security.token_storage')->setToken(null);
+                    $request->getSession()->invalidate();
+                    return new JsonResponse(['success' => true, 'message' => 'Používateľ bol úspešne odstránený.']);
                 } else {
                     return new JsonResponse(['success' => false, 'message' => 'Nemáte zaplatené niektoré objednávky, účet nie je možné zmazať.']);
                 }
@@ -262,9 +270,11 @@ class UserController extends AbstractController
         return new JsonResponse(['success' => false, 'message' => 'Nastala neznáma chyba.']);
     }
 
-//    /**
-//     * Ak má aktuálne prihlásený používateľ zaplatené všetky objednávky, môže byť vymazaný.
-//     */
+    /**
+     * Ak má vložený používateľ zaplatené všetky objednávky, môže byť vymazaný.
+     * @param User $user
+     * @return bool
+     */
     private function isDeletable(User $user)
     {
         $choosenUser = $this->getDoctrine()->getRepository(User::class)
@@ -285,9 +295,10 @@ class UserController extends AbstractController
     /**
      * Vyrendruje stránku pre informácie o profile a úpravu profilu.
      * @Route("/profile", name="profile_info", methods={"GET"})
+     * @param Request $request
      * @return Response
      */
-    public function profileInfo()
+    public function profileInfo(Request $request)
     {
         return $this->render('profileInfo.htlm.twig');
     }
