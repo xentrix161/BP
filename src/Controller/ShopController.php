@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Shop;
 use App\Form\ShopType;
 use App\Repository\ShopRepository;
+use App\Services\InputValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShopController extends AbstractController
 {
+    private $inputValidationService;
+    public function __construct(InputValidationService $inputValidationService)
+    {
+        $this->inputValidationService = $inputValidationService;
+    }
+
     /**
      * Vyrendruje zoznam všetkých záznamov o portáli.
      * @Route("/admin/", name="shop_index", methods={"GET"})
@@ -28,6 +35,8 @@ class ShopController extends AbstractController
         ]);
     }
 
+
+    //TODO: odstranit
     /**
      * Vyrendruje formulár na vytvorenie nového záznamu o portáli.
      * @Route("/admin/new", name="shop_new", methods={"GET","POST"})
@@ -67,6 +76,8 @@ class ShopController extends AbstractController
         ]);
     }
 
+
+    //TODO: odstranit
     /**
      * Vyrendruje formulár na edit záznamu o portáli podľa ID.
      * @Route("/admin/{id}/edit", name="shop_edit", methods={"GET","POST"})
@@ -91,6 +102,8 @@ class ShopController extends AbstractController
         ]);
     }
 
+
+    //TODO: odstranit
     /**
      * Vymaže záznam o portáli podľa ID.
      * @Route("/admin/{id}", name="shop_delete", methods={"DELETE"})

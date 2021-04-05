@@ -2,54 +2,6 @@
 
 {% block body %}
     {% include "categoryPanel.html.twig" %}
-    {#    <input type="checkbox" id="panel-open-close">#}
-{#    <div class="category-panel">#}
-{#        <div id="dateDisplay"></div>#}
-{#        <div id="timeDisplay"></div>#}
-
-{#        <a class="homepage-title" href="/homepage">pAnkst0re!</a>#}
-{#        <label class="close-btn" for="panel-open-close">&times;</label>#}
-{#        <h2>Kategórie</h2>#}
-{#        {% for ctg in categories %}#}
-{#            <a href="{{ url('app_homepage_category', {'id': ctg.id}) }}">{{ ctg.name }}</a>#}
-{#        {% endfor %}#}
-{#        <div class="chart">#}
-{#            <h2 class="chart-main-label">Rebríčky</h2>#}
-{#            <ul class="chart-content-box">#}
-{#                {% if charts == null %}#}
-{#                    <div>&lt;žiadne k dispozícii&gt;</div>#}
-{#                {% endif %}#}
-
-
-
-{#                {% for key, value in charts %}#}
-{#                    {% if value != null %}#}
-{#                        <li class="chart-single-box">#}
-{#                            <input type="checkbox" id="chart-{{ loop.index }}">#}
-{#                            <span class="chart-title">#}
-{#                            <label for="chart-{{ loop.index }}">{{ key }}</label>#}
-{#                        </span>#}
-{#                            <ol class="chart-data">#}
-{#                                {% for data in value %}#}
-{#                                    <li class="chart-row">#}
-{#                                        <span>{{ loop.index }}.</span>#}
-{#                                        <span>{{ data['name'] }}</span>#}
-{#                                        <span>{{ data['data'] }}</span>#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-{#                            </ol>#}
-{#                        </li>#}
-{#                    {% endif %}#}
-{#                {% endfor %}#}
-{#            </ul>#}
-
-{#        </div>#}
-{#    </div>#}
-
-{#    <div id="main">#}
-{#        <label class="open-btn" for="panel-open-close">&#9776; Ponuka</label>#}
-{#    </div>#}
-
     <div class="collection">
         {% for item in data %}
             <div class="product">

@@ -99,7 +99,6 @@ class UserController extends AbstractController
                     $user->setTokenDate(new \DateTime());
                     $entityManager->persist($user);
                     $entityManager->flush();
-                    $message = "Používateľ bol vytvorený úspešne.";
                     return $this->redirectToRoute('user_index');
                 } else {
                     $message = "Email sa už používa! Zadajte iný prosím.";
@@ -113,6 +112,7 @@ class UserController extends AbstractController
                 );
             }
         }
+
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
@@ -180,6 +180,7 @@ class UserController extends AbstractController
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $userPass1));
                     $this->getDoctrine()->getManager()->flush();
                     $message = "Používateľ bol upravený úspešne.";
+
                     return $this->redirectToRoute('user_index');
                 } else {
                     $message = "Email sa už používa! Zadajte iný prosím.";

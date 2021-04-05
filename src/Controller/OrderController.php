@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
+use App\Services\InputValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class OrderController extends AbstractController
 {
+    private $inputValidationService;
+    public function __construct(InputValidationService $inputValidationService)
+    {
+        $this->inputValidationService = $inputValidationService;
+    }
+
     /**
      * Vyrendruje zoznam všetkých objednávok.
      * @Route("/admin/", name="order_index", methods={"GET"})
@@ -28,6 +35,7 @@ class OrderController extends AbstractController
         ]);
     }
 
+    //TODO: odstranit
     /**
      * Vyrendruje formulár na vytvorenie novej objednávky.
      * @Route("/admin/new", name="order_new", methods={"GET","POST"})
@@ -84,9 +92,25 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $formData = $form->getData();
 
-            return $this->redirectToRoute('order_index');
+            $price = $formData->getTotalPrice();
+            $mobile = $formData->getMobile();
+
+            $bool = $this->inputValidationService
+                ->price($price)
+                ->mobileNumber($mobile)
+                ->validate();
+
+            $message = $this->inputValidationService->getMessage();
+            if (!empty($message)) {
+                $this->addFlash('info', $message);
+            }
+
+            if ($bool) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('order_index');
+            }
         }
 
         return $this->render('order/edit.html.twig', [

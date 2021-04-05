@@ -18,9 +18,9 @@
 
     {% elseif status == 'success' %}
 
-    <div class="form-wrapper" data-redirect="10">
+    <div class="form-wrapper" >
         Váš účet bol úspešne aktivovaný. Môžete pokračovať na <a href="{{ path('app_login') }}">prihlásenie</a>
-        Automatické presmerovanie na prihlásenie prebehne za 10 sekúnd.
+        Automatické presmerovanie na prihlásenie prebehne za <span data-redirect="/login" data-redirect-time="10">10 sekúnd</span>.
     </div>
 
     {% endif %}

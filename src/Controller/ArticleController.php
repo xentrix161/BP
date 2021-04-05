@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Entity\User;
 use App\Form\ArticleType;
 use App\Services\ChartsService;
+use App\Services\InputValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,11 +21,17 @@ class ArticleController extends AbstractController
 {
     private $chartService;
     private $security;
+    private $inputValidationService;
 
-    public function __construct(ChartsService $chartService, Security $security)
+    public function __construct(
+        ChartsService $chartService,
+        Security $security,
+        InputValidationService $inputValidationService
+    )
     {
         $this->chartService = $chartService;
         $this->security = $security;
+        $this->inputValidationService = $inputValidationService;
     }
 
     /**
@@ -97,34 +104,51 @@ class ArticleController extends AbstractController
         ]);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
 
-//            dump($request); die;
-            $catId = $request->request->get('article')['cat_id'];
-            $file = $request->files->get('article')['img'];
-            $uploads_directory = $this->getParameter('uploads_directory');
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $title = $formData->getTitle();
+            $desc = $formData->getDescription();
+            $price = $formData->getPrice();
+            $amount = $formData->getAmount();
 
-            $file->move(
-                $uploads_directory,
-                $fileName
-            );
+            $bool = $this->inputValidationService
+                ->title($title)
+                ->description($desc)
+                ->price($price)
+                ->amount($amount)
+                ->validate();
 
-
-            //Nezaradené
-            $category = $this->getDoctrine()->getRepository(Category::class)->find(9);
-            // ak nezvolia kategóriu tak nezaradené
-            if (empty($catId)) {
-                $article->setCatId($category);
+            $message = $this->inputValidationService->getMessage();
+            if (!empty($message)) {
+                $this->addFlash('info', $message);
             }
 
-            $article->setImg($fileName);
-            $article->setUserId((int)$loggedUser->getId());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($article);
-            $entityManager->flush();
+            if ($bool) {
+                $catId = $request->request->get('article')['cat_id'];
+                $file = $request->files->get('article')['img'];
+                $uploads_directory = $this->getParameter('uploads_directory');
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
+                $file->move(
+                    $uploads_directory,
+                    $fileName
+                );
+
+                //Nezaradené
+                $category = $this->getDoctrine()->getRepository(Category::class)->find(9);
+                // ak nezvolia kategóriu tak nezaradené
+                if (empty($catId)) {
+                    $article->setCatId($category);
+                }
+
+                $article->setImg($fileName);
+                $article->setUserId((int)$loggedUser->getId());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($article);
+                $entityManager->flush();
+                return $this->redirectToRoute('article_index');
+            }
             return $this->redirectToRoute('article_index');
         }
 
@@ -192,30 +216,49 @@ class ArticleController extends AbstractController
         $oldImageName = "";
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $request->files->get('article')['img'];
 
-            $oldImageName = $article->getImg();
+            $formData = $form->getData();
 
-            try {
-                if (!empty($file)) {
-                    $uploads_directory = $this->getParameter('uploads_directory');
-                    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                    $file->move(
-                        $uploads_directory,
-                        $fileName
-                    );
-                    $article->setImg($fileName);
-                    if (!empty($oldImageName) && file_exists($uploads_directory . '/' . $oldImageName)) {
-                        unlink($uploads_directory . '/' . $oldImageName);
-                    }
-                }
-            } catch (\Exception $exception) {
-                //TODO: alert dorobit
+            $title = $formData->getTitle();
+            $desc = $formData->getDescription();
+            $price = $formData->getPrice();
+            $amount = $formData->getAmount();
+
+            $bool = $this->inputValidationService
+                ->title($title)
+                ->description($desc)
+                ->price($price)
+                ->amount($amount)
+                ->validate();
+
+            $message = $this->inputValidationService->getMessage();
+            if (!empty($message)) {
+                $this->addFlash('info', $message);
             }
 
+            if ($bool) {
+                $file = $request->files->get('article')['img'];
+                $oldImageName = $article->getImg();
+                try {
+                    if (!empty($file)) {
+                        $uploads_directory = $this->getParameter('uploads_directory');
+                        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                        $file->move(
+                            $uploads_directory,
+                            $fileName
+                        );
+                        $article->setImg($fileName);
+                        if (!empty($oldImageName) && file_exists($uploads_directory . '/' . $oldImageName)) {
+                            unlink($uploads_directory . '/' . $oldImageName);
+                        }
+                    }
+                } catch (\Exception $exception) {
+                    //TODO: alert dorobit
+                }
 
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('article_index');
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('article_index');
+            }
         }
 
         return $this->render('article/edit.html.twig', [

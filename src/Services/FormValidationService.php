@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 class FormValidationService
 {
@@ -12,9 +10,10 @@ class FormValidationService
 
     /**
      * Vráti TRUE ak zadané kontrolné funkcie splnili podmienky.
+     * @param string $route
      * @return bool
      */
-    public function validate(): bool
+    public function validate(string $route = ''): bool
     {
         $returnOutput = true;
         if (empty($this->validateArray)) {
@@ -67,8 +66,8 @@ class FormValidationService
      */
     public function email(string $email): self
     {
-        $special = preg_match('/([a-z0-9._%+-]+)@([a-z0-9.-]+)\.[a-z]{2,63}$/', strtolower($email), $match);
-        $this->validateArray['email'] = $special && strlen($match[1]) > 2;
+        $matchValue = preg_match('/([a-z0-9._%+-]+)@([a-z0-9.-]+)\.[a-z]{2,63}$/', strtolower($email), $match);
+        $this->validateArray['email'] = $matchValue && strlen($match[1]) > 2;
         return $this;
     }
 

@@ -22,6 +22,10 @@
 
     <link rel="icon" href="/uploads/icon.png">
 
+    <script>
+        window.domain = 'http://127.0.0.1:8000';
+    </script>
+
     {% block stylesheets %}
         {{ encore_entry_link_tags('homepage', 'webpack_assets') }}
     {% endblock %}
@@ -33,5 +37,17 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('homepage') }}
 {% endblock %}
+
+
+{% for message in app.flashes('info') %}
+    <script>
+        var msg = "{{ message }}";
+        if (!!msg) {
+            setTimeout(function () {
+                alert(msg)
+            }, 20);
+        }
+    </script>
+{% endfor %}
 </body>
 </html>

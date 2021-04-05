@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Services\InputValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoryController extends AbstractController
 {
+    private $inputValidationService;
+
+    public function __construct(InputValidationService $inputValidationService)
+    {
+        $this->inputValidationService = $inputValidationService;
+    }
+
+
     /**
      * Vyrendruje zoznam všetkých kategórií.
      * @Route("/admin/", name="category_index", methods={"GET"})
@@ -42,11 +51,27 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
+            $formData = $form->getData();
 
-            return $this->redirectToRoute('category_index');
+            $title = $formData->getName();
+            $slug = $formData->getSlug();
+
+            $bool = $this->inputValidationService
+                ->title($title)
+                ->slug($slug)
+                ->validate();
+
+            $message = $this->inputValidationService->getMessage();
+            if (!empty($message)) {
+                $this->addFlash('info', $message);
+            }
+
+            if ($bool) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($category);
+                $entityManager->flush();
+                return $this->redirectToRoute('category_index');
+            }
         }
 
         return $this->render('category/new.html.twig', [
@@ -81,9 +106,25 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $formData = $form->getData();
 
-            return $this->redirectToRoute('category_index');
+            $title = $formData->getName();
+            $slug = $formData->getSlug();
+
+            $bool = $this->inputValidationService
+                ->title($title)
+                ->slug($slug)
+                ->validate();
+
+            $message = $this->inputValidationService->getMessage();
+            if (!empty($message)) {
+                $this->addFlash('info', $message);
+            }
+
+            if ($bool) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('category_index');
+            }
         }
 
         return $this->render('category/edit.html.twig', [

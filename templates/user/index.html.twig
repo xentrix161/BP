@@ -39,13 +39,4 @@
     <div class="create-new">
         <a href="{{ path('user_new') }}">Vytvoriť nového užívateľa</a>
     </div>
-
-    {% for message in app.flashes('info') %}
-        <script>
-            var msg = "{{ message }}";
-            setTimeout(function () {
-                alert(msg)
-            }, 20);
-        </script>
-    {% endfor %}
 {% endblock %}

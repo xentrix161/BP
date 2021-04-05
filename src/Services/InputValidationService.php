@@ -55,6 +55,7 @@ class InputValidationService
     public function slug(string $slug): self
     {
         if (strlen(str_replace(' ', '', $slug)) < 3) {
+            $this->validateArray['slug'] = false;
             return $this;
         }
 
@@ -76,37 +77,40 @@ class InputValidationService
         return $this;
     }
 
-//    public function address(string $address): self
-//    {
-//        //$special = preg_match('@[$-/:-?<>{-~!"^_`\[\]]@', $surname);
-//        $this->validateArray['address'] = true;
-//        return $this;
-//    }
-
     public function city(string $city): self
     {
+        $matchValue = preg_match('@([a-zA-Z. ľščťžýáíé])@', $city);
 
-        //TODO
-        $form = preg_match('@([a-zA-Z. ľščťžýáíé])@', $city);
-
-        $this->validateArray['city'] = $form;
+        $this->validateArray['city'] = $matchValue;
         return $this;
     }
 
     public function zip(string $zip): self
     {
-        //TODO
+        $zip = str_replace(' ', '', $zip);
+        $matchValue = preg_match('/[0-9]{5}/', $zip);
+
+        $this->validateArray['zip'] = $matchValue;
+        return $this;
     }
 
     public function street(string $street): self
     {
-        //TODO
+        $street = preg_replace('!\s+!', ' ', $street);
+        $matchValue = preg_match('/^[a-zA-Z]+[a-zA-Z \d\/]+/', $street);
+
+        $this->validateArray['street'] = $matchValue;
+        return $this;
     }
 
 
     public function mobileNumber(string $mobileNumber): self
     {
-        //TODO
+        $mobileNumber = str_replace(' ', '', $mobileNumber);
+        $matchValue = preg_match('/^(00|\+)(42[01])[\d]{7,9}$/', $mobileNumber);
+
+        $this->validateArray['mobileNumber'] = $matchValue;
+        return $this;
     }
 
     /**
@@ -159,21 +163,20 @@ class InputValidationService
             ],
             'city' => [
                 'success' => '',
-                'error' => 'Mesto nie je v správnom tvare!'
+                'error' => 'Mesto nie je v správnom tvare! (napr. Dolný Kubín)'
             ],
             'zip' => [
                 'success' => '',
-                'error' => 'PSČ nie je v správnom tvare!'
+                'error' => 'PSČ nie je v správnom tvare (napr. 02601)!'
             ],
             'street' => [
                 'success' => '',
-                'error' => 'Ulica nie je v správnom tvare!'
+                'error' => 'Ulica nie je v správnom tvare (Ulica číslo)!'
             ],
             'mobileNumber' => [
                 'success' => '',
-                'error' => 'Mobil nie je v správnom tvare!'
+                'error' => 'Mobil nie je v správnom tvare, skontrolujte či začína predvoľbou +421 alebo +420!'
             ]
-
         ];
         return $messagesArray[$fieldName][$infoType];
     }
@@ -184,7 +187,7 @@ class InputValidationService
             'Ć'=>'C', 'ć'=>'c', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A',
             'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
             'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o',
-            'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o',  'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r',
+            'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o',  'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r',
             'Ľ' => 'L', 'Ĺ' => 'L', 'ľ' => 'l', 'ĺ' => 'l', 'Ť' => 'T', 'ť' => 't', 'Ď' => 'D', 'ď' => 'd', 'Ň' => 'N', 'ň' => 'n', 'Ř' => 'R', 'ř' => 'r', 'Ů' => 'U', 'ů' => 'r',
 
         );
