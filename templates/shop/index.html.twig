@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-
-<title>Shop index</title>
-
+{% extends 'page_temps/base_temp.html.twig' %}
 {% block body %}
     <h1>Shop index</h1>
 
@@ -22,7 +19,7 @@
                 <td>{{ shop.orderId }}</td>
                 <td>
                     <a href="{{ path('shop_show', {'id': shop.id}) }}">show</a>
-                    <a href="{{ path('shop_edit', {'id': shop.id}) }}">edit</a>
+{#                    <a href="{{ path('shop_edit', {'id': shop.id}) }}">edit</a>#}
                 </td>
             </tr>
         {% else %}
@@ -33,5 +30,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('shop_new') }}">Create new</a>
+{#    <a href="{{ path('shop_new') }}">Create new</a>#}
 {% endblock %}

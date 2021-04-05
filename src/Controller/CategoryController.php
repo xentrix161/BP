@@ -54,11 +54,12 @@ class CategoryController extends AbstractController
             $formData = $form->getData();
 
             $title = $formData->getName();
-            $slug = $formData->getSlug();
+//            $slug = $formData->getSlug();
+
 
             $bool = $this->inputValidationService
                 ->title($title)
-                ->slug($slug)
+//                ->slug($slug)
                 ->validate();
 
             $message = $this->inputValidationService->getMessage();
@@ -68,6 +69,16 @@ class CategoryController extends AbstractController
 
             if ($bool) {
                 $entityManager = $this->getDoctrine()->getManager();
+                $slug = str_replace(' ', '-', $title);
+                $slug = $this->inputValidationService->normalize($slug);
+
+                if (strlen($slug) < 3) {
+                    $slug .= '-slug';
+                }
+
+                $slug = strtolower($slug);
+                $category->setSlug($slug);
+
                 $entityManager->persist($category);
                 $entityManager->flush();
                 return $this->redirectToRoute('category_index');
@@ -122,6 +133,11 @@ class CategoryController extends AbstractController
             }
 
             if ($bool) {
+                $slug = str_replace(' ', '-', $slug);
+                $slug = $this->inputValidationService->normalize($slug);
+                $slug = strtolower($slug);
+                $category->setSlug($slug);
+
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('category_index');
             }

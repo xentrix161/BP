@@ -6,6 +6,8 @@ use App\Entity\Article;
 use App\Entity\Order;
 use App\Entity\Shop;
 use App\Entity\User;
+use App\Services\FormValidationService;
+use App\Services\InputValidationService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,12 +30,21 @@ class ShoppingCartController extends AbstractController
     private $session;
     private $security;
     private $mailer;
+    private $inputValidationService;
+    private $formValidationService;
 
-    public function __construct(SessionInterface $session, Security $security, MailerInterface $mailer)
+    public function __construct(
+        SessionInterface $session,
+        Security $security, MailerInterface $mailer,
+        InputValidationService $inputValidationService,
+        FormValidationService $formValidationService
+    )
     {
         $this->session = $session;
         $this->security = $security;
         $this->mailer = $mailer;
+        $this->inputValidationService = $inputValidationService;
+        $this->formValidationService = $formValidationService;
     }
 
     /**
@@ -70,7 +81,8 @@ class ShoppingCartController extends AbstractController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function cashDesk(MailerInterface $mailer, Request $request) {
+    public function cashDesk(MailerInterface $mailer, Request $request)
+    {
         $notAvailableItems = $this->checkAvailableItems();
 
         if (!empty($notAvailableItems)) {
@@ -95,44 +107,82 @@ class ShoppingCartController extends AbstractController
         $requestData = $request->request->get('cashdesk');
 
         if (!is_null($requestData) && !empty($requestData['submit'])) {
-            $order = new Order();
-            $shopProfit = new Shop();
-            $currTime = new \DateTime();
-//            $currTime->modify('+ 1 hour');
+//            $formData = $form->getData();
 
-            $fullAddress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
+//            dump($requestData); die;
 
-            $newInvoiceNumber = $this->createInvoiceNumber();
-            $shopProf = $this->getTotalPrice()*0.05;
+            $name = $requestData['name'];
+            $surname = $requestData['surname'];
+            $street = $requestData['address'];
+            $city = $requestData['city'];
+            $zip = $requestData['zip'];
+            $mobileNumber = $requestData['phone'];
 
-            $order->setDate($currTime);
-            $order->setAddress($fullAddress);
-            $order->setTotalPrice($this->getTotalPrice());
-            $order->setUserId($userToUpdateBuyer->getId());
-            $order->setMobile($requestData['phone']);
-            $order->setInvoiceNumber($newInvoiceNumber);
-            $order->setPaymentMethod($requestData['method']);
-            $order->setPaid(rand(0,1));
-            $em->persist($order);
+            $boolForm = $this->formValidationService
+                ->name($name)
+                ->surname($surname)
+                ->validate();
 
-            $userToUpdateBuyer->setExpense($userToUpdateBuyer->getExpense() + $this->getTotalPrice());
+            $boolInput = $this->inputValidationService
+                ->street($street)
+                ->city($city)
+                ->zip($zip)
+                ->mobileNumber($mobileNumber)
+                ->validate();
 
-            $em->persist($userToUpdateBuyer);
-            $em->flush();
+            $message = $this->formValidationService->getMessage();
 
-            $tempOrder = $this->getDoctrine()->getRepository(Order::class)
-                ->findOneBy(['invoice_number' => $newInvoiceNumber]);
+            if (empty($message)) {
+                $message = $this->inputValidationService->getMessage();
+            }
+            if (!empty($message)) {
+                $this->addFlash('info', $message);
+            }
+            $bool = $boolForm && $boolInput;
 
-            $shopProfit->setOrderId($tempOrder->getId());
-            $shopProfit->setProfit($shopProf);
-            $em->persist($shopProfit);
+            if ($bool) {
+                $order = new Order();
+                $shopProfit = new Shop();
+                $currTime = new \DateTime();
 
-            $this->setExpensesToArticleOwners();
-            $em->flush();
+                $fullAddress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
 
-            $this->sendEmail($mailer, $order->getInvoiceNumber());
+                $newInvoiceNumber = $this->createInvoiceNumber();
+                $shopProf = $this->getTotalPrice() * 0.05;
 
-            $this->deleteFullShoppingCart();
+                $order->setDate($currTime);
+                $order->setAddress($fullAddress);
+                $order->setTotalPrice($this->getTotalPrice());
+                $order->setUserId($userToUpdateBuyer->getId());
+
+                $phoneNumber = str_replace(' ', '', $requestData['phone']);
+                $phoneNumber = preg_replace('/^(00)/', '+', $phoneNumber);
+
+                $order->setMobile($phoneNumber);
+                $order->setInvoiceNumber($newInvoiceNumber);
+                $order->setPaymentMethod($requestData['method']);
+                $order->setPaid(rand(0, 1));
+                $em->persist($order);
+
+                $userToUpdateBuyer->setExpense($userToUpdateBuyer->getExpense() + $this->getTotalPrice());
+
+                $em->persist($userToUpdateBuyer);
+                $em->flush();
+
+                $tempOrder = $this->getDoctrine()->getRepository(Order::class)
+                    ->findOneBy(['invoice_number' => $newInvoiceNumber]);
+
+                $shopProfit->setOrderId($tempOrder->getId());
+                $shopProfit->setProfit($shopProf);
+                $em->persist($shopProfit);
+
+                $this->setExpensesToArticleOwners();
+                $em->flush();
+
+                $this->sendEmail($mailer, $order->getInvoiceNumber());
+
+                $this->deleteFullShoppingCart();
+            }
         }
 
         return $this->render('shopping_cart/cash_desk.html.twig', [
@@ -344,7 +394,7 @@ class ShoppingCartController extends AbstractController
         $currDate = date("ym");
 
         $lastInvoiceThisMonth = $this->getDoctrine()->getRepository(Order::class)
-            ->findBy(array(),array('invoice_number'=>'DESC'),1,0);
+            ->findBy(array(), array('invoice_number' => 'DESC'), 1, 0);
         $invoiceNum = (int)$lastInvoiceThisMonth[0]->getInvoiceNumber();
 
         if (!is_null($invoiceNum) && substr((string)$invoiceNum, 0, 4) === $currDate) {
@@ -363,7 +413,7 @@ class ShoppingCartController extends AbstractController
     private function setExpensesToArticleOwners()
     {
         $em = $this->getDoctrine()->getManager();
-        $uniqueItemsList =  $this->countNumberOfUniqueItems();
+        $uniqueItemsList = $this->countNumberOfUniqueItems();
 
         foreach ($uniqueItemsList as $id => $count) {
             //vytiahnem podla ID z db tovar,
@@ -380,7 +430,7 @@ class ShoppingCartController extends AbstractController
                 ->findOneBy(['id' => $userId]);
             // nastavim mu profit podla $count a jednotkovej ceny,
             $profit = $userToUpdate->getEarning() + ($count * $pricePerUnit);
-            $userToUpdate->setEarning($profit*0.95);
+            $userToUpdate->setEarning($profit * 0.95);
 
             $em->persist($userToUpdate);
             // odpocitam amout tovarov podla kosiku,
@@ -398,7 +448,7 @@ class ShoppingCartController extends AbstractController
      */
     private function checkAvailableItems()
     {
-        $uniqueItemsList =  $this->countNumberOfUniqueItems();
+        $uniqueItemsList = $this->countNumberOfUniqueItems();
 
         $outputArray = [];
 

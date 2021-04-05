@@ -36,32 +36,32 @@ class ShopController extends AbstractController
     }
 
 
-    //TODO: odstranit
-    /**
-     * Vyrendruje formulár na vytvorenie nového záznamu o portáli.
-     * @Route("/admin/new", name="shop_new", methods={"GET","POST"})
-     * @param Request $request
-     * @return Response
-     */
-    public function new(Request $request): Response
-    {
-        $shop = new Shop();
-        $form = $this->createForm(ShopType::class, $shop);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($shop);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('shop_index');
-        }
-
-        return $this->render('shop/new.html.twig', [
-            'shop' => $shop,
-            'form' => $form->createView(),
-        ]);
-    }
+//    /**
+//     * Vyrendruje formulár na vytvorenie nového záznamu o portáli.
+//     * @Route("/admin/new", name="shop_new", methods={"GET","POST"})
+//     * @param Request $request
+//     * @return Response
+//     */
+//    public function new(Request $request): Response
+//    {
+//        $shop = new Shop();
+//        $form = $this->createForm(ShopType::class, $shop);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($shop);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('shop_index');
+//        }
+//
+//        return $this->render('shop/new.html.twig', [
+//            'shop' => $shop,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
     /**
      * Zobrazí záznam o portáli podľa ID.
@@ -77,48 +77,48 @@ class ShopController extends AbstractController
     }
 
 
-    //TODO: odstranit
-    /**
-     * Vyrendruje formulár na edit záznamu o portáli podľa ID.
-     * @Route("/admin/{id}/edit", name="shop_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Shop $shop
-     * @return Response
-     */
-    public function edit(Request $request, Shop $shop): Response
-    {
-        $form = $this->createForm(ShopType::class, $shop);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+//    /**
+//     * Vyrendruje formulár na edit záznamu o portáli podľa ID.
+//     * @Route("/admin/{id}/edit", name="shop_edit", methods={"GET","POST"})
+//     * @param Request $request
+//     * @param Shop $shop
+//     * @return Response
+//     */
+//    public function edit(Request $request, Shop $shop): Response
+//    {
+//        $form = $this->createForm(ShopType::class, $shop);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $this->getDoctrine()->getManager()->flush();
+//
+//            return $this->redirectToRoute('shop_index');
+//        }
+//
+//        return $this->render('shop/edit.html.twig', [
+//            'shop' => $shop,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
-            return $this->redirectToRoute('shop_index');
-        }
-
-        return $this->render('shop/edit.html.twig', [
-            'shop' => $shop,
-            'form' => $form->createView(),
-        ]);
-    }
 
 
-    //TODO: odstranit
-    /**
-     * Vymaže záznam o portáli podľa ID.
-     * @Route("/admin/{id}", name="shop_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Shop $shop
-     * @return Response
-     */
-    public function delete(Request $request, Shop $shop): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$shop->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($shop);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('shop_index');
-    }
+//    /**
+//     * Vymaže záznam o portáli podľa ID.
+//     * @Route("/admin/{id}", name="shop_delete", methods={"DELETE"})
+//     * @param Request $request
+//     * @param Shop $shop
+//     * @return Response
+//     */
+//    public function delete(Request $request, Shop $shop): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$shop->getId(), $request->request->get('_token'))) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($shop);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('shop_index');
+//    }
 }

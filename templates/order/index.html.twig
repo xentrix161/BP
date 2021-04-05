@@ -29,7 +29,7 @@
                 <td>{{ order.paid ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('order_show', {'id': order.id}) }}">Zobraziť</a>
-                    <a href="{{ path('order_edit', {'id': order.id}) }}">Upraviť</a>
+{#                    <a href="{{ path('order_edit', {'id': order.id}) }}">Upraviť</a>#}
                 </td>
             </tr>
         {% else %}
@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    <div class="create-new">
-        <a href="{{ path('order_new') }}">Vytvoriť novú objednávku</a>
-    </div>
+{#    <div class="create-new">#}
+{#        <a href="{{ path('order_new') }}">Vytvoriť novú objednávku</a>#}
+{#    </div>#}
 {% endblock %}

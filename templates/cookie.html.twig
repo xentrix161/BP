@@ -1,0 +1,59 @@
+<style>
+    .cookie-bar {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        z-index: 9999;
+        background: white;
+        padding: 10px;
+        color: black;
+    }
+
+    .cookie-bar > div:last-child button {
+        /*display: inline-block;*/
+        display: block;
+        padding: 10px;
+        background: grey;
+        width: 50px;
+        text-align: center;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    .cookie-bar > div:first-child {
+        padding-right: 70px;
+    }
+</style>
+
+<div class="cookie-bar clear-fix">
+    <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.</p>
+    </div>
+    <div>
+        <button style="cursor: pointer">OK</button>
+    </div>
+</div>
+
+<script>
+    (function (){
+        var cookieBar = document.querySelector('.cookie-bar');
+        var cookieBtn = cookieBar.querySelector('button');
+
+        if (window.localStorage.getItem('cookieBar')) {
+            cookieBar.parentNode.removeChild(cookieBar);
+        }
+
+        cookieBtn.addEventListener("click", function (){
+            var ls = window.localStorage;
+            if (!ls.getItem('cookieBar')) {
+                ls.setItem('cookieBar', 'true');
+                cookieBar.parentNode.removeChild(cookieBar);
+            }
+        });
+    })()
+</script>

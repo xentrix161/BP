@@ -175,7 +175,11 @@ class UserController extends AbstractController
             $message = $this->formValidationService->getMessage();
 
             if ($bool) {
+                //TODO: if (admin) { }
+                //TODO: $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => akutalneZobrazenyUzivatelID]);
+                //TODO: else (user) { }
                 $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+
                 if (empty($temp)) {
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $userPass1));
                     $this->getDoctrine()->getManager()->flush();

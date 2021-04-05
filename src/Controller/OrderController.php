@@ -35,36 +35,36 @@ class OrderController extends AbstractController
         ]);
     }
 
-    //TODO: odstranit
-    /**
-     * Vyrendruje formulár na vytvorenie novej objednávky.
-     * @Route("/admin/new", name="order_new", methods={"GET","POST"})
-     * @param Request $request
-     * @return Response
-     */
-    public function new(Request $request): Response
-    {
-        $order = new Order();
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $newInvoiceNumber = $this->createInvoiceNumber();
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $order->setDate(new \DateTime());
-            $order->setInvoiceNumber($newInvoiceNumber);
-            $entityManager->persist($order);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('order_index');
-        }
-
-        return $this->render('order/new.html.twig', [
-            'order' => $order,
-            'form' => $form->createView(),
-        ]);
-    }
+//    /**
+//     * Vyrendruje formulár na vytvorenie novej objednávky.
+//     * @Route("/admin/new", name="order_new", methods={"GET","POST"})
+//     * @param Request $request
+//     * @return Response
+//     */
+//    public function new(Request $request): Response
+//    {
+//        $order = new Order();
+//        $form = $this->createForm(OrderType::class, $order);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $newInvoiceNumber = $this->createInvoiceNumber();
+//
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $order->setDate(new \DateTime());
+//            $order->setInvoiceNumber($newInvoiceNumber);
+//            $entityManager->persist($order);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('order_index');
+//        }
+//
+//        return $this->render('order/new.html.twig', [
+//            'order' => $order,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
     /**
      * Zobrazí objednávku podľa ID.
@@ -79,63 +79,63 @@ class OrderController extends AbstractController
         ]);
     }
 
-    /**
-     * Vyrendruje formulár na edit objednávky podľa ID.
-     * @Route("/admin/{id}/edit", name="order_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Order $order
-     * @return Response
-     */
-    public function edit(Request $request, Order $order): Response
-    {
-        $form = $this->createForm(OrderType::class, $order);
-        $form->handleRequest($request);
+//    /**
+//     * Vyrendruje formulár na edit objednávky podľa ID.
+//     * @Route("/admin/{id}/edit", name="order_edit", methods={"GET","POST"})
+//     * @param Request $request
+//     * @param Order $order
+//     * @return Response
+//     */
+//    public function edit(Request $request, Order $order): Response
+//    {
+//        $form = $this->createForm(OrderType::class, $order);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $formData = $form->getData();
+//
+//            $price = $formData->getTotalPrice();
+//            $mobile = $formData->getMobile();
+//
+//            $bool = $this->inputValidationService
+//                ->price($price)
+//                ->mobileNumber($mobile)
+//                ->validate();
+//
+//            $message = $this->inputValidationService->getMessage();
+//            if (!empty($message)) {
+//                $this->addFlash('info', $message);
+//            }
+//
+//            if ($bool) {
+//                $this->getDoctrine()->getManager()->flush();
+//                return $this->redirectToRoute('order_index');
+//            }
+//        }
+//
+//        return $this->render('order/edit.html.twig', [
+//            'order' => $order,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
-
-            $price = $formData->getTotalPrice();
-            $mobile = $formData->getMobile();
-
-            $bool = $this->inputValidationService
-                ->price($price)
-                ->mobileNumber($mobile)
-                ->validate();
-
-            $message = $this->inputValidationService->getMessage();
-            if (!empty($message)) {
-                $this->addFlash('info', $message);
-            }
-
-            if ($bool) {
-                $this->getDoctrine()->getManager()->flush();
-                return $this->redirectToRoute('order_index');
-            }
-        }
-
-        return $this->render('order/edit.html.twig', [
-            'order' => $order,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * Vymaže objednávku poďla ID.
-     * @Route("/admin/{id}", name="order_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Order $order
-     * @return Response
-     */
-    public function delete(Request $request, Order $order): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($order);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('order_index');
-    }
+//    /**
+//     * Vymaže objednávku poďla ID.
+//     * @Route("/admin/{id}", name="order_delete", methods={"DELETE"})
+//     * @param Request $request
+//     * @param Order $order
+//     * @return Response
+//     */
+//    public function delete(Request $request, Order $order): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($order);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('order_index');
+//    }
 
     /**
      * Vytvorí unikátne číslo faktúry.
