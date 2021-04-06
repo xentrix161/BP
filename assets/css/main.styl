@@ -67,6 +67,33 @@ ul, ol
   li
     list-style none
 
+ul.drop-down
+  &.drop-down-out
+    > li
+      position relative
+      > ul
+        position absolute
+  > li
+    &:hover
+      > ul
+        display block
+    > ul
+      display none
+      > li
+        > a
+          display inline-block
+          padding 0.5rem
+
+.bg-black
+  background-color black
+
+.bg-yellow
+  background-color yellow
+
+
+
+
+
 .btn
   border none
 

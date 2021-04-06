@@ -17,7 +17,7 @@
         </li>
     </ul>
 
-    <ul class="form-buttons float-right">
+    <ul class="form-buttons float-right drop-down drop-down-out">
         <li>
             <label>
                 <button>
@@ -35,30 +35,30 @@
             {% if userRole[0] == 'ROLE_SELLER' or userRole[0] == 'ROLE_ADMIN' %}
                 <li>
                     <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
-                </li>
-                <li>
-                    <a id="item-counter"
-                       href={{ path('shopping_cart') }}>Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
-                </li>
-                <li>
-                    <a id="" href="{{ path('article_index') }}">Predať</a>
-                </li>
-                <li>
-                    <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
+                    <ul class="bg-black">
+                        <li>
+                            <a id="item-counter"
+                               href={{ path('shopping_cart') }}>Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
+                        </li>
+                        <li>
+                            <a id="" href="{{ path('article_index') }}">Predať</a>
+                        </li>
+                    </ul>
                 </li>
             {% else %}
                 <li>
                     <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
-                </li>
-                <li>
-                    <a id="item-counter"
-                       href={{ path('shopping_cart') }}>Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
-                </li>
-                <li>
-                    <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
+                    <ul class="bg-black">
+                        <li>
+                            <a id="item-counter"
+                               href={{ path('shopping_cart') }}>Košík(<span>{{ app.session.get(sesionName)|length }}</span>)</a>
+                        </li>
+                    </ul>
                 </li>
             {% endif %}
-
+            <li>
+                <a class="button radius" href="{{ path('app_logout') }}">Odhlásiť</a>
+            </li>
         {% else %}
             <li>
                 <a class="button radius" href={{ path('app_login') }}>Prihlásiť</a>

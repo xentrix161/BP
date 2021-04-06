@@ -1,0 +1,8 @@
+<script>
+    (function () {
+        var url = '{{ url | default('') }}';
+        if (!!url) {
+            window.location.href = url;
+        }
+    })()
+</script>

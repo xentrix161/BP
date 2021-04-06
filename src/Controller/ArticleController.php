@@ -304,4 +304,27 @@ class ArticleController extends AbstractController
             ->getRepository(Category::class);
         return $categoriesFromDB->findAll();
     }
+
+
+    /**
+     *
+     * @Route("/produkt/{id}/rating", name="article_rating")
+     * @param $id
+     * @param Request $request
+     * @return Response
+     */
+    public function rating($id, Request $request) {
+
+        $isAjax = true;
+
+        if (!$isAjax) {
+            $url = $request->getUri();
+            $tmp = explode('/', $url);
+            array_pop($tmp);
+            $url = implode('/', $tmp);
+            return $this->render('redirect.htlm.twig', [
+                'url' => $url,
+            ]);
+        }
+    }
 }
