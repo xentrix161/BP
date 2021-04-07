@@ -9,6 +9,9 @@
     {% for ctg in categories %}
         <a href="{{ url('app_homepage_category', {'id': ctg.id}) }}">{{ ctg.name }}</a>
     {% endfor %}
+
+    {% if app.user != null %}
+
     <div class="chart">
         <h2 class="chart-main-label">Rebríčky</h2>
         <ul class="chart-content-box">
@@ -16,30 +19,30 @@
                 <div>&lt;žiadne k dispozícii&gt;</div>
             {% endif %}
 
-
-
             {% for key, value in charts %}
-                {% if value != null %}
-                    <li class="chart-single-box">
-                        <input type="checkbox" id="chart-{{ loop.index }}">
-                        <span class="chart-title">
+                {% if value != null and value | length %}
+                    {% if value[0]['permission'] == true or (app.user.role[0] == 'ROLE_ADMIN' and value[0]['permission'] == false) %}
+                        <li class="chart-single-box">
+                            <input type="checkbox" id="chart-{{ loop.index }}">
+                            <span class="chart-title">
                             <label for="chart-{{ loop.index }}">{{ key }}</label>
                         </span>
-                        <ol class="chart-data">
-                            {% for data in value %}
-                                <li class="chart-row">
-                                    <span>{{ loop.index }}.</span>
-                                    <span>{{ data['name'] }}</span>
-                                    <span>{{ data['data'] }}</span>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </li>
+                            <ol class="chart-data">
+                                {% for data in value %}
+                                    <li class="chart-row">
+                                        <span>{{ loop.index }}.</span>
+                                        <span>{{ data['name'] }}</span>
+                                        <span>{{ data['data'] }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </li>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </ul>
-
     </div>
+    {% endif %}
 </div>
 
 <div id="main">

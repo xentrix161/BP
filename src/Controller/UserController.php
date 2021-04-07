@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Services\FormValidationService;
+use App\Services\RoleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,12 +27,14 @@ class UserController extends AbstractController
     private $formValidationService;
     private $security;
     private $session;
+    private $roleService;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         FormValidationService $formValidationService,
         Security $security,
-        SessionInterface $session
+        SessionInterface $session,
+        RoleService $roleService
     )
 
     {
@@ -39,6 +42,7 @@ class UserController extends AbstractController
         $this->formValidationService = $formValidationService;
         $this->security = $security;
         $this->session = $session;
+        $this->roleService = $roleService;
     }
 
     /**
@@ -306,5 +310,31 @@ class UserController extends AbstractController
     public function profileInfo(Request $request)
     {
         return $this->render('profileInfo.htlm.twig');
+    }
+
+    /**
+     * Promotuje usera na ADMINA podla ID.
+     * @Route("/admin/{id}/promote", name="user_promote", methods={"GET"})
+     * @param User $user
+     * @return Response
+     */
+    public function promoteToAdmin(User $user) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userToPromote = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['id' => $user->getId()]);
+
+        if ($userToPromote != null) {
+            $userToPromote->setRole([$this->roleService::ROLE_ADMIN]);
+            $em->persist($userToPromote);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('user_index');
+
+//        return $this->render('user/index.html.twig', [
+//            'user' => $user,
+//        ]);
     }
 }

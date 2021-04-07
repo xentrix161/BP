@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Entity\User;
+use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ChartsService
@@ -54,7 +55,8 @@ class ChartsService
         foreach ($top3Earners as $earner) {
             $outputArray[] = [
                 'name' => $earner->getName() . " " . $earner->getSurname(),
-                'data' => $earner->getEarning() . "€"
+                'data' => round($earner->getEarning(), 2) . "€",
+                'permission' => true
             ];
         }
         return $outputArray;
@@ -67,7 +69,20 @@ class ChartsService
      */
     public function getTopArticles($numberOfItems = 10)
     {
-        return [];
+        $top10RatedArticles = $this->em->getRepository(Article::class)
+            ->findBy(array(), array('rating' => 'DESC'), $numberOfItems, 0);
+
+        $outputArray = [];
+        foreach ($top10RatedArticles as $article) {
+            if ($article->getRating() != null) {
+                $outputArray[] = [
+                    'name' => $article->getTitle(),
+                    'data' => round($article->getRating(), 2) . " z 5 hviezd",
+                    'permission' => true
+                ];
+            }
+        }
+        return $outputArray;
     }
 
 
@@ -85,7 +100,8 @@ class ChartsService
         foreach ($top3RatedSellers as $seller) {
             $outputArray[] = [
                 'name' => $seller->getName() . " " . $seller->getSurname(),
-                'data' => $seller->getRating() . "*"
+                'data' => $seller->getRating() . " z 5 hviezd",
+                'permission' => false
             ];
         }
         return $outputArray;

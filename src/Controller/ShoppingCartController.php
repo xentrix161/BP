@@ -175,12 +175,10 @@ class ShoppingCartController extends AbstractController
                 $shopProfit->setOrderId($tempOrder->getId());
                 $shopProfit->setProfit($shopProf);
                 $em->persist($shopProfit);
-
                 $this->setExpensesToArticleOwners();
                 $em->flush();
 
                 $this->sendEmail($mailer, $order->getInvoiceNumber());
-
                 $this->deleteFullShoppingCart();
             }
         }

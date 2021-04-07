@@ -2,6 +2,7 @@
     <ul class="navigation float-left">
         <li class="navigation-hover">
             Menu
+            <i class="fas fa-caret-down"></i>
         </li>
         <li>
             <a href="http://127.0.0.1:8000/homepage">Domov</a>
@@ -34,7 +35,7 @@
             {% set userRole = app.user.roles %}
             {% if userRole[0] == 'ROLE_SELLER' or userRole[0] == 'ROLE_ADMIN' %}
                 <li>
-                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }}</a>
+                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }} <i class="fas fa-caret-down"></i> </a>
                     <ul class="bg-black">
                         <li>
                             <a id="item-counter"

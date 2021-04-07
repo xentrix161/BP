@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Rating;
 use App\Entity\User;
+use App\Enum\EntityTypeEnum;
 use App\Form\ArticleType;
 use App\Services\ChartsService;
 use App\Services\InputValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,6 +72,34 @@ class ArticleController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute("access_denied");
         }
+        $actualUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+
+        $userId = $actualUser->getId();
+        $entityId = $id;
+//        $entityType = EntityTypeEnum::TYPE_ARTICLE;
+        $currentTime = new \DateTime();
+
+        $ratingsByArticleId = $this->getDoctrine()->getRepository(Rating::class)
+            ->findBy(['entity_id' => $entityId]);
+        $max = -1;
+        $lastEntityId = null;
+        $count = count($ratingsByArticleId);
+        $canRate = true;
+
+        if (!empty($ratingsByArticleId)) {
+            foreach ($ratingsByArticleId as $index => $rating) {
+                if (($rating->getUserId() == $userId) && ($max < $rating->getId())) {
+                    $max = $rating->getId();
+                    $lastEntityId = $index;
+//                    dump($max, $rating->getId(), $index, $rating, $userId);
+                }
+            }
+
+            if (!is_null($lastEntityId) && !empty($ratingsByArticleId[$lastEntityId])) {
+                $canRate = $ratingsByArticleId[$lastEntityId]->getDate()->format('n') != $currentTime->format('n');
+            }
+        }
 
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
@@ -81,7 +112,9 @@ class ArticleController extends AbstractController
             'controller_name' => 'ArticleController',
             'categories' => $allCategories,
             'charts' => $allCharts,
-            'data' => $data
+            'data' => $data,
+            'numberOfRates' => $count,
+            'canRate' => $canRate
         ]);
     }
 
@@ -313,9 +346,46 @@ class ArticleController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function rating($id, Request $request) {
+    public function rating($id, Request $request)
+    {
+        $newRating = new Rating();
+        $em = $this->getDoctrine()->getManager();
+        $actualUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
 
-        $isAjax = true;
+        //aktualny article
+        $actualArticle = $this->getDoctrine()->getRepository(Article::class)
+            ->findOneBy(['id' => $id]);
+        //vsetky jeho ratingy
+        $ratingsByArticleId = $this->getDoctrine()->getRepository(Rating::class)
+            ->findBy(['entity_id' => $id]);
+        //pocet kolko ich je
+        $count = count($ratingsByArticleId);
+        //sucet hviezdiciek
+        $overallRating = 0;
+        foreach ($ratingsByArticleId as $rating) {
+            $overallRating += $rating->getRate();
+        }
+        //zoberem kolko ohodnotil prave user
+        $valueStars = $request->request->get('data')[0]['value'];
+        //pripocitam 1 ku count a pripocitam pocet tohoto hodnotenia ku vsetkym jeho hviezdam
+        $count++;
+        $overallRating += $valueStars;
+        //urobim priemer
+        $averageArticleStars = $overallRating / $count;
+        //nasetujem ho articlu
+        $actualArticle->setRating($averageArticleStars);
+        //vytvorim zaznam o hodnoteni
+        $newRating->setRate($valueStars);
+        $newRating->setDate(new \DateTime());
+        $newRating->setUserId((int)$actualUser->getId());
+        $newRating->setEntityId($id);
+        $newRating->setEntityType(EntityTypeEnum::TYPE_ARTICLE);
+        $em->persist($newRating);
+        $em->persist($actualArticle);
+        $em->flush();
+
+        $isAjax = $request->request->get('data')[0]['ajax'] == true;
 
         if (!$isAjax) {
             $url = $request->getUri();
@@ -326,5 +396,6 @@ class ArticleController extends AbstractController
                 'url' => $url,
             ]);
         }
+        return new JsonResponse(['success' => true, 'rating' => $overallRating, 'count' => $count]);
     }
 }
