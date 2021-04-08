@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
+use function Symfony\Component\String\b;
 
 /**
  * @Route("/user")
@@ -145,12 +146,13 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
-        $temp = $this->getDoctrine()->getRepository(User::class)
+        $currentUser = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(['email' => $this->security->getUser()->getUsername()]);
+        $oldEmail = $user->getEmail();
 
-        if (!empty($temp)) {
-            if ($temp->getId() !== (int)$request->get('id')
-                && $temp->getRole()[0] !== 'ROLE_ADMIN') {
+        if (!empty($currentUser)) {
+            if ($currentUser->getId() !== (int)$request->get('id')
+                && $currentUser->getRole()[0] !== 'ROLE_ADMIN') {
                 return $this->redirectToRoute('access_denied');
             }
         }
@@ -159,14 +161,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $formData = $form->getData();
             $userName = $formData->getName();
             $userSurname = $formData->getSurname();
             $userEmail = $formData->getEmail();
             $userPass1 = $formData->getPassword();
             $userPass2 = $formData->getPassword2();
-
             $bool = $this->formValidationService
                 ->name($userName)
                 ->surname($userSurname)
@@ -175,26 +175,29 @@ class UserController extends AbstractController
                 ->passwordChars($userPass1)
                 ->passwordMatch($userPass1, $userPass2)
                 ->validate();
-
             $message = $this->formValidationService->getMessage();
 
             if ($bool) {
-                //TODO: if (admin) { }
-                //TODO: $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => akutalneZobrazenyUzivatelID]);
-                //TODO: else (user) { }
                 $temp = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+                $user->setPassword($this->passwordEncoder->encodePassword($user, $userPass1));
 
-                if (empty($temp)) {
-                    $user->setPassword($this->passwordEncoder->encodePassword($user, $userPass1));
-                    $this->getDoctrine()->getManager()->flush();
+                if ($currentUser->getRole()[0] == RoleService::ROLE_ADMIN && $user->getId() != $currentUser->getId()) {
+                    $user->setEmail($oldEmail);
                     $message = "Používateľ bol upravený úspešne.";
-
-                    return $this->redirectToRoute('user_index');
+                    $this->getDoctrine()->getManager()->flush();
+                    return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
                 } else {
-                    $message = "Email sa už používa! Zadajte iný prosím.";
+                    if (!empty($temp) && $oldEmail != $userEmail) {
+                        $user->setEmail($oldEmail);
+                        $message = "Email sa už používa! Zadajte iný prosím.";
+                    } else {
+                        $message = "Používateľ bol upravený úspešne.";
+                        $this->getDoctrine()->getManager()->flush();
+                        return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+                    }
                 }
+                $this->getDoctrine()->getManager()->flush();
             }
-
             if (!empty($message)) {
                 $this->addFlash(
                     'info',
