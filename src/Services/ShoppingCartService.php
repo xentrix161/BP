@@ -15,10 +15,19 @@ class ShoppingCartService extends AbstractController
     public const STATUS_DONE = 'CART_DONE';
 
     private $isAdmin = false;
-    private $ownerId = null;
-    private $content = null;
-    private $status = null;
-    private $totalPrice = null;
+    private $em = null;
+
+    private $variables = [
+        'ownerId' => ['value' => null, 'method' => 'setUserId'],
+        'content' => ['value' => null, 'method' => 'setCartContent'],
+        'status' => ['value' => null, 'method' => 'setStatus'],
+        'totalPrice' => ['value' => null, 'method' => 'setTotalPrice'],
+    ];
+
+    public function __construct()
+    {
+        $this->em = $this->getDoctrine()->getManager();
+    }
 
     public function asAdmin(): self
     {
@@ -28,67 +37,69 @@ class ShoppingCartService extends AbstractController
 
     public function update(): void
     {
-        if (is_null($this->ownerId)) {
+        if (is_null($this->variables['ownerId']['value'])) {
             $this->reset();
             return;
         }
 
         $cart = $this->getDoctrine()->getRepository(ShoppingCart::class)
-            ->findOneBy(['user_id' => $this->ownerId, 'status' => self::STATUS_PENDING]);
+            ->findOneBy(['user_id' => $this->variables['ownerId']['value'], 'status' => self::STATUS_PENDING]);
 
         if (empty($cart)) {
             $this->reset();
             return;
         }
 
-        if (!is_null($this->content)) {
-            $cart->setCartContent($this->content);
+        foreach ($this->variables as $value) {
+            if (!is_null($value['value'])) {
+                $cart->{$value['method']}($value['value']);
+            }
         }
 
-        if (!is_null($this->status)) {
-            $cart->setStatus($this->status);
-        }
-
-        if (!is_null($this->totalPrice)) {
-            $cart->setTotalPrice($this->totalPrice);
-        }
-
-        if ($this->isAdmin) {
-            $cart->setUserId($this->ownerId);
-        }
-
-        //TODO: updatne existujuci zaznam
+        $this->em->persist($cart);
+        $this->em->flush();
         $this->reset();
     }
 
     public function create(): void
     {
-        $shoppingCart = new ShoppingCart();
-        //TODO: vytovri novy zaznam
+        $cart = new ShoppingCart();
+        if ($this->isSomeOfAttrNull()) {
+            return;
+        }
+
+        foreach ($this->variables as $value) {
+            $cart->{$value['method']}($value['value']);
+        }
+        $cart->setStatus(self::STATUS_PENDING);
+        $cart->setDate($this->getDate());
+
+        $this->em->persist($cart);
+        $this->em->flush();
         $this->reset();
     }
 
     public function setOwnerId(int $userId): self
     {
-        //TODO: nasetuje ID vlastnika kosiku
+        $this->variables['ownerId']['value'] = $userId;
         return $this;
     }
 
     public function setContent(array $content): self
     {
-        //TODO: nasetuje article do kosiku
+        $this->variables['content']['value'] = $content;
         return $this;
     }
 
     public function setStatus(string $status): self
     {
-        //TODO: nasetuje status kosika
+        $this->variables['status']['value'] = $status;
         return $this;
     }
 
     public function setTotalPrice(float $totalPrice): self
     {
-        //TODO: nasetuje celkovu cenu za kosik
+        $this->variables['totalPrice']['value'] = $totalPrice;
         return $this;
     }
 
@@ -107,10 +118,9 @@ class ShoppingCartService extends AbstractController
     private function reset(): void
     {
         $this->isAdmin = false;
-        $this->ownerId = null;
-        $this->content = null;
-        $this->status = null;
-        $this->totalPrice = null;
+        foreach ($this->variables as $value) {
+            $value['value'] = null;
+        }
     }
 
     private function getDate(): \DateTime
@@ -118,7 +128,14 @@ class ShoppingCartService extends AbstractController
         return new \DateTime();
     }
 
-
-
-
+    private function isSomeOfAttrNull(): bool
+    {
+        foreach ($this->variables as $value) {
+            if (is_null($value['value'])) {
+                $this->reset();
+                return true;
+            }
+        }
+        return false;
+    }
 }
