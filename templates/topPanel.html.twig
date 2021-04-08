@@ -20,12 +20,15 @@
 
     <ul class="form-buttons float-right drop-down drop-down-out">
         <li>
-            <label>
-                <button>
+{#            <button>#}
 
-                </button>
-                <input class="input-search" type="text" placeholder="Hľadaj v e-shope...">
-            </label>
+{#            </button>#}
+            <form method="get" action="{{ path('search_results') }}">
+                <label>
+
+                    <input class="input-search" type="text" name="search" placeholder="Hľadaj v e-shope...">
+                </label>
+            </form>
         </li>
 
         {% set sesionName = app.user.username|default('undefined') %}
@@ -35,7 +38,8 @@
             {% set userRole = app.user.roles %}
             {% if userRole[0] == 'ROLE_SELLER' or userRole[0] == 'ROLE_ADMIN' %}
                 <li>
-                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }} <i class="fas fa-caret-down"></i> </a>
+                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }} <i
+                                class="fas fa-caret-down"></i> </a>
                     <ul class="bg-black">
                         <li>
                             <a id="item-counter"
@@ -48,7 +52,8 @@
                 </li>
             {% else %}
                 <li>
-                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }} <i class="fas fa-caret-down"></i>car</a>
+                    <a href="{{ url('profile_info', {'id': app.user.id}) }}">{{ app.user.name|default('undefined') }} <i
+                                class="fas fa-caret-down"></i>car</a>
                     <ul class="bg-black">
                         <li>
                             <a id="item-counter"

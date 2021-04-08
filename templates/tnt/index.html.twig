@@ -1,0 +1,25 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    {% include "categoryPanel.html.twig" %}
+    <h1 class="text-center">Výsledky vyhľadávania: Našlo sa {{ data|length }} výsledkov.</h1>
+    {% if data|length == 0 %}
+        <h2 class="center text-center">Skúste použiť diakritiku.</h2>
+    {% endif %}
+    <div class="collection">
+        {% for item in data %}
+            <div class="product">
+                <a class="product-url" href="{{ url('produkt', {'id': item.id}) }}">
+                    <img class="product-image" src="/uploads/{{ item.img }}" alt="">
+                    <p class="product-name">
+                        {{ item.title }}
+                    </p>
+                </a>
+                <span class="product-price">
+                    Cena {{ item.price |number_format(2, '.', ',') }} €
+            </span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

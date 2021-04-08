@@ -551,6 +551,9 @@
             "./config/packages/reset_password.yaml"
         ]
     },
+    "teamtnt/tntsearch": {
+        "version": "v2.7.0"
+    },
     "twig/extra-bundle": {
         "version": "v3.0.5"
     },
