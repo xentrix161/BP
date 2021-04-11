@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 
+use App\Services\ShoppingCartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    private $shoppingCartService;
+    public function __construct(ShoppingCartService $shoppingCartService)
+    {
+        $this->shoppingCartService = $shoppingCartService;
+    }
+
+
     /**
      * @Route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
@@ -23,23 +31,13 @@ class SecurityController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_homepage');
         }
-        //        $tempUser = $this->getDoctrine()->getRepository(User::class)
-//            ->findOneBy(['email' => '']);
-//
-//
-//
-//
-//
-//        if (!empty($tempUser)) {
-////            return $this->redirectToRoute('activate_account', ['token' => $tempUser->getEmail()]);
-//
-//            return $this->redirectToRoute('activate_account', ['token' => 'filipkosmel@gmail.com']);
-//        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
+
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,

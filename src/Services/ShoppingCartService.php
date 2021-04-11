@@ -1,11 +1,11 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Entity\ShoppingCart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ShoppingCartService extends AbstractController
 {
@@ -14,19 +14,21 @@ class ShoppingCartService extends AbstractController
     public const STATUS_PAYMENT = 'CART_PAYMENT';
     public const STATUS_DONE = 'CART_DONE';
 
+    private $security;
+    private $session;
+
     private $isAdmin = false;
     private $em = null;
 
-    private $variables = [
-        'ownerId' => ['value' => null, 'method' => 'setUserId'],
-        'content' => ['value' => null, 'method' => 'setCartContent'],
-        'status' => ['value' => null, 'method' => 'setStatus'],
-        'totalPrice' => ['value' => null, 'method' => 'setTotalPrice'],
-    ];
+    private $cart = null;
+    private $variables = [];
 
-    public function __construct()
+    public function __construct(SessionInterface $session, Security $security)
     {
-        $this->em = $this->getDoctrine()->getManager();
+        $this->session = $session;
+        $this->security = $security;
+
+        $this->cart = new ShoppingCart();
     }
 
     public function asAdmin(): self
@@ -37,13 +39,14 @@ class ShoppingCartService extends AbstractController
 
     public function update(): void
     {
-        if (is_null($this->variables['ownerId']['value'])) {
+        $this->em = $this->getDoctrine()->getManager();
+        if (empty($this->getValue('ownerId'))) {
             $this->reset();
             return;
         }
 
         $cart = $this->getDoctrine()->getRepository(ShoppingCart::class)
-            ->findOneBy(['user_id' => $this->variables['ownerId']['value'], 'status' => self::STATUS_PENDING]);
+            ->findOneBy(['user_id' => $this->getValue('ownerId'), 'status' => self::STATUS_PENDING]);
 
         if (empty($cart)) {
             $this->reset();
@@ -51,7 +54,7 @@ class ShoppingCartService extends AbstractController
         }
 
         foreach ($this->variables as $value) {
-            if (!is_null($value['value'])) {
+            if (!is_null($value['value']) && method_exists($this->cart, $value['method'])) {
                 $cart->{$value['method']}($value['value']);
             }
         }
@@ -63,63 +66,101 @@ class ShoppingCartService extends AbstractController
 
     public function create(): void
     {
-        $cart = new ShoppingCart();
-        if ($this->isSomeOfAttrNull()) {
+        if (empty($this->getValue('ownerId'))) {
             return;
         }
 
-        foreach ($this->variables as $value) {
-            $cart->{$value['method']}($value['value']);
-        }
-        $cart->setStatus(self::STATUS_PENDING);
-        $cart->setDate($this->getDate());
+        $rowExist = $this->getDoctrine()->getRepository(ShoppingCart::class)
+            ->findOneBy(['status' => self::STATUS_PENDING, 'user_id' => $this->getValue('ownerId')]);
 
-        $this->em->persist($cart);
+        if (!empty($rowExist)) {
+            $userEmailSes = $this->security->getUser()->getUsername();
+            $this->session->set($userEmailSes, $rowExist->getCartContent());
+            return;
+        }
+
+        $this->em = $this->getDoctrine()->getManager();
+
+        foreach ($this->variables as $value) {
+
+            if (!empty($value['method']) && method_exists($this->cart, $value['method'])) {
+                if (
+                    empty($value['value'] && is_array($value['value']))
+                    || (empty($value['value'] && is_numeric($value['value'])))
+                    || !empty($value['value'])
+                ) {
+                    $this->cart->{$value['method']}($value['value']);
+                }
+            }
+        }
+        $this->cart->setStatus(self::STATUS_PENDING);
+        $this->cart->setDate($this->getDate());
+
+        $this->em->persist($this->cart);
         $this->em->flush();
         $this->reset();
     }
 
     public function setOwnerId(int $userId): self
     {
-        $this->variables['ownerId']['value'] = $userId;
+        $this->setValue('ownerId', $userId);
+        $this->setMethod('ownerId', 'setUserId');
         return $this;
     }
 
     public function setContent(array $content): self
     {
-        $this->variables['content']['value'] = $content;
+        $this->setValue('content', $content);
+        $this->setMethod('content', 'setCartContent');
         return $this;
     }
 
     public function setStatus(string $status): self
     {
-        $this->variables['status']['value'] = $status;
+        $this->setValue('status', $status);
+        $this->setMethod('status', 'setStatus');
         return $this;
     }
 
     public function setTotalPrice(float $totalPrice): self
     {
-        $this->variables['totalPrice']['value'] = $totalPrice;
+        $this->setValue('totalPrice', $totalPrice);
+        $this->setMethod('totalPrice', 'setTotalPrice');
         return $this;
     }
 
     public function getAllCarts(): array
     {
-        //TODO: vrati vsetky kosiky podla setnuteho ID usera, ak je admin vrati aj DELETED kosiky, ak nie je tak ostatne
-        return [];
+        if (empty($this->getValue('ownerId'))) {
+            return [];
+        }
+
+        $statusArray = [self::STATUS_PENDING, self::STATUS_DONE, self::STATUS_PAYMENT];
+
+        if ($this->isAdmin) {
+            array_push($statusArray, self::STATUS_DELETED);
+        }
+
+        return $this->getDoctrine()->getRepository(ShoppingCart::class)
+            ->findBy(['user_id' => $this->getValue('ownerId'), 'status' => $statusArray]);
     }
 
-    public function getContent(): array
+    public function getActualCartContent(): array
     {
-        //TODO: vrati obsah konkretneho kosika
-        return [];
+        if (empty($this->getValue('ownerId'))) {
+            return [];
+        }
+        $cart = $this->getDoctrine()->getRepository(ShoppingCart::class)
+            ->findOneBy(['user_id' => $this->getValue('ownerId'), 'status' => self::STATUS_PENDING]);
+        return $cart->getCartContent();
     }
 
     private function reset(): void
     {
         $this->isAdmin = false;
-        foreach ($this->variables as $value) {
-            $value['value'] = null;
+        $this->cart = new ShoppingCart();
+        foreach ($this->variables as $index => $value) {
+            unset($this->variables[$index]);
         }
     }
 
@@ -128,14 +169,125 @@ class ShoppingCartService extends AbstractController
         return new \DateTime();
     }
 
-    private function isSomeOfAttrNull(): bool
+    private function setValue($name, $value)
     {
-        foreach ($this->variables as $value) {
-            if (is_null($value['value'])) {
-                $this->reset();
-                return true;
+        $this->variables[$name]['value'] = $value;
+    }
+
+    private function setMethod($name, $method)
+    {
+        $this->variables[$name]['method'] = $method;
+    }
+
+    private function getValue($name)
+    {
+        if (!empty($this->variables[$name]['value'])) {
+            return $this->variables[$name]['value'];
+        }
+        return null;
+    }
+
+    private function getMethod($name)
+    {
+        if (!empty($this->variables[$name]['method']) && method_exists($this->cart, $this->variables[$name]['method'])) {
+            return $this->variables[$name]['method'];
+        }
+        return null;
+    }
+
+    /**
+     * Vráti zoznam itemov v nákupnom košíku.
+     * @return object ["name" => $sessionName, "items" => array, "isEmpty" => true/false]
+     */
+    public function getSessionItems()
+    {
+        $userEmailSes = $this->security->getUser()->getUsername();
+        $sessionItems = $this->session->get($userEmailSes);
+
+        if (empty($sessionItems)) {
+            $sessionItems = [];
+        }
+
+        $array = ["name" => $userEmailSes, "items" => $sessionItems, "isEmpty" => empty($sessionItems)];
+        return (object)$array;
+    }
+
+    public function setSessionItem($itemId)
+    {
+        $session = $this->getSessionItems();
+        $sessionItems = $session->items;
+
+        if (empty($sessionItems)) {
+            $sessionItems = [];
+        }
+        array_push($sessionItems, $itemId);
+        $this->session->set($session->name, $sessionItems);
+
+        return $sessionItems;
+    }
+
+    /**
+     * Vráti ID tovaru a k nemu počet kusov v nákupnom košíku.
+     * @return array ['article_id' => 'count']
+     */
+    public function countNumberOfUniqueItems()
+    {
+        $sessionItems = $this->getSessionItems()->items;
+        $outputArray = [];
+        foreach ($sessionItems as $item) {
+            if (!empty($outputArray[$item])) {
+                $outputArray[$item]++;
+            } else {
+                $outputArray[$item] = 1;
             }
         }
-        return false;
+        return $outputArray;
+    }
+
+    /**
+     * Vymaže item z nákupného košíka podľa ID. V prípade, že z daného druhu tovaru je v košíku viac ako 1 kus,
+     * (všetky itemy)
+     * @param $itemId
+     * @return array
+     */
+    public function deleteItemFromShoppingCartById($itemId)
+    {
+        $session = $this->getSessionItems();
+        $sessionItems = $session->items;
+        $temp = [];
+        foreach ($sessionItems as $item) {
+            if ($item != $itemId) {
+                array_push($temp, $item);
+            }
+        }
+        $this->session->set($session->name, $temp);
+        return ["success" => true, "id" => $itemId, "numberOfItems" => count($temp)];
+    }
+
+    /**
+     * Vymaže item z nákupného košíka podľa ID (jeden item).
+     * @param $itemId
+     * @return array
+     */
+    public function deleteFromShoppingCart($itemId)
+    {
+        $session = $this->getSessionItems();
+        $sessionItems = $session->items;
+
+        if (!empty($sessionItems)) {
+            $temp = [];
+            $found = false;
+            foreach ($sessionItems as $item) {
+                if ($item == $itemId && $found == false) {
+                    $found = true;
+                } else {
+                    array_push($temp, $item);
+                }
+            }
+            $sessionItems = [];
+            $sessionItems = array_merge($sessionItems, $temp);
+        }
+        $this->session->set($session->name, $sessionItems);
+        return $sessionItems;
     }
 }

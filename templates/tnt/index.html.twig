@@ -1,7 +1,7 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-    {% include "categoryPanel.html.twig" %}
+    {% include "category_panel.html.twig" %}
     <h1 class="text-center">Výsledky vyhľadávania: Našlo sa {{ data|length }} výsledkov.</h1>
     {% if data|length == 0 %}
         <h2 class="center text-center">Skúste použiť diakritiku.</h2>

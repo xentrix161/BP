@@ -312,7 +312,7 @@ class UserController extends AbstractController
      */
     public function profileInfo(Request $request)
     {
-        return $this->render('profileInfo.html.twig');
+        return $this->render('profile_info.html.twig');
     }
 
     /**

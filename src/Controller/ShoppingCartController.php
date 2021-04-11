@@ -8,6 +8,8 @@ use App\Entity\Shop;
 use App\Entity\User;
 use App\Services\FormValidationService;
 use App\Services\InputValidationService;
+use App\Services\ShoppingCartService;
+use DateTime;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,12 +34,14 @@ class ShoppingCartController extends AbstractController
     private $mailer;
     private $inputValidationService;
     private $formValidationService;
+    private $shoppingCartService;
 
     public function __construct(
         SessionInterface $session,
         Security $security, MailerInterface $mailer,
         InputValidationService $inputValidationService,
-        FormValidationService $formValidationService
+        FormValidationService $formValidationService,
+        ShoppingCartService $shoppingCartService
     )
     {
         $this->session = $session;
@@ -45,6 +49,7 @@ class ShoppingCartController extends AbstractController
         $this->mailer = $mailer;
         $this->inputValidationService = $inputValidationService;
         $this->formValidationService = $formValidationService;
+        $this->shoppingCartService = $shoppingCartService;
     }
 
     /**
@@ -67,9 +72,9 @@ class ShoppingCartController extends AbstractController
         return $this->render('shopping_cart/index.html.twig', [
             'controller_name' => 'ShoppingCartController',
             'items' => $this->getItemsFromDbById(),
-            'count' => $this->countNumberOfUniqueItems(),
+            'count' => $this->shoppingCartService->countNumberOfUniqueItems(),
             'totalPrice' => $this->getTotalPrice(),
-            'isCartEmpty' => $this->getSessionItems()->isEmpty,
+            'isCartEmpty' => $this->shoppingCartService->getSessionItems()->isEmpty,
             'notAvailableItems' => $decoded
         ]);
     }
@@ -99,18 +104,12 @@ class ShoppingCartController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->security->getUser();
-        $user->getUsername();
-
         $userToUpdateBuyer = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(['email' => $user->getUsername()]);
 
         $requestData = $request->request->get('cashdesk');
 
         if (!is_null($requestData) && !empty($requestData['submit'])) {
-//            $formData = $form->getData();
-
-//            dump($requestData); die;
-
             $name = $requestData['name'];
             $surname = $requestData['surname'];
             $street = $requestData['address'];
@@ -127,7 +126,7 @@ class ShoppingCartController extends AbstractController
                 ->street($street)
                 ->city($city)
                 ->zip($zip)
-                ->mobileNumber($mobileNumber)
+//                ->mobileNumber($mobileNumber)
                 ->validate();
 
             $message = $this->formValidationService->getMessage();
@@ -143,7 +142,7 @@ class ShoppingCartController extends AbstractController
             if ($bool) {
                 $order = new Order();
                 $shopProfit = new Shop();
-                $currTime = new \DateTime();
+                $currTime = new DateTime();
 
                 $fullAddress = $requestData['address'] . ", " . $requestData['zip'] . ", " . $requestData['city'];
 
@@ -161,7 +160,18 @@ class ShoppingCartController extends AbstractController
                 $order->setMobile($phoneNumber);
                 $order->setInvoiceNumber($newInvoiceNumber);
                 $order->setPaymentMethod($requestData['method']);
-                $order->setPaid(rand(0, 1));
+                $payResult = rand(0, 1);
+                $order->setPaid($payResult);
+
+                if ($payResult == 0) {
+                    $this->shoppingCartService
+                        ->setOwnerId($this->getUserId())
+                        ->setStatus($this->shoppingCartService::STATUS_PAYMENT)
+                        ->update();
+                } else {
+                    $this->shoppingCartService->setStatus($this->shoppingCartService::STATUS_DONE);
+                }
+
                 $em->persist($order);
 
                 $userToUpdateBuyer->setExpense($userToUpdateBuyer->getExpense() + $this->getTotalPrice());
@@ -175,20 +185,20 @@ class ShoppingCartController extends AbstractController
                 $shopProfit->setOrderId($tempOrder->getId());
                 $shopProfit->setProfit($shopProf);
                 $em->persist($shopProfit);
-                $this->setExpensesToArticleOwners();
+                $this->setProfitToArticleOwners();
                 $em->flush();
 
                 $this->sendEmail($mailer, $order->getInvoiceNumber());
-                $this->deleteFullShoppingCart();
+                $this->deleteFullShoppingCart(true);
             }
         }
 
         return $this->render('shopping_cart/cash_desk.html.twig', [
             'controller_name' => 'ShoppingCartController',
             'items' => $this->getItemsFromDbById(),
-            'count' => $this->countNumberOfUniqueItems(),
+            'count' => $this->shoppingCartService->countNumberOfUniqueItems(),
             'totalPrice' => $this->getTotalPrice(),
-            'isCartEmpty' => $this->getSessionItems()->isEmpty
+            'isCartEmpty' => $this->shoppingCartService->getSessionItems()->isEmpty
         ]);
     }
 
@@ -200,58 +210,53 @@ class ShoppingCartController extends AbstractController
      */
     public function addToShoppingCart($itemId)
     {
-        $session = $this->getSessionItems();
-        $sessionItems = $session->items;
-
-        if (empty($sessionItems)) {
-            $sessionItems = [];
-        }
-        array_push($sessionItems, $itemId);
-        $this->session->set($session->name, $sessionItems);
-
+        $sessionItems = $this->shoppingCartService->setSessionItem($itemId);
+        $this->shoppingCartService
+            ->setOwnerId($this->getUserId())
+            ->setContent($sessionItems)
+            ->setTotalPrice($this->getTotalPrice())
+            ->update();
         return new JsonResponse($sessionItems);
     }
 
     /**
-     * Vymaže item z nákupného košíka podľa ID.
+     * Vymaže jeden item z nákupného košíka podľa ID.
      * @Route("/delete/{itemId}", name="delete_from_cart")
      * @param $itemId
      * @return JsonResponse
      */
     public function deleteFromShoppingCart($itemId)
     {
-        $session = $this->getSessionItems();
-        $sessionItems = $session->items;
+        $cartItems = $this->shoppingCartService->deleteFromShoppingCart($itemId);
 
-        if (!empty($sessionItems)) {
-            $temp = [];
-            $found = false;
-            foreach ($sessionItems as $item) {
-                if ($item == $itemId && $found == false) {
-                    $found = true;
-                } else {
-                    array_push($temp, $item);
-                }
-            }
-            $sessionItems = [];
-            $sessionItems = array_merge($sessionItems, $temp);
-        }
-        $this->session->set($session->name, $sessionItems);
-        return new JsonResponse($sessionItems);
+        $this->shoppingCartService
+            ->setOwnerId($this->getUserId())
+            ->setContent($cartItems)
+            ->setTotalPrice($this->getTotalPrice())
+            ->update();
+        return new JsonResponse($cartItems);
     }
 
     /**
      * Vymaže celý nákupný košík.
      * @Route("/delete-cart", name="delete_cart")
      */
-    public function deleteFullShoppingCart()
+    public function deleteFullShoppingCart($bool = false)
     {
-        $this->session->set($this->getSessionItems()->name, []);
+        if (!$bool) {
+            $this->shoppingCartService
+                ->setOwnerId($this->getUserId())
+                ->setContent([])
+                ->setTotalPrice(0)
+                ->update();
+        }
+
+        $this->session->set($this->shoppingCartService->getSessionItems()->name, []);
         return new JsonResponse(["success" => true]);
     }
 
     /**
-     * Vymaže item z nákupného košíka podľa ID. V prípade, že z daného druhu tovaru je v košíku viac ako 1 kus,
+     * Vymaže vsetky item z nákupného košíka podľa ID. V prípade, že z daného druhu tovaru je v košíku viac ako 1 kus,
      * vymaže všetky!!!
      * @Route("/delete-item/{itemId}", name="delete_item")
      * @param $itemId
@@ -259,16 +264,15 @@ class ShoppingCartController extends AbstractController
      */
     public function deleteItemFromShoppingCartById($itemId)
     {
-        $session = $this->getSessionItems();
-        $sessionItems = $session->items;
-        $temp = [];
-        foreach ($sessionItems as $item) {
-            if ($item != $itemId) {
-                array_push($temp, $item);
-            }
-        }
-        $this->session->set($session->name, $temp);
-        return new JsonResponse(["success" => true, "id" => $itemId, "numberOfItems" => count($temp)]);
+        $cartItems = $this->shoppingCartService->deleteItemFromShoppingCartById($itemId);
+
+        $this->shoppingCartService
+            ->setOwnerId($this->getUserId())
+            ->setContent($cartItems)
+            ->setTotalPrice($this->getTotalPrice())
+            ->update();
+
+        return new JsonResponse($cartItems);
     }
 
     /**
@@ -278,42 +282,7 @@ class ShoppingCartController extends AbstractController
      */
     public function getShoppingCart()
     {
-        return new JsonResponse($this->getSessionItems()->items);
-    }
-
-    /**
-     * Vráti zoznam itemov v nákupnom košíku.
-     * @return object ["name" => $sessionName, "items" => array, "isEmpty" => true/false]
-     */
-    public function getSessionItems()
-    {
-        $userEmailSes = $this->security->getUser()->getUsername();
-        $sessionItems = $this->session->get($userEmailSes);
-
-        if (empty($sessionItems)) {
-            $sessionItems = [];
-        }
-
-        $array = ["name" => $userEmailSes, "items" => $sessionItems, "isEmpty" => empty($sessionItems)];
-        return (object)$array;
-    }
-
-    /**
-     * Vráti ID tovaru a k nemu počet kusov v nákupnom košíku.
-     * @return array ['article_id' => 'count']
-     */
-    private function countNumberOfUniqueItems()
-    {
-        $sessionItems = $this->getSessionItems()->items;
-        $outputArray = [];
-        foreach ($sessionItems as $item) {
-            if (!empty($outputArray[$item])) {
-                $outputArray[$item]++;
-            } else {
-                $outputArray[$item] = 1;
-            }
-        }
-        return $outputArray;
+        return new JsonResponse($this->shoppingCartService->getSessionItems()->items);
     }
 
     /**
@@ -322,7 +291,7 @@ class ShoppingCartController extends AbstractController
      */
     private function getItemsFromDbById()
     {
-        $itemsObject = $this->countNumberOfUniqueItems();
+        $itemsObject = $this->shoppingCartService->countNumberOfUniqueItems();
 
         $articlesFromDB = $this->getDoctrine()
             ->getRepository(Article::class);
@@ -335,7 +304,7 @@ class ShoppingCartController extends AbstractController
      */
     private function getTotalPrice()
     {
-        $countedItems = $this->countNumberOfUniqueItems(); //na indexe je ID itemu a v poli je pocet itemov
+        $countedItems = $this->shoppingCartService->countNumberOfUniqueItems(); //na indexe je ID itemu a v poli je pocet itemov
         $uniqItems = $this->getItemsFromDbById();
         $total = 0;
 
@@ -364,16 +333,13 @@ class ShoppingCartController extends AbstractController
         $email = (new TemplatedEmail())
             ->from('filipkosmel@gmail.com')
             ->to($this->getUser()->getUsername())
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
             ->priority(Email::PRIORITY_HIGH)
             ->subject('Objednávka - potvrdenie')
             ->htmlTemplate('email/order.html.twig')
             ->context([
                 'totalPrice' => $this->getTotalPrice(),
                 'items' => $this->getItemsFromDbById(),
-                'count' => $this->countNumberOfUniqueItems(),
+                'count' => $this->shoppingCartService->countNumberOfUniqueItems(),
                 'invoice_number' => $invoice
             ]);
 
@@ -381,6 +347,20 @@ class ShoppingCartController extends AbstractController
             $mailer->send($email);
         } catch (TransportExceptionInterface $e) {
         }
+    }
+
+    /**
+     * @Route("/create-cart-row", name="create_cart_row")
+     */
+    public function createCartRow()
+    {
+        $this->shoppingCartService
+            ->setOwnerId($this->getUserId())
+            ->setContent([])
+            ->setTotalPrice(0)
+            ->create();
+
+        return $this->render('redirect.htlm.twig');
     }
 
     /**
@@ -408,33 +388,24 @@ class ShoppingCartController extends AbstractController
      * Metóda tiež upraví počet tovarov na sklade poďla toho, koľko ich bolo v košíku objednaných.
      * @return void
      */
-    private function setExpensesToArticleOwners()
+    private function setProfitToArticleOwners()
     {
         $em = $this->getDoctrine()->getManager();
-        $uniqueItemsList = $this->countNumberOfUniqueItems();
+        $uniqueItemsList = $this->shoppingCartService->countNumberOfUniqueItems();
 
         foreach ($uniqueItemsList as $id => $count) {
-            //vytiahnem podla ID z db tovar,
             $article = $this->getDoctrine()->getRepository(Article::class)
                 ->findOneBy(['id' => $id]);
-            //z tovaru vytiahnem ID usera,
             $userId = $article->getUserId();
-            // jednotkovu cenu,
             $pricePerUnit = $article->getPrice();
-            // amout tovarov v DB
             $amountOfArticleInDB = $article->getAmount();
-            //vytiahnem podla ID z db USERA,
             $userToUpdate = $this->getDoctrine()->getRepository(User::class)
                 ->findOneBy(['id' => $userId]);
-            // nastavim mu profit podla $count a jednotkovej ceny,
             $profit = $userToUpdate->getEarning() + ($count * $pricePerUnit);
             $userToUpdate->setEarning($profit * 0.95);
 
             $em->persist($userToUpdate);
-            // odpocitam amout tovarov podla kosiku,
             $article->setAmount($amountOfArticleInDB - $count);
-            // flushnem tovary
-            // usera flushnem,
             $em->persist($article);
             $em->flush();
         }
@@ -446,7 +417,7 @@ class ShoppingCartController extends AbstractController
      */
     private function checkAvailableItems()
     {
-        $uniqueItemsList = $this->countNumberOfUniqueItems();
+        $uniqueItemsList = $this->shoppingCartService->countNumberOfUniqueItems();
 
         $outputArray = [];
 
@@ -460,7 +431,15 @@ class ShoppingCartController extends AbstractController
                 $outputArray[] = $id;
             }
         }
-
         return $outputArray;
+    }
+
+    private function getUserId()
+    {
+        $user = $this->security->getUser();
+        $actualUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $user->getUsername()]);
+
+        return $actualUser->getId();
     }
 }

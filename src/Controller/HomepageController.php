@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
@@ -21,12 +22,17 @@ class HomepageController extends AbstractController
     private $security;
     private $roleService;
     private $chartService;
+    private $session;
 
-    public function __construct(Security $security, RoleService $roleService, ChartsService $chartService)
+    public function __construct(
+        Security $security,
+        RoleService $roleService,
+        ChartsService $chartService, SessionInterface $session)
     {
         $this->security = $security;
         $this->roleService = $roleService;
         $this->chartService = $chartService;
+        $this->session = $session;
     }
 
     /**
@@ -57,7 +63,7 @@ class HomepageController extends AbstractController
                 } else {
                     $status = 'notActivated';
                 }
-                return $this->render('activateAcc.html.twig', [
+                return $this->render('activate_acc.html.twig', [
                     'status' => $status,
                     'token' => $tempUser->getToken()
                 ]);
@@ -67,6 +73,7 @@ class HomepageController extends AbstractController
         if (!is_numeric($pageNumber) || $pageNumber < 1) {
             $pageNumber = 1;
         }
+
         $allArticles = $this->getArticleList($pageNumber);
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBar($pageNumber);
@@ -248,6 +255,23 @@ class HomepageController extends AbstractController
         $categoriesFromDB = $this->getDoctrine()
             ->getRepository(Category::class);
         return $categoriesFromDB->findAll();
+    }
+
+    /**
+     * Vráti zoznam itemov v nákupnom košíku.
+     * @return object ["name" => $sessionName, "items" => array, "isEmpty" => true/false]
+     */
+    public function getSessionItems()
+    {
+        $userEmailSes = $this->security->getUser()->getUsername();
+        $sessionItems = $this->session->get($userEmailSes);
+
+        if (empty($sessionItems)) {
+            $sessionItems = [];
+        }
+
+        $array = ["name" => $userEmailSes, "items" => $sessionItems, "isEmpty" => empty($sessionItems)];
+        return (object)$array;
     }
 
     /**

@@ -24,19 +24,5 @@
     </div>
 
     {% endif %}
-
-
-    <script>
-        (function (){
-            var redirectEl = $('[data-redirect]');
-            var value = redirectEl.data('redirect');
-
-            if (redirectEl.length > 0 && value !== '' && !isNaN(+value)) {
-                setTimeout(function (){
-                    window.location.href = 'http://127.0.0.1:8000/login';
-                }, parseInt(value)*1000)
-            }
-        })()
-    </script>
 {% endblock %}
 

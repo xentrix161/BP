@@ -144,7 +144,7 @@ class RegisterController extends AbstractController
             $em->persist($tempUser);
             $em->flush();
 
-            return $this->render('activateAcc.html.twig', [
+            return $this->render('activate_acc.html.twig', [
                 'status' => $status,
                 'token' => $token
             ]);
@@ -157,7 +157,7 @@ class RegisterController extends AbstractController
             $status = 'notActivated';
         }
 
-        return $this->render('activateAcc.html.twig', [
+        return $this->render('activate_acc.html.twig', [
             'status' => $status,
             'token' => $token
 //            'email' => $tempUser->getEmail(),
