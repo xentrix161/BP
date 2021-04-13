@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Order;
 use App\Entity\User;
 use App\Services\ChartsService;
 use App\Services\RoleService;
@@ -78,6 +79,8 @@ class HomepageController extends AbstractController
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBar($pageNumber);
         $allCharts = $this->chartService->getTopCharts();
+        $registeredUsers = $this->getNumberOfRegisteredUsers();
+        $totalOrders = $this->getNumberOfTotalOrders();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
@@ -85,7 +88,9 @@ class HomepageController extends AbstractController
             'totalPages' => $totalPages,
             'pageNumber' => $pageNumber,
             'categoryBool' => false,
-            'charts' => $allCharts
+            'charts' => $allCharts,
+            'registeredUsers' => $registeredUsers,
+            'numberOfTotalOrders' => $totalOrders
         ]);
     }
 
@@ -109,6 +114,8 @@ class HomepageController extends AbstractController
         $allCategories = $this->getCategoryList();
         $totalPages = $this->generatePaginationBarForCategories($pageNumber, $id);
         $allCharts = $this->chartService->getTopCharts();
+        $registeredUsers = $this->getNumberOfRegisteredUsers();
+        $totalOrders = $this->getNumberOfTotalOrders();
         return $this->render('homepage.html.twig', [
             'controller_name' => 'HomepageController',
             'data' => $allArticles,
@@ -117,7 +124,31 @@ class HomepageController extends AbstractController
             'pageNumber' => $pageNumber,
             'id' => $id,
             'categoryBool' => true,
-            'charts' => $allCharts
+            'charts' => $allCharts,
+            'registeredUsers' => $registeredUsers,
+            'numberOfTotalOrders' => $totalOrders
+        ]);
+    }
+
+
+    /**
+     * Vyrendruje stránku s articlami používateľa podľa zadaného ID.
+     * @Route("/user-articles/{id}", name="user_articles")
+     * @param $id
+     * @return Response
+     */
+    public function getUserArticles($id)
+    {
+        $userArticles = $this->getDoctrine()->getRepository(Article::class)
+            ->findBy(['user_id' => $id]);
+
+        $user = $this->getDoctrine()->getRepository(User::class)
+            ->find($id);
+
+        return $this->render('user_articles.html.twig', [
+            'controller_name' => 'HomepageController',
+            'articles' => $userArticles,
+            'owner' => $user
         ]);
     }
 
@@ -272,6 +303,21 @@ class HomepageController extends AbstractController
 
         $array = ["name" => $userEmailSes, "items" => $sessionItems, "isEmpty" => empty($sessionItems)];
         return (object)$array;
+    }
+
+    public function getNumberOfRegisteredUsers()
+    {
+        $registeredUsers = $this->getDoctrine()->getRepository(User::class)
+            ->findAll();
+
+        return count($registeredUsers);
+    }
+
+    public function getNumberOfTotalOrders()
+    {
+        $totalOrders = $this->getDoctrine()->getRepository(Order::class)
+            ->findAll();
+        return count($totalOrders);
     }
 
     /**

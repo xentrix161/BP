@@ -1,0 +1,34 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>Registrovaní používatelia</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">ID</th>
+            <th class="name-surname">ID hodnotiaceho</th>
+            <th class="name-surname">Dátum</th>
+            <th class="name-surname">Hodnotenie</th>
+            <th class="name-surname">Hodnotená entita</th>
+            <th class="name-surname">ID hodnotenej entity</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rating in listOfRatings %}
+            <tr>
+                <td>{{ rating.id }}</td>
+                <td>{{ rating.userId }}</td>
+                <td>{{ rating.date | date('d-m-Y') }}</td>
+                <td>{{ rating.rate | number_format(2) }}</td>
+                <td>{{ rating.entityType ? 'Tovar' : 'iná entita' }}</td>
+                <td>{{ rating.entityId }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="create-new">
+        <a href="{{ path('statistics') }}">Späť na zoznam štatistík</a>
+    </div>
+{% endblock %}
+
+

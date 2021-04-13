@@ -1,0 +1,40 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>Všetky objednávky na portáli</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">ID</th>
+            <th class="name-surname">Dátum</th>
+            <th class="name-surname">Adresa</th>
+            <th class="name-surname">Použivateľ</th>
+            <th class="name-surname">Mobil</th>
+            <th class="name-surname">Hodnota</th>
+            <th class="name-surname">Číslo faktúry</th>
+            <th class="name-surname">Spôsob platby</th>
+            <th class="name-surname">Zaplatené</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in listOfOrders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date  |date('d-m-Y') }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.userId }}</td>
+                <td>{{ order.mobile }}</td>
+                <td><b>{{ order.totalPrice | number_format(2) }}€</b></td>
+                <td>{{ order.invoiceNumber }}</td>
+                <td>{{ order.paymentMethod ? 'Kartou' : 'V hotovosti' }}</td>
+                <td>{{ order.paid ? 'Zaplatené' : 'Nezaplatené' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="create-new">
+        <a href="{{ path('statistics') }}">Späť na zoznam štatistík</a>
+    </div>
+{% endblock %}
+
+

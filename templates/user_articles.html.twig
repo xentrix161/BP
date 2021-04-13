@@ -1,0 +1,22 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+{#    {% include "category_panel.html.twig" %}#}
+    <h1 class="text-center">Tovar od používateľa <span style="color: darkgoldenrod; font-style: italic" >{{ owner.name }} {{ owner.surname }}</span>: Našlo sa {{ articles|length }} výsledkov.</h1>
+    <div class="collection">
+        {% for article in articles %}
+            <div class="product">
+                <a class="product-url" href="{{ url('produkt', {'id': article.id}) }}">
+                    <img class="product-image" src="/uploads/{{ article.img }}" alt="">
+                    <p class="product-name">
+                        {{ article.title }}
+                    </p>
+                </a>
+                <span class="product-price">
+                    Cena {{ article.price |number_format(2, '.', ',') }} €
+            </span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

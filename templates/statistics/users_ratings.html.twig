@@ -1,0 +1,35 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>Predajcovia poďla hodnotenia</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">ID</th>
+            <th class="name-surname">Meno</th>
+            <th class="name-surname">Email</th>
+            <th class="name-surname">Rola</th>
+            <th class="name-surname">Hodnotenie</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in ratingsUsers %}
+            {% if user.rating != 0 or user.rating != null %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }} {{ user.surname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role[0] }}</td>
+                    <td><b>{{ user.rating | number_format(2) }}</b> z 5</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="create-new">
+        <a href="{{ path('statistics') }}">Späť na zoznam štatistík</a>
+    </div>
+{% endblock %}
+
+

@@ -2,7 +2,6 @@
 <div class="category-panel">
     <div id="dateDisplay"></div>
     <div id="timeDisplay"></div>
-
     <a class="homepage-title" href="/homepage">pAnkst0re!</a>
     <label class="close-btn" for="panel-open-close">&times;</label>
     <h2>Kategórie</h2>
@@ -31,7 +30,7 @@
                                     {% for data in value %}
                                         <li class="chart-row">
                                             <span>{{ loop.index }}.</span>
-                                            <span>{{ data['name'] }}</span>
+                                            <span><a href="{{ data['url'] }}">{{ data['name'] }}</a></span>
                                             <span>{{ data['data'] }}</span>
                                         </li>
                                     {% endfor %}
@@ -42,6 +41,9 @@
                 {% endfor %}
             </ul>
         </div>
+        <h3>Registrovaných: {{ registeredUsers }} </h3>
+        <h3>Objednávky: {{ numberOfTotalOrders }} </h3>
+{#        <h3>Aktívni: </h3>#}
     {% endif %}
 </div>
 

@@ -1,0 +1,114 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>Štatistiky portálu</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">Číslo</th>
+            <th class="name-surname">Názov štatistiky</th>
+            <th class="name-surname">Odkaz na štatistiku</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Používatelia podľa minutých finančných prostriedkov</td>
+            <td><a href="{{ path('statistics_users_spenders') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Predajcovia poďla zarobených finačných prostriedkov</td>
+            <td><a href="{{ path('statistics_users_earners') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Predajcovia podľa hodnotenia</td>
+            <td><a href="{{ path('statistics_users_ratings') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Tovary podľa hodnotenia</td>
+            <td><a href="{{ path('statistics_article_ratings') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Tovary podľa predaných kusov</td>
+            <td><a href="{{ path('statistics_article_sold') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Profity portálu</td>
+            <td><a href="{{ path('statistics_portal_profit') }}">link</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h1>Zoznamy</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">Číslo</th>
+            <th class="name-surname">Názov zoznamu</th>
+            <th class="name-surname">Odkaz na zoznam</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Zoznam všetkých používateľov</td>
+            <td><a href="{{ path('statistics_users_all') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Zoznam všetkých objednávok</td>
+            <td><a href="{{ path('statistics_orders_all') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Zoznam všetkých hodnotení</td>
+            <td><a href="{{ path('statistics_ratings_all') }}">link</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h1>Počítadlá</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">Počet zaregistrovaných používateľov</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ totalUsers }} používateľov</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">Počet vyhotovených objednávok</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ totalOrders }} objednávok</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">Celkový profit portálu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ totalProfit }} eur</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+

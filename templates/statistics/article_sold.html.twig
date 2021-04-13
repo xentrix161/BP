@@ -1,0 +1,30 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>Tovary podľa predaných kusov</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">ID tovaru</th>
+            <th class="name-surname">Názov tovaru</th>
+            <th class="name-surname">Počet predaných kusov</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articlesSortedSold %}
+            {% if article.sold != 0 or article.sold != null %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td><a href="{{ url('produkt', {'id': article.id}) }}">{{ article.title }}</a></td>
+                    <td>{{ article.sold }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="create-new">
+        <a href="{{ path('statistics') }}">Späť na zoznam štatistík</a>
+    </div>
+{% endblock %}
+
+

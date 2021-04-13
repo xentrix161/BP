@@ -1,0 +1,32 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>Tovary podľa hodnotenia</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">ID tovaru</th>
+            <th class="name-surname">Názov tovaru</th>
+            <th class="name-surname">Hodnotenie tovaru</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articlesSortedRating %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><a href="{{ url('produkt', {'id': article.id}) }}">{{ article.title }}</a></td>
+                {% if article.rating == 0 or article.rating == null %}
+                    <td>(tovar ešte nikto neohodnotil)</td>
+                {% else %}
+                    <td><b>{{ article.rating | number_format(2) }}</b> z 5</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="create-new">
+        <a href="{{ path('statistics') }}">Späť na zoznam štatistík</a>
+    </div>
+{% endblock %}
+
+

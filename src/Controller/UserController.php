@@ -312,7 +312,30 @@ class UserController extends AbstractController
      */
     public function profileInfo(Request $request)
     {
-        return $this->render('profile_info.html.twig');
+        $total = $this->getTotalOfUsersOrder();
+        $paid = $this->getNumberOfPaidUsersOrder();
+        return $this->render('profile_info.html.twig', [
+            'total' => $total,
+            'paid' => $paid
+        ]);
+    }
+
+    public function getTotalOfUsersOrder()
+    {
+        $loggedUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->getUser()->getUsername()]);
+        $numberOfUsersOrder = $this->getDoctrine()->getRepository(Order::class)
+            ->findBy(['user_id' => $loggedUser->getId()]);
+        return count($numberOfUsersOrder);
+    }
+
+    public function getNumberOfPaidUsersOrder()
+    {
+        $loggedUser = $this->getDoctrine()->getRepository(User::class)
+            ->findOneBy(['email' => $this->getUser()->getUsername()]);
+        $numberOfUsersPaidOrder = $this->getDoctrine()->getRepository(Order::class)
+            ->findBy(['user_id' => $loggedUser->getId(), 'paid' => true]);
+        return count($numberOfUsersPaidOrder);
     }
 
     /**

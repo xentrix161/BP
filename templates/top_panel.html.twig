@@ -8,14 +8,15 @@
             <a href="http://127.0.0.1:8000/homepage">Domov</a>
         </li>
         <li>
-            <a href="">O nás</a>
-        </li>
-        <li>
             <a href="">Obchodné podmienky</a>
         </li>
-        <li>
-            <a href="">FAQ</a>
-        </li>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user.role[0] == 'ROLE_ADMIN' %}
+                <li>
+                    <a href="{{ path('statistics') }}">Štatistiky</a>
+                </li>
+            {% endif %}
+        {% endif %}
     </ul>
 
     <ul class="form-buttons float-right drop-down drop-down-out">

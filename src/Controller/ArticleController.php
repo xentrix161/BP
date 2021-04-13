@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Order;
 use App\Entity\Rating;
 use App\Entity\User;
 use App\Enum\EntityTypeEnum;
@@ -92,7 +93,6 @@ class ArticleController extends AbstractController
                 if (($rating->getUserId() == $userId) && ($max < $rating->getId())) {
                     $max = $rating->getId();
                     $lastEntityId = $index;
-//                    dump($max, $rating->getId(), $index, $rating, $userId);
                 }
             }
 
@@ -107,6 +107,8 @@ class ArticleController extends AbstractController
 
         $allCategories = $this->getCategoryList();
         $allCharts = $this->chartService->getTopCharts();
+        $totalUsers = $this->getNumberOfRegisteredUsers();
+        $totalOrders = $this->getNumberOfTotalOrders();
 
         return $this->render('article/articleDetail.html.twig', [
             'controller_name' => 'ArticleController',
@@ -114,7 +116,9 @@ class ArticleController extends AbstractController
             'charts' => $allCharts,
             'data' => $data,
             'numberOfRates' => $count,
-            'canRate' => $canRate
+            'canRate' => $canRate,
+            'registeredUsers' => $totalUsers,
+            'numberOfTotalOrders' => $totalOrders
         ]);
     }
 
@@ -385,8 +389,12 @@ class ArticleController extends AbstractController
         $em->persist($actualArticle);
         $em->flush();
 
-        $isAjax = $request->request->get('data')[0]['ajax'] == true;
+        $owningUser = $this->getDoctrine()->getRepository(User::class)
+            ->find($actualArticle->getUserId());
+        $this->ratingUser($owningUser);
 
+
+        $isAjax = $request->request->get('data')[0]['ajax'] == true;
         if (!$isAjax) {
             $url = $request->getUri();
             $tmp = explode('/', $url);
@@ -397,5 +405,44 @@ class ArticleController extends AbstractController
             ]);
         }
         return new JsonResponse(['success' => true, 'rating' => $overallRating, 'count' => $count]);
+    }
+
+    public function getNumberOfRegisteredUsers()
+    {
+        $registeredUsers = $this->getDoctrine()->getRepository(User::class)
+            ->findAll();
+
+        return count($registeredUsers);
+    }
+
+    public function getNumberOfTotalOrders()
+    {
+        $totalOrders = $this->getDoctrine()->getRepository(Order::class)
+            ->findAll();
+        return count($totalOrders);
+    }
+
+    public function ratingUser(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $allUsersArticles = $this->getDoctrine()->getRepository(Article::class)
+            ->findBy(['user_id' => $user->getId()]);
+
+        $count = count($allUsersArticles);
+        if ($count > 0) {
+            $totalValue = 0;
+            $usersAvg = 0;
+            $counter = 0;
+            foreach ($allUsersArticles as $article) {
+                if (!is_null($article->getRating()) || $article->getRating() != 0) {
+                    $totalValue += $article->getRating();
+                    $counter++;
+                }
+            }
+            $usersAvg = $totalValue / $counter;
+        }
+        $user->setRating($usersAvg);
+        $em->persist($user);
+        $em->flush();
     }
 }

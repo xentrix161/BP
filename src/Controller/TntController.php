@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Order;
 use App\Entity\User;
 use App\Services\ChartsService;
 use App\Services\RoleService;
@@ -47,12 +48,16 @@ class TntController extends AbstractController
         $allArticles = $this->getArticleList($foundIds);
         $allCategories = $this->getCategoryList();
         $allCharts = $this->chartService->getTopCharts();
+        $registeredUsers = $this->getNumberOfRegisteredUsers();
+        $totalOrders = $this->getNumberOfTotalOrders();
         return $this->render('tnt/index.html.twig', [
             'controller_name' => 'TntController',
             'data' => $allArticles,
             'categories' => $allCategories,
             'categoryBool' => false,
-            'charts' => $allCharts
+            'charts' => $allCharts,
+            'registeredUsers' => $registeredUsers,
+            'numberOfTotalOrders' => $totalOrders
         ]);
     }
 
@@ -108,6 +113,7 @@ class TntController extends AbstractController
     }
 
     /**
+     * @param $searchWord
      * @return Article[]|object[]
      * @throws IndexNotFoundException
      */
@@ -218,5 +224,20 @@ class TntController extends AbstractController
         $all = $articlesFromDB->findAll();
         $totalNumberOfArticles = count($all);
         return ceil($totalNumberOfArticles / $this->limitArticlesPerPage);
+    }
+
+    public function getNumberOfRegisteredUsers()
+    {
+        $registeredUsers = $this->getDoctrine()->getRepository(User::class)
+            ->findAll();
+
+        return count($registeredUsers);
+    }
+
+    public function getNumberOfTotalOrders()
+    {
+        $totalOrders = $this->getDoctrine()->getRepository(Order::class)
+            ->findAll();
+        return count($totalOrders);
     }
 }

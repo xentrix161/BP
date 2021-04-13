@@ -2,16 +2,17 @@
 
 {% block body %}
     <div class="form-wrapper">
-        <div>Minul si: {{ app.user.expense }}</div>
-        <div>Aktivovany: {{ app.user.activate }}</div>
-
+        <div>Objednávky: <b>{{ total }}</b> objednávok</div>
+        <div>Zaplatené obj.: <b>{{ paid }}</b> objednávok</div>
+        <div>Minul si: <b>{{ app.user.expense }}€</b></div>
+        <div>Aktivovany: <b>{{ app.user.activate ? 'Áno' : 'Nie' }}</b></div>
         {% if app.user.role[0] == 'ROLE_SELLER' or app.user.role[0] == 'ROLE_ADMIN' %}
-            <div>Zárobok: {{ app.user.earning }}</div>
-            <div>Hodnotenie: {{ app.user.rating }}</div>
+            <div>Zárobok: <b>{{ app.user.earning|number_format(2) }}€</b></div>
+            <div>Hodnotenie: <b>{{ app.user.rating }}</b> z 5</div>
         {% endif %}
 
-        <a href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
-        <a class="delete-acc" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
+        <a class="button radius" href="{{ url('user_edit', {'id': app.user.id}) }}">Upraviť profil</a>
+        <a class="delete-acc button radius" href="{{ url('user_edit', {'id': app.user.id}) }}">Vymazať účet</a>
     </div>
 
     <div class="delete-modal form-wrapper">

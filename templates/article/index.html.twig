@@ -10,6 +10,9 @@
                 <th>Popis</th>
                 <th class="name-surname">Cena</th>
                 <th>Obrázok</th>
+                <th>Dostupnosť</th>
+                <th>Sklad ks</th>
+{#                <th>Predané ks</th>#}
                 <th class="action">Akcie</th>
             </tr>
         </thead>
@@ -23,6 +26,7 @@
                 <td>{{ article.img }}</td>
                 <td>{{ article.available ? 'Yes' : 'No' }}</td>
                 <td>{{ article.amount }}</td>
+{#                <td>{{ article.sold }}</td>#}
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">Zobraziť</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">Upraviť</a>

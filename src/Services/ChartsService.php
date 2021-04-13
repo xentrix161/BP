@@ -6,12 +6,14 @@ namespace App\Services;
 use App\Entity\User;
 use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ChartsService
+class ChartsService extends AbstractController
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $em) {
+    public function __construct(EntityManagerInterface $em)
+    {
         $this->em = $em;
     }
 
@@ -22,21 +24,17 @@ class ChartsService
     public function getTopCharts()
     {
         $outputArray = [
-            'TOP 3 predajci' => $this->getTopRatedSellers(),
-            'TOP 10 tovarov' => $this->getTopArticles(),
-            'TOP 3 profit' => $this->getTopEarners()
+            'TOP hodnotení predajci' => $this->getTopRatedSellers(),
+            'TOP hodnotené tovary' => $this->getTopArticles(),
+            'TOP profitový predajci' => $this->getTopEarners(),
+//            'TOP predávané tovary' => $this->getTopSoldArticles()
+
         ];
 
         $empty = false;
-
         foreach ($outputArray as $item) {
-            if (empty($item)) {
-                $empty = true;
-            } else {
-                $empty = false;
-            }
+            $empty = empty($item);
         }
-
         return $empty ? null : $outputArray;
     }
 
@@ -56,6 +54,8 @@ class ChartsService
             $outputArray[] = [
                 'name' => $earner->getName() . " " . $earner->getSurname(),
                 'data' => round($earner->getEarning(), 2) . "€",
+                'entity' => $earner,
+                'url' => $this->generateUrl('user_articles', ['id' => $earner->getId()]),
                 'permission' => true
             ];
         }
@@ -78,6 +78,33 @@ class ChartsService
                 $outputArray[] = [
                     'name' => $article->getTitle(),
                     'data' => round($article->getRating(), 2) . " z 5 hviezd",
+                    'entity' => $article,
+                    'url' => $this->generateUrl('produkt', ['id' => $article->getId()]),
+                    'permission' => true
+                ];
+            }
+        }
+        return $outputArray;
+    }
+
+    /**
+     * Vráti TOP x hodnotených articlov celkovo.
+     * @param int $numberOfItems
+     * @return array
+     */
+    public function getTopSoldArticles($numberOfItems = 10)
+    {
+        $top10SoldArticles = $this->em->getRepository(Article::class)
+            ->findBy(array(), array('sold' => 'DESC'), $numberOfItems, 0);
+
+        $outputArray = [];
+        foreach ($top10SoldArticles as $article) {
+            if ($article->getSold() != null) {
+                $outputArray[] = [
+                    'name' => $article->getTitle(),
+                    'data' => $article->getSold() . " predaných",
+                    'entity' => $article,
+                    'url' => '#',
                     'permission' => true
                 ];
             }
@@ -98,11 +125,15 @@ class ChartsService
 
         $outputArray = [];
         foreach ($top3RatedSellers as $seller) {
-            $outputArray[] = [
-                'name' => $seller->getName() . " " . $seller->getSurname(),
-                'data' => $seller->getRating() . " z 5 hviezd",
-                'permission' => false
-            ];
+            if ($seller->getRating() != null) {
+                $outputArray[] = [
+                    'name' => $seller->getName() . " " . $seller->getSurname() . ", ID: " . $seller->getId(),
+                    'data' => $seller->getRating() . " z 5 hviezd",
+                    'entity' => $seller,
+                    'url' => $this->generateUrl('user_articles', ['id' => $seller->getId()]),
+                    'permission' => false
+                ];
+            }
         }
         return $outputArray;
     }
