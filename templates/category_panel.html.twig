@@ -51,19 +51,19 @@
     <label class="open-btn" for="panel-open-close">&#9776; Ponuka</label>
 </div>
 
-<script>
-    (function () {
-        var checkbox = $('#panel-open-close');
+{#<script>#}
+{#    (function () {#}
+{#        var checkbox = $('#panel-open-close');#}
 
-        checkbox.on('change', function (evt) {
-            var self = $(this);
-            window.localStorage.setItem('panel', self.is(':checked'));
-        })
+{#        checkbox.on('change', function (evt) {#}
+{#            var self = $(this);#}
+{#            window.localStorage.setItem('panel', self.is(':checked'));#}
+{#        })#}
 
-        if (window.localStorage.getItem('panel') === 'true') {
-            checkbox.prop('checked', true);
-        } else if (window.localStorage.getItem('panel') === 'false') {
-            checkbox.prop('checked', false);
-        }
-    })()
-</script>
+{#        if (window.localStorage.getItem('panel') === 'true') {#}
+{#            checkbox.prop('checked', true);#}
+{#        } else if (window.localStorage.getItem('panel') === 'false') {#}
+{#            checkbox.prop('checked', false);#}
+{#        }#}
+{#    })()#}
+{#</script>#}

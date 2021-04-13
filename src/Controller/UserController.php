@@ -100,6 +100,9 @@ class UserController extends AbstractController
                 if (empty($temp)) {
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
                     $user->setRole(['ROLE_NONE']);
+                    $user->setExpense(0);
+                    $user->setEarning(0);
+                    $user->setRating(0);
                     $user->setToken(md5(uniqid()));
                     $user->setTokenDate(new \DateTime());
                     $entityManager->persist($user);

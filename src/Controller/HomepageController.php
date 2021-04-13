@@ -145,10 +145,18 @@ class HomepageController extends AbstractController
         $user = $this->getDoctrine()->getRepository(User::class)
             ->find($id);
 
+        $allCategories = $this->getCategoryList();
+        $allCharts = $this->chartService->getTopCharts();
+        $registeredUsers = $this->getNumberOfRegisteredUsers();
+        $totalOrders = $this->getNumberOfTotalOrders();
         return $this->render('user_articles.html.twig', [
             'controller_name' => 'HomepageController',
             'articles' => $userArticles,
-            'owner' => $user
+            'owner' => $user,
+            'categories' => $allCategories,
+            'charts' => $allCharts,
+            'registeredUsers' => $registeredUsers,
+            'numberOfTotalOrders' => $totalOrders
         ]);
     }
 

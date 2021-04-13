@@ -9,18 +9,6 @@
             môžete zadať nové heslo)</div>
     </div>
 
-
-    {% for message in app.flashes('info') %}
-        <script>
-            var msg = "{{ message }}";
-            setTimeout(function () {
-                alert(msg)
-            }, 20);
-        </script>
-    {% endfor %}
-
-
-
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
     <br>

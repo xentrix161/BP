@@ -82,6 +82,9 @@ class RegisterController extends AbstractController
 
                     $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
                     $user->setRole([$this->roleService::ROLE_NONE]);
+                    $user->setExpense(0);
+                    $user->setEarning(0);
+                    $user->setRating(0);
                     $user->setToken($token);
                     $user->setTokenDate(new \DateTime());
                     $user->setActivate(0);

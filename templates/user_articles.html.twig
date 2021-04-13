@@ -1,7 +1,7 @@
 {% extends 'page_temps/base_temp.html.twig' %}
 
 {% block body %}
-{#    {% include "category_panel.html.twig" %}#}
+    {% include "category_panel.html.twig" %}
     <h1 class="text-center">Tovar od používateľa <span style="color: darkgoldenrod; font-style: italic" >{{ owner.name }} {{ owner.surname }}</span>: Našlo sa {{ articles|length }} výsledkov.</h1>
     <div class="collection">
         {% for article in articles %}
