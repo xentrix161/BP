@@ -1,0 +1,21 @@
+{#{% extends 'page_temps/base_temp.html.twig' %}#}
+
+{#{% block body %}#}
+    <h1 class="text-center" style="padding-top: 50px">Mohlo by sa Vám tiež páčiť</h1>
+    <div class="collection">
+        {% for article in suggestedArticles %}
+            <div class="product">
+                <a class="product-url" href="{{ url('produkt', {'id': article.id}) }}">
+                    <img class="product-image" src="/uploads/{{ article.img }}" alt="">
+                    <p class="product-name">
+                        {{ article.title }}
+                    </p>
+                </a>
+                <span class="product-price">
+                    Cena {{ article.price |number_format(2, '.', ',') }} €
+            </span>
+            </div>
+        {% endfor %}
+    </div>
+{#{% endblock %}#}
+

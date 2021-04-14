@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\User;
 use App\Services\ChartsService;
+use App\Services\PersonalizationDataService;
 use App\Services\RoleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,16 +25,23 @@ class HomepageController extends AbstractController
     private $roleService;
     private $chartService;
     private $session;
+    /**
+     * @var PersonalizationDataService
+     */
+    private $personalizationDataService;
 
     public function __construct(
         Security $security,
         RoleService $roleService,
-        ChartsService $chartService, SessionInterface $session)
+        ChartsService $chartService,
+        SessionInterface $session,
+        PersonalizationDataService $personalizationDataService)
     {
         $this->security = $security;
         $this->roleService = $roleService;
         $this->chartService = $chartService;
         $this->session = $session;
+        $this->personalizationDataService = $personalizationDataService;
     }
 
     /**
@@ -327,6 +335,7 @@ class HomepageController extends AbstractController
             ->findAll();
         return count($totalOrders);
     }
+
 
     /**
      * Vráti pole obsahujúce dáta, ktoré určujú ako bude vypadať čislovací bar na stránke.

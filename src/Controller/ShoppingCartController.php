@@ -8,6 +8,7 @@ use App\Entity\Shop;
 use App\Entity\User;
 use App\Services\FormValidationService;
 use App\Services\InputValidationService;
+use App\Services\PersonalizationDataService;
 use App\Services\ShoppingCartService;
 use DateTime;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -35,13 +36,15 @@ class ShoppingCartController extends AbstractController
     private $inputValidationService;
     private $formValidationService;
     private $shoppingCartService;
+    private $personalizationDataService;
 
     public function __construct(
         SessionInterface $session,
         Security $security, MailerInterface $mailer,
         InputValidationService $inputValidationService,
         FormValidationService $formValidationService,
-        ShoppingCartService $shoppingCartService
+        ShoppingCartService $shoppingCartService,
+        PersonalizationDataService $personalizationDataService
     )
     {
         $this->session = $session;
@@ -50,6 +53,7 @@ class ShoppingCartController extends AbstractController
         $this->inputValidationService = $inputValidationService;
         $this->formValidationService = $formValidationService;
         $this->shoppingCartService = $shoppingCartService;
+        $this->personalizationDataService = $personalizationDataService;
     }
 
     /**
@@ -69,13 +73,16 @@ class ShoppingCartController extends AbstractController
             $decoded = explode('-', base64_decode($error));
         }
 
+
+        $suggestedArticles = $this->getSuggestedArticles();
         return $this->render('shopping_cart/index.html.twig', [
             'controller_name' => 'ShoppingCartController',
             'items' => $this->getItemsFromDbById(),
             'count' => $this->shoppingCartService->countNumberOfUniqueItems(),
             'totalPrice' => $this->getTotalPrice(),
             'isCartEmpty' => $this->shoppingCartService->getSessionItems()->isEmpty,
-            'notAvailableItems' => $decoded
+            'notAvailableItems' => $decoded,
+            'suggestedArticles' => $suggestedArticles
         ]);
     }
 
@@ -409,6 +416,11 @@ class ShoppingCartController extends AbstractController
             $em->persist($article);
             $em->flush();
         }
+    }
+
+    public function getSuggestedArticles()
+    {
+        return $this->personalizationDataService->getAdvertisedArticles();
     }
 
     /**
