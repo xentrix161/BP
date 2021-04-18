@@ -404,7 +404,7 @@ class ArticleController extends AbstractController
                 'url' => $url,
             ]);
         }
-        return new JsonResponse(['success' => true, 'rating' => $overallRating, 'count' => $count]);
+        return new JsonResponse(['success' => true, 'rating' => number_format($averageArticleStars, 2), 'count' => $count]);
     }
 
     public function getNumberOfRegisteredUsers()

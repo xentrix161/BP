@@ -261,7 +261,7 @@ class ShoppingCartService extends AbstractController
             }
         }
         $this->session->set($session->name, $temp);
-        return ["success" => true, "id" => $itemId, "numberOfItems" => count($temp)];
+        return ["success" => true, "id" => $itemId, "numberOfItems" => count($temp), 'cartItems' => $temp];
     }
 
     /**
@@ -289,5 +289,38 @@ class ShoppingCartService extends AbstractController
         }
         $this->session->set($session->name, $sessionItems);
         return $sessionItems;
+    }
+
+    public function countNumberOfAllSoldItemsSorted()
+    {
+        $allDoneCarts = $this->getDoctrine()->getRepository(ShoppingCart::class)
+            ->findBy(['status' => $this::STATUS_DONE]);
+
+        $countingArray= [];
+        foreach ($allDoneCarts as $doneCart) {
+            foreach ($doneCart->getCartContent() as $articleId) {
+                if (empty($countingArray[$articleId])) {
+                    $countingArray[$articleId] = 1;
+                } else {
+                    $countingArray[$articleId]++;
+                }
+            }
+        }
+        $countingArray = $this->sortAssociativeArrayByValues($countingArray);
+        return $countingArray;
+    }
+
+    private function sortAssociativeArrayByValues($array, $sortType = 'DESC')
+    {
+        if ($sortType === 'ASC') {
+            uasort($array, function ($a, $b) {
+                return $a > $b;
+            });
+        } else {
+            uasort($array, function ($a, $b) {
+                return $a < $b;
+            });
+        }
+        return $array;
     }
 }

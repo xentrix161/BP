@@ -5,20 +5,22 @@
     <table class="table">
         <thead>
         <tr>
+            <th class="id-class">Miesto</th>
             <th class="id-class">ID tovaru</th>
             <th class="name-surname">Názov tovaru</th>
-            <th class="name-surname">Počet predaných kusov</th>
+{#            <th class="name-surname">Počet predaných kusov</th>#}
         </tr>
         </thead>
         <tbody>
         {% for article in articlesSortedSold %}
-            {% if article.sold != 0 or article.sold != null %}
+{#            {% if article.sold != 0 or article.sold != null %}#}
                 <tr>
+                    <td>{{ loop.index }}.</td>
                     <td>{{ article.id }}</td>
                     <td><a href="{{ url('produkt', {'id': article.id}) }}">{{ article.title }}</a></td>
-                    <td>{{ article.sold }}</td>
+{#                    <td>{{ article.sold }}</td>#}
                 </tr>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
         </tbody>
     </table>

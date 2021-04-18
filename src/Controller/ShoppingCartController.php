@@ -64,6 +64,7 @@ class ShoppingCartController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->shoppingCartService->countNumberOfAllSoldItemsSorted(); die;
         if (!$this->getUser()) {
             return $this->redirectToRoute('access_denied');
         }
@@ -133,7 +134,7 @@ class ShoppingCartController extends AbstractController
                 ->street($street)
                 ->city($city)
                 ->zip($zip)
-//                ->mobileNumber($mobileNumber)
+                ->mobileNumber($mobileNumber)
                 ->validate();
 
             $message = $this->formValidationService->getMessage();
@@ -275,7 +276,7 @@ class ShoppingCartController extends AbstractController
 
         $this->shoppingCartService
             ->setOwnerId($this->getUserId())
-            ->setContent($cartItems)
+            ->setContent($cartItems['cartItems'])
             ->setTotalPrice($this->getTotalPrice())
             ->update();
 

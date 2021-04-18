@@ -41,16 +41,10 @@
                     <form method="post" action="{{ app.request.uri }}/rating">
                         <h1>Ohodnoť tovar</h1>
                         <div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5">
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4">
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3">
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2">
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1">
-                            <label for="star1" title="text">1 star</label>
+                            {% for index in [5, 4, 3, 2, 1] %}
+                                <input type="radio" id="star{{ index }}" name="rate" value="{{ index }}">
+                                <label for="star{{ index }}" title="text">{{ index }} stars</label>
+                            {% endfor %}
                         </div>
                     </form>
                 {% else %}
@@ -62,64 +56,9 @@
                     Tovar ste už hodnotili(hodnotiť tovar je možné len raz za mesiac!)
                     <span>Hodnotilo {{ numberOfRates }} používateľov</span>.
                 </div>
-
-                {% if canRate %}
-                <script>
-                    // (function () {
-                    //     var form = $('.rate-wrapper form');
-                    //     var input = form.find('input');
-                    //
-                    //     form.submit(function (evt) {
-                    //         evt.preventDefault();
-                    //         var self = evt.currentTarget;
-                    //         var url = self.action;
-                    //         var data = input.serializeArray();
-                    //         data[0]['ajax'] = true;
-                    //         $.post(url, {data: data}, function (response) {
-                    //             if (response.success === true) {
-                    //                 var rateInfo = $('.rate-info');
-                    //                 var rateValue = rateInfo.find('span:first-child');
-                    //                 var countValue = rateInfo.find('span:last-child');
-                    //                 rateValue.text(response.rating);
-                    //                 var text = declension(response.count, ['Hodnotilo', 'Hodnotil', 'Hodnotili']) + ' ' + response.count + ' ' + declension(response.count, ['používateľov', 'používateľ', 'používatelia']);
-                    //                 countValue.text(text);
-                    //
-                    //                 rateInfo.show();
-                    //                 form.hide();
-                    //             }
-                    //         });
-                    //     });
-                    //
-                    //     input.on('change', function () {
-                    //         var data = input.serializeArray();
-                    //         if (window.confirm('Naozaj si želáte ohodnotiť tento tovar ' + data[0].value + ' z 5 hviezdičiek?')) {
-                    //             form.submit()
-                    //         }
-                    //     })
-                    //
-                    //     /**
-                    //      * @description Funkcia na skloňovanie slov na základe vstupného čísla.
-                    //      * @param {number} value
-                    //      * @param {string[]} declensionArray
-                    //      * @returns {string}
-                    //      */
-                    //     function declension(value, declensionArray) {
-                    //         value = isNaN(+value) ? 0 : value;
-                    //         if (value === 1) {
-                    //             console.log(value, 1);
-                    //             return declensionArray[1];
-                    //         } else if (value >= 2 && value <= 4) {
-                    //             console.log(value, 2);
-                    //             return declensionArray[2];
-                    //         }
-                    //         console.log(value, 0);
-                    //         return declensionArray[0];
-                    //     }
-                    // })()
-                    import 'assets/js/rate-article'
-                </script>
-                {% endif %}
             </div>
         </div>
     </div>
+    {% include 'banner.html.twig.html' %}
+
 {% endblock %}

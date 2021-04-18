@@ -109,6 +109,7 @@ class InputValidationService
         $mobileNumber = str_replace(' ', '', $mobileNumber);
         $matchValue = preg_match('/^(00|\+)(42[01])[\d]{7,9}$/', $mobileNumber);
 
+        dump($mobileNumber, $matchValue);
         $this->validateArray['mobileNumber'] = $matchValue;
         return $this;
     }

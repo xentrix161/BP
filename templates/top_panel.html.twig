@@ -21,9 +21,9 @@
 
     <ul class="form-buttons float-right drop-down drop-down-out">
         <li>
-{#            <button>#}
+            {# <button> #}
 
-{#            </button>#}
+            {# </button> #}
             <form method="get" action="{{ path('search_results') }}">
                 <label>
 
@@ -49,6 +49,11 @@
                         <li>
                             <a id="" href="{{ path('article_index') }}">Predať</a>
                         </li>
+                        {% if userRole[0] == 'ROLE_ADMIN' %}
+                            <li>
+                                <a id="" href="{{ path('all_crude') }}">CRUDE</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </li>
             {% else %}

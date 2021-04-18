@@ -3,6 +3,8 @@ const publicPath = '/build/';
 
 Encore
     .setOutputPath('public/build/')
+    .copyFiles({from: './assets/images/direct',
+                to: 'images/[path][name].[ext]'})
     .setPublicPath(publicPath)
     .setManifestKeyPrefix('build/')
     .cleanupOutputBeforeBuild()

@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\Rating;
 use App\Entity\Shop;
 use App\Entity\User;
+use App\Services\ShoppingCartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -14,6 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatisticsController extends AbstractController
 {
+    /**
+     * @var ShoppingCartService
+     */
+    private $shoppingCartService;
+
+    public function __construct(ShoppingCartService $shoppingCartService)
+    {
+        $this->shoppingCartService = $shoppingCartService;
+    }
+
     /**
      * @Route("/admin/statistics", name="statistics")
      */
@@ -138,10 +149,19 @@ class StatisticsController extends AbstractController
             ->findBy(array(), array('rating' => 'DESC'));
     }
 
+
+    /**
+     * @Route("/statistics/sold", name="sold")
+     */
     public function getArticlesSortedBySold()
     {
-        return $this->getDoctrine()->getRepository(Article::class)
-            ->findBy(array(), array('sold' => 'DESC'));
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $articlesIds = $this->shoppingCartService->countNumberOfAllSoldItemsSorted();
+        $sortedArray = [];
+        for ($i = 0; $i < count($articlesIds); $i++) {
+            array_push($sortedArray, $repository->find(array_keys($articlesIds)[$i]));
+        }
+        return $sortedArray;
     }
 
     public function getPortalProfits()

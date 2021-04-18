@@ -64,7 +64,7 @@ class PersonalizationDataService extends AbstractController
             }
         }
         if ($sort) {
-            $this->sortAssociativeArrayByValues($countingArray, $sortType);
+            $countingArray = $this->sortAssociativeArrayByValues($countingArray, $sortType);
         }
         return $countingArray;
     }
@@ -105,10 +105,9 @@ class PersonalizationDataService extends AbstractController
     {
         $category1 = $this->getDoctrine()->getRepository(Article::class)
             ->find(array_keys($associativeArray)[0])->getCatId();
-
         $category2 = $category1;
         $counter = 1;
-        while ($category2 == $category1 && $counter <= count($associativeArray)-1) {
+        while ($category2 == $category1 && $counter <= count($associativeArray) - 1) {
             $category2 = $this->getDoctrine()->getRepository(Article::class)
                 ->find(array_keys($associativeArray)[$counter])->getCatId();
             $counter++;
@@ -157,14 +156,14 @@ class PersonalizationDataService extends AbstractController
         }
 
         $userCart = $this->getLatestUserCart($user->getId());
-        $userCartContent = $this->getAssociativeArrayFromCartContent($userCart);
+        $userCartContent = $this->getAssociativeArrayFromCartContent($userCart, true);
 
         $array = $this->getTopCategoriesArticles($userCartContent);
         shuffle($array);
         return array_slice($array, 0, 6);
     }
 
-    private function sortAssociativeArrayByValues(&$array, $sortType = 'DESC')
+    private function sortAssociativeArrayByValues($array, $sortType = 'DESC')
     {
         if ($sortType === 'ASC') {
             uasort($array, function ($a, $b) {
@@ -175,5 +174,6 @@ class PersonalizationDataService extends AbstractController
                 return $a < $b;
             });
         }
+        return $array;
     }
 }

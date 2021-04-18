@@ -2,7 +2,6 @@
 
 {% block body %}
     {% include "category_panel.html.twig" %}
-
     <div class="collection">
         {% for item in data %}
             <div class="product">
@@ -37,5 +36,6 @@
             {% endfor %}
         </div>
     </div>
+    {% include 'banner.html.twig.html' %}
 {% endblock %}
 

@@ -11,10 +11,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ChartsService extends AbstractController
 {
     private $em;
+    /**
+     * @var ShoppingCartService
+     */
+    private $shoppingCartService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ShoppingCartService $shoppingCartService)
     {
         $this->em = $em;
+        $this->shoppingCartService = $shoppingCartService;
     }
 
     /**
@@ -27,8 +32,7 @@ class ChartsService extends AbstractController
             'TOP hodnotení predajci' => $this->getTopRatedSellers(),
             'TOP hodnotené tovary' => $this->getTopArticles(),
             'TOP profitový predajci' => $this->getTopEarners(),
-//            'TOP predávané tovary' => $this->getTopSoldArticles()
-
+            'TOP predávané tovary' => $this->getTopSoldArticles()
         ];
 
         $empty = false;
@@ -53,7 +57,7 @@ class ChartsService extends AbstractController
         foreach ($top3Earners as $earner) {
             $outputArray[] = [
                 'name' => $earner->getName() . " " . $earner->getSurname(),
-                'data' => round($earner->getEarning(), 2) . "€",
+                'data' => number_format(round($earner->getEarning(), 2), 2) . "€",
                 'entity' => $earner,
                 'url' => $this->generateUrl('user_articles', ['id' => $earner->getId()]),
                 'permission' => true
@@ -94,20 +98,22 @@ class ChartsService extends AbstractController
      */
     public function getTopSoldArticles($numberOfItems = 10)
     {
-        $top10SoldArticles = $this->em->getRepository(Article::class)
-            ->findBy(array(), array('sold' => 'DESC'), $numberOfItems, 0);
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $articlesIds = $this->shoppingCartService->countNumberOfAllSoldItemsSorted();
+        $sortedArray = [];
+        for ($i = 0; $i < count($articlesIds) and $i < $numberOfItems; $i++) {
+            array_push($sortedArray, $repository->find(array_keys($articlesIds)[$i]));
+        }
 
         $outputArray = [];
-        foreach ($top10SoldArticles as $article) {
-            if ($article->getSold() != null) {
+        foreach ($sortedArray as $article) {
                 $outputArray[] = [
                     'name' => $article->getTitle(),
-                    'data' => $article->getSold() . " predaných",
+                    'data' => '',
                     'entity' => $article,
-                    'url' => '#',
+                    'url' => $this->generateUrl('produkt', ['id' => $article->getId()]),
                     'permission' => true
                 ];
-            }
         }
         return $outputArray;
     }
@@ -128,7 +134,7 @@ class ChartsService extends AbstractController
             if ($seller->getRating() != null) {
                 $outputArray[] = [
                     'name' => $seller->getName() . " " . $seller->getSurname() . ", ID: " . $seller->getId(),
-                    'data' => $seller->getRating() . " z 5 hviezd",
+                    'data' => round($seller->getRating(), 2)  . " z 5 hviezd",
                     'entity' => $seller,
                     'url' => $this->generateUrl('user_articles', ['id' => $seller->getId()]),
                     'permission' => false

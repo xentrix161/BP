@@ -1,0 +1,43 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+
+{% block body %}
+    <h1>CRUDE menu</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="id-class">Číslo</th>
+            <th class="name-surname">Názov entity</th>
+            <th class="name-surname">Odkaz na CRUDE operacie entity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Používateľ</td>
+            <td><a href="{{ path('user_index') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Kategória</td>
+            <td><a href="{{ path('category_index') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Tovar</td>
+            <td><a href="{{ path('article_index') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Objednávka</td>
+            <td><a href="{{ path('order_index') }}">link</a></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Portál</td>
+            <td><a href="{{ path('shop_index') }}">link</a></td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+

@@ -35,6 +35,15 @@ class ShopController extends AbstractController
         ]);
     }
 
+    /**
+     * Vyrendruje CRUDE menu.
+     * @Route("/admin/all-crude", name="all_crude", methods={"GET"})
+     */
+    public function crudeIndex()
+    {
+        return $this->render('crude_menu.html.twig');
+    }
+
 
 
 //    /**
