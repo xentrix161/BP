@@ -1,0 +1,40 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block body %}
+    <h1>ShoppingCart index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User_id</th>
+                <th>Cart_content</th>
+                <th>Date</th>
+                <th>Total_price</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for shopping_cart in shopping_carts %}
+            <tr>
+                <td>{{ shopping_cart.id }}</td>
+                <td>{{ shopping_cart.userId }}</td>
+                <td>{{ shopping_cart.cartContent ? shopping_cart.cartContent|json_encode : '' }}</td>
+                <td>{{ shopping_cart.date ? shopping_cart.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ shopping_cart.totalPrice }}</td>
+                <td>{{ shopping_cart.status }}</td>
+                <td>
+                    <a href="{{ path('shopping_cart_show', {'id': shopping_cart.id}) }}">show</a>
+{#                    <a href="{{ path('shopping_cart_cont_edit', {'id': shopping_cart.id}) }}">edit</a>#}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{#    <a href="{{ path('shopping_cart_cont_new') }}">Create new</a>#}
+{% endblock %}

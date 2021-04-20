@@ -1,0 +1,8 @@
+{% extends 'page_temps/base_temp.html.twig' %}
+{% block body %}
+    <h1>Create new ShoppingCart</h1>
+
+    {{ include('shopping_cart_cont/_form.html.twig') }}
+
+    <a href="{{ path('shopping_cart_cont_index') }}">back to list</a>
+{% endblock %}

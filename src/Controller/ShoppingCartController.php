@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Order;
 use App\Entity\Shop;
+use App\Entity\ShoppingCart;
 use App\Entity\User;
+use App\Form\ShoppingCartType;
+use App\Repository\ShoppingCartRepository;
 use App\Services\FormValidationService;
 use App\Services\InputValidationService;
 use App\Services\PersonalizationDataService;
@@ -64,7 +67,7 @@ class ShoppingCartController extends AbstractController
      */
     public function index(Request $request)
     {
-        $this->shoppingCartService->countNumberOfAllSoldItemsSorted(); die;
+//        $this->shoppingCartService->countNumberOfAllSoldItemsSorted(); die;
         if (!$this->getUser()) {
             return $this->redirectToRoute('access_denied');
         }
@@ -455,4 +458,81 @@ class ShoppingCartController extends AbstractController
 
         return $actualUser->getId();
     }
+
+    /**
+     * @Route("/admin/", name="shopping_cart_index", methods={"GET"})
+     */
+    public function index1(ShoppingCartRepository $shoppingCartRepository): Response
+    {
+        return $this->render('shopping_cart_cont/index.html.twig', [
+            'shopping_carts' => $shoppingCartRepository->findAll(),
+        ]);
+    }
+
+//    /**
+//     * @Route("/new", name="shopping_cart_cont_new", methods={"GET","POST"})
+//     */
+//    public function new(Request $request): Response
+//    {
+//        $shoppingCart = new ShoppingCart();
+//        $form = $this->createForm(ShoppingCartType::class, $shoppingCart);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($shoppingCart);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('shopping_cart_cont_index');
+//        }
+//
+//        return $this->render('shopping_cart_cont/new.html.twig', [
+//            'shopping_cart' => $shoppingCart,
+//            'form' => $form->createView(),
+//        ]);
+//    }
+
+    /**
+     * @Route("/{id}", name="shopping_cart_show", methods={"GET"})
+     */
+    public function show(ShoppingCart $shoppingCart): Response
+    {
+        return $this->render('shopping_cart_cont/show.html.twig', [
+            'shopping_cart' => $shoppingCart,
+        ]);
+    }
+
+//    /**
+//     * @Route("/{id}/edit", name="shopping_cart_cont_edit", methods={"GET","POST"})
+//     */
+//    public function edit(Request $request, ShoppingCart $shoppingCart): Response
+//    {
+//        $form = $this->createForm(ShoppingCartType::class, $shoppingCart);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $this->getDoctrine()->getManager()->flush();
+//
+//            return $this->redirectToRoute('shopping_cart_cont_index');
+//        }
+//
+//        return $this->render('shopping_cart_cont/edit.html.twig', [
+//            'shopping_cart' => $shoppingCart,
+//            'form' => $form->createView(),
+//        ]);
+//    }
+//
+//    /**
+//     * @Route("/{id}", name="shopping_cart_cont_delete", methods={"POST"})
+//     */
+//    public function delete(Request $request, ShoppingCart $shoppingCart): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$shoppingCart->getId(), $request->request->get('_token'))) {
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($shoppingCart);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('shopping_cart_cont_index');
+//    }
 }
